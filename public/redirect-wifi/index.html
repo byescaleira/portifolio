@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#000000">
+<title>Autenticação de Rede</title>
+<style>
+  /* ============================================================
+     PORTAL WI-FI — TELA DE "SEGURANÇA"
+     Edite apenas o bloco CONFIG lá embaixo no <script>.
+     ============================================================ */
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+  html,body{
+    height:100%;
+    background:#000;
+    overflow:hidden;
+    font-family:"SF Mono",ui-monospace,Menlo,Consolas,"Courier New",monospace;
+    color:#22ff66;
+    -webkit-font-smoothing:none;
+  }
+
+  /* ---------- chuva matrix ---------- */
+  #matrix{
+    position:fixed;inset:0;z-index:0;
+    opacity:.18;
+    transition:opacity 1.2s ease;
+  }
+  body.hot #matrix{opacity:.42}
+  body.dead #matrix{opacity:.75}
+
+  /* ---------- scanlines + vinheta de CRT ---------- */
+  .crt{
+    position:fixed;inset:0;z-index:50;pointer-events:none;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,0) 2px,
+        rgba(0,0,0,.28) 3px,
+        rgba(0,0,0,.28) 4px
+      );
+    mix-blend-mode:multiply;
+  }
+  .vig{
+    position:fixed;inset:0;z-index:51;pointer-events:none;
+    background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(0,0,0,.85) 100%);
+  }
+  .flick{
+    position:fixed;inset:0;z-index:52;pointer-events:none;
+    background:#22ff66;opacity:0;
+    animation:flick 7s steps(1) infinite;
+  }
+  @keyframes flick{
+    0%,96%,100%{opacity:0}
+    97%{opacity:.035}
+    98%{opacity:0}
+    99%{opacity:.02}
+  }
+
+  /* ---------- terminal ---------- */
+  .wrap{
+    position:relative;z-index:10;
+    height:100%;
+    padding:16px 14px 18px;
+    display:flex;flex-direction:column;
+  }
+
+  .bar{
+    flex:0 0 auto;
+    display:flex;align-items:center;gap:8px;
+    border:1px solid #165c2c;
+    background:rgba(0,20,6,.7);
+    padding:7px 10px;
+    font-size:11px;letter-spacing:.5px;
+    text-transform:uppercase;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:#22ff66;box-shadow:0 0 8px #22ff66;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.15}}
+  .bar b{font-weight:400;color:#7dffa8}
+  .bar span.r{margin-left:auto;color:#0f8f3d}
+
+  #out{
+    flex:1 1 auto;
+    margin-top:12px;
+    overflow:hidden;
+    font-size:clamp(11px,3.2vw,14px);
+    line-height:1.55;
+    text-shadow:0 0 6px rgba(34,255,102,.55);
+    word-break:break-word;
+  }
+  .ln{white-space:pre-wrap;min-height:1.55em}
+  .dim{color:#0f8f3d}
+  .ok{color:#22ff66}
+  .warn{color:#ffd23f;text-shadow:0 0 6px rgba(255,210,63,.6)}
+  .bad{color:#ff2e4d;text-shadow:0 0 8px rgba(255,46,77,.7)}
+  .hl{background:#22ff66;color:#000;text-shadow:none;padding:0 4px}
+  .cursor::after{content:"█";animation:blink .8s steps(1) infinite;margin-left:1px}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+  /* ---------- glitch ---------- */
+  body.glitch .wrap{animation:shake .18s infinite}
+  body.glitch #out{animation:rgbsplit .12s infinite}
+  @keyframes shake{
+    0%{transform:translate(0,0)}
+    25%{transform:translate(-3px,2px)}
+    50%{transform:translate(2px,-3px)}
+    75%{transform:translate(-2px,-1px)}
+    100%{transform:translate(3px,1px)}
+  }
+  @keyframes rgbsplit{
+    0%{text-shadow:2px 0 #ff2e4d,-2px 0 #00e5ff}
+    50%{text-shadow:-3px 0 #ff2e4d,3px 0 #00e5ff}
+    100%{text-shadow:1px 0 #ff2e4d,-1px 0 #00e5ff}
+  }
+  .tear{
+    position:fixed;left:0;right:0;height:0;z-index:40;
+    background:rgba(34,255,102,.12);
+    backdrop-filter:invert(1);
+    -webkit-backdrop-filter:invert(1);
+    pointer-events:none;opacity:0;
+  }
+  body.glitch .tear{animation:tear .9s steps(1) infinite}
+  @keyframes tear{
+    0%{opacity:0;top:10%;height:0}
+    10%{opacity:1;top:22%;height:18px}
+    20%{opacity:0}
+    45%{opacity:1;top:61%;height:9px}
+    55%{opacity:0}
+    80%{opacity:1;top:38%;height:26px}
+    90%{opacity:0}
+  }
+
+  /* ---------- tela final ---------- */
+  #final{
+    position:fixed;inset:0;z-index:60;
+    display:none;
+    flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    padding:28px 20px;
+    background:radial-gradient(ellipse at center,rgba(60,0,10,.92) 0%,rgba(0,0,0,.97) 70%);
+    animation:fadein .5s ease both;
+  }
+  #final.on{display:flex}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+
+  #final .skull{font-size:clamp(46px,16vw,110px);line-height:1;filter:drop-shadow(0 0 22px #ff2e4d);animation:breathe 1.6s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+
+  #final h1{
+    margin-top:16px;
+    font-size:clamp(19px,6.4vw,40px);
+    letter-spacing:2px;
+    color:#ff2e4d;
+    text-shadow:0 0 18px rgba(255,46,77,.8), 2px 0 #00e5ff, -2px 0 #ff2e4d;
+    animation:jitter .25s steps(1) infinite;
+  }
+  @keyframes jitter{
+    0%{transform:translate(0,0)}
+    33%{transform:translate(-1px,1px)}
+    66%{transform:translate(1px,-1px)}
+  }
+
+  #final .sub{margin-top:12px;font-size:clamp(11px,3.4vw,14px);color:#ff8b9c;line-height:1.7;max-width:520px}
+  #final .loot{
+    margin-top:18px;text-align:left;
+    font-size:clamp(10px,3vw,13px);
+    border:1px solid #7a1024;background:rgba(40,0,8,.6);
+    padding:12px 14px;width:100%;max-width:440px;
+    color:#ff6b81;line-height:1.85;
+  }
+  #final .loot b{color:#fff;font-weight:400}
+  #final .timer{
+    margin-top:20px;
+    font-size:clamp(26px,9vw,52px);
+    color:#fff;letter-spacing:4px;
+    text-shadow:0 0 24px #ff2e4d;
+  }
+  #final .timerlbl{margin-top:4px;font-size:11px;letter-spacing:2px;color:#ff8b9c;text-transform:uppercase}
+
+  #sair{
+    margin-top:30px;
+    display:inline-block;
+    font-family:inherit;font-size:11px;letter-spacing:1.5px;
+    color:#5c5c66;background:none;border:1px solid #3a3a44;
+    padding:9px 16px;cursor:pointer;text-decoration:none;
+    opacity:0;transition:opacity .6s ease,color .2s,border-color .2s;
+  }
+  #sair.show{opacity:1}
+  #sair:hover,#sair:active{color:#22ff66;border-color:#22ff66}
+
+  @media (max-height:520px){
+    #final .loot{display:none}
+    #final .skull{font-size:clamp(34px,11vw,60px)}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="tear"></div>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="dot"></span>
+    <b id="ssid">CONECTANDO...</b>
+    <span class="r" id="clock">--:--:--</span>
+  </div>
+  <div id="out"></div>
+</div>
+
+<div class="crt"></div>
+<div class="vig"></div>
+<div class="flick"></div>
+
+<div id="final">
+  <div class="skull">&#9760;&#65038;</div>
+  <h1>DISPOSITIVO COMPROMETIDO</h1>
+  <div class="sub">
+    Sua sessão foi interceptada durante a autenticação.<br>
+    Não desconecte da rede. A extração ainda está em andamento.
+  </div>
+  <div class="loot" id="loot"></div>
+  <div class="timer" id="timer">00:00</div>
+  <div class="timerlbl">tempo até o envio do pacote</div>
+  <a id="sair" href="#">continuar mesmo assim →</a>
+</div>
+
+<script>
+/* ==============================================================
+   CONFIG — mexa só aqui
+   ============================================================== */
+const CONFIG = {
+  nomeRede:     'WIFI_ESCALEIRA_5G',   // nome que aparece na barra do topo
+  urlContinuar: 'https://www.google.com', // pra onde vai o botão discreto do final
+  velocidade:   1,      // 1 = normal | 0.6 = mais rápido | 1.6 = mais lento
+  vibrar:       true,   // vibração no celular nos sustos
+  som:          true,   // bips de terminal (pode ser bloqueado até o 1º toque)
+  segundosFinal: 90     // contagem regressiva da tela final
+};
+/* ============================================================== */
+
+const $  = s => document.querySelector(s);
+const out = $('#out');
+const sp  = ms => new Promise(r => setTimeout(r, ms * CONFIG.velocidade));
+const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+const pick = a => a[Math.floor(Math.random()*a.length)];
+
+/* ---------- relógio + ssid ---------- */
+$('#ssid').textContent = 'REDE: ' + CONFIG.nomeRede;
+setInterval(() => {
+  $('#clock').textContent = new Date().toLocaleTimeString('pt-BR');
+}, 1000);
+
+/* ---------- áudio ---------- */
+let ac = null;
+function audio(){ if(!CONFIG.som) return null; try{ ac = ac || new (window.AudioContext||window.webkitAudioContext)(); if(ac.state==='suspended') ac.resume(); return ac; }catch(e){ return null; } }
+function beep(freq=880, dur=.03, type='square', vol=.03){
+  const c = audio(); if(!c) return;
+  try{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime+dur);
+  }catch(e){}
+}
+function alarme(){
+  const c = audio(); if(!c) return;
+  try{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(220,c.currentTime);
+    o.frequency.linearRampToValueAtTime(880,c.currentTime+.35);
+    o.frequency.linearRampToValueAtTime(180,c.currentTime+.8);
+    g.gain.setValueAtTime(.05,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.85);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime+.9);
+  }catch(e){}
+}
+['pointerdown','touchstart','keydown'].forEach(ev =>
+  document.addEventListener(ev, () => audio(), { once:true, passive:true })
+);
+function vibra(p){ if(CONFIG.vibrar && navigator.vibrate){ try{ navigator.vibrate(p); }catch(e){} } }
+
+/* ---------- chuva matrix ---------- */
+(function(){
+  const cv = $('#matrix'), ctx = cv.getContext('2d');
+  const chars = 'アカサタナハマヤラワイキシチニヒミリヰウクスツヌフムユルエケセテネヘメレヱオコソトノホモヨロヲﾝ0123456789ABCDEF@#$%&*<>/\\|=+-'.split('');
+  let cols, drops, size;
+  function resize(){
+    cv.width = cv.clientWidth = window.innerWidth;
+    cv.height = cv.clientHeight = window.innerHeight;
+    size = window.innerWidth < 480 ? 13 : 16;
+    cols = Math.ceil(cv.width / size);
+    drops = new Array(cols).fill(0).map(() => Math.random() * -80);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  function draw(){
+    ctx.fillStyle = 'rgba(0,0,0,.075)';
+    ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.font = size + 'px monospace';
+    for(let i=0;i<cols;i++){
+      const t = pick(chars);
+      const y = drops[i]*size;
+      ctx.fillStyle = document.body.classList.contains('dead') ? '#ff2e4d' : '#22ff66';
+      if(Math.random() > .975){ ctx.fillStyle = '#dfffe9'; }
+      ctx.fillText(t, i*size, y);
+      if(y > cv.height && Math.random() > .972) drops[i] = 0;
+      drops[i] += document.body.classList.contains('hot') ? 1.4 : .8;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ---------- motor do terminal ---------- */
+function novaLinha(cls){
+  const d = document.createElement('div');
+  d.className = 'ln ' + (cls||'');
+  out.appendChild(d);
+  while(out.scrollHeight > out.clientHeight && out.firstChild) out.removeChild(out.firstChild);
+  return d;
+}
+async function digita(txt, cls, vel=18){
+  const d = novaLinha(cls);
+  d.classList.add('cursor');
+  for(let i=0;i<txt.length;i++){
+    d.textContent += txt[i];
+    if(i % 2 === 0) beep(rnd(1500,2100), .012, 'square', .015);
+    await sp(vel + (Math.random()*vel));
+  }
+  d.classList.remove('cursor');
+  return d;
+}
+function imprime(txt, cls){ const d = novaLinha(cls); d.textContent = txt; return d; }
+async function barra(rotulo, dur, cls){
+  const d = novaLinha(cls);
+  // barra se adapta à largura da tela pra não quebrar linha no celular
+  const estreito = window.innerWidth < 420;
+  const total = estreito ? 12 : 22;
+  const pad   = estreito ? 19 : 26;
+  const t0 = Date.now(), fim = dur * CONFIG.velocidade;
+  return new Promise(res => {
+    const iv = setInterval(() => {
+      let p = Math.min(1,(Date.now()-t0)/fim);
+      const n = Math.round(p*total);
+      d.textContent = rotulo.slice(0,pad-2).padEnd(pad,'.') + '[' + '█'.repeat(n) + '░'.repeat(total-n) + ']' + String(Math.round(p*100)).padStart(4,' ') + '%';
+      if(p>=1){ clearInterval(iv); beep(1200,.05); res(); }
+    }, 45);
+  });
+}
+
+/* ---------- coleta de "inteligência" (dados públicos do próprio navegador) ---------- */
+function hexPar(){ return rnd(0,255).toString(16).toUpperCase().padStart(2,'0'); }
+const FAKE_MAC = Array.from({length:6},hexPar).join(':');
+const LOCAL_IP = '192.168.' + rnd(0,4) + '.' + rnd(20,240);
+
+function sistema(){
+  const u = navigator.userAgent;
+  if(/iPhone|iPad|iPod/i.test(u)){
+    const m = u.match(/OS (\d+[_\d]*)/);
+    return 'Apple iOS ' + (m ? m[1].replace(/_/g,'.') : '17.x');
+  }
+  if(/Android/i.test(u)){ const m = u.match(/Android (\d+(\.\d+)?)/); return 'Android ' + (m?m[1]:'14'); }
+  if(/Mac OS X/i.test(u)) return 'macOS';
+  if(/Windows NT 10/i.test(u)) return 'Windows 10/11';
+  if(/Windows/i.test(u)) return 'Windows';
+  if(/Linux/i.test(u)) return 'Linux';
+  return 'desconhecido';
+}
+function navegador(){
+  const u = navigator.userAgent;
+  if(/CriOS|Chrome/i.test(u) && !/Edg/i.test(u)) return 'Chrome';
+  if(/Edg/i.test(u)) return 'Edge';
+  if(/FxiOS|Firefox/i.test(u)) return 'Firefox';
+  if(/Safari/i.test(u)) return 'Safari';
+  return 'WebView';
+}
+function aparelho(){
+  const u = navigator.userAgent;
+  if(/iPhone/i.test(u)) return 'iPhone';
+  if(/iPad/i.test(u)) return 'iPad';
+  if(/Android/i.test(u)){ const m = u.match(/;\s?([^;)]+)\s+Build/i); return m ? m[1].trim() : 'Smartphone Android'; }
+  if(/Macintosh/i.test(u)) return 'Mac';
+  if(/Windows/i.test(u)) return 'PC Windows';
+  return 'terminal não identificado';
+}
+async function bateria(){
+  try{
+    if(navigator.getBattery){
+      const b = await navigator.getBattery();
+      return Math.round(b.level*100) + '%' + (b.charging ? ' (carregando)' : '');
+    }
+  }catch(e){}
+  return 'protegida';
+}
+
+/* ---------- roteiro ---------- */
+async function roteiro(){
+  await sp(250);
+  await digita('$ conectando ao ponto de acesso ' + CONFIG.nomeRede + ' ...', 'dim', 14);
+  await sp(300);
+  imprime('  handshake WPA2 ......... OK', 'dim');
+  await sp(200);
+  imprime('  ip atribuído ........... ' + LOCAL_IP, 'dim');
+  await sp(400);
+  await digita('$ autenticando cliente...', 'dim', 14);
+  await sp(500);
+  imprime('  aguardando liberação do portal', 'dim');
+  await sp(900);
+
+  /* susto 1 */
+  beep(300,.12,'sawtooth',.05); vibra(60);
+  imprime('', '');
+  await digita('!! ANOMALIA DETECTADA NO PACOTE DE AUTENTICAÇÃO', 'warn', 12);
+  await sp(500);
+  await digita('$ injetando payload... ', 'bad', 10);
+  document.body.classList.add('hot');
+  await sp(400);
+
+  await barra('bypass firewall', 1400, 'ok');
+  await barra('privilégios root', 1200, 'ok');
+  await sp(200);
+  imprime('  root@dispositivo:~# acesso total concedido', 'hl');
+  vibra([40,60,40]);
+  await sp(700);
+
+  /* fingerprint */
+  imprime('', '');
+  await digita('$ fingerprint --alvo=cliente_conectado', 'dim', 12);
+  await sp(350);
+  const bat = await bateria();
+  const linhas = [
+    ['aparelho',      aparelho()],
+    ['sistema',       sistema()],
+    ['navegador',     navegador()],
+    ['idioma',        navigator.language || 'pt-BR'],
+    ['fuso horário',  (Intl.DateTimeFormat().resolvedOptions().timeZone) || '—'],
+    ['resolução',     screen.width + 'x' + screen.height + ' @' + (window.devicePixelRatio||1) + 'x'],
+    ['núcleos cpu',   (navigator.hardwareConcurrency || rnd(4,8)) + ' threads'],
+    ['memória ram',   (navigator.deviceMemory ? navigator.deviceMemory + ' GB' : rnd(4,12) + ' GB (estimado)')],
+    ['bateria',       bat],
+    ['toque',         (('ontouchstart' in window) ? 'tela sensível ativa' : 'periférico físico')],
+    ['mac clonado',   FAKE_MAC],
+    ['ip interno',    LOCAL_IP]
+  ];
+  for(const [k,v] of linhas){
+    imprime('  ' + (k+' ').padEnd(16,'.') + ' ' + v, 'ok');
+    beep(rnd(900,1400), .02);
+    await sp(rnd(90,190));
+  }
+  await sp(600);
+
+  /* susto 2 */
+  imprime('', '');
+  await digita('$ iniciando extração remota...', 'bad', 12);
+  document.body.classList.add('glitch');
+  alarme(); vibra([120,50,120]);
+  await sp(900);
+  document.body.classList.remove('glitch');
+
+  await barra('galeria de fotos', 1500, 'warn');
+  await barra('contatos', 1100, 'warn');
+  await barra('histórico web', 1300, 'warn');
+  await barra('senhas salvas', 1600, 'bad');
+  await sp(200);
+  imprime('  ' + rnd(1120,8940) + ' arquivos indexados', 'bad');
+  await sp(500);
+
+  imprime('', '');
+  await digita('$ ativando câmera frontal...', 'bad', 14);
+  document.body.classList.add('glitch');
+  vibra([200,80,200,80,300]); alarme();
+  await sp(1200);
+  imprime('  [CAM0] transmissão ao vivo estabelecida', 'bad');
+  await sp(900);
+  imprime('  [MIC0] captura de áudio em segundo plano', 'bad');
+  await sp(1000);
+  document.body.classList.remove('glitch');
+
+  await barra('empacotando', 1700, 'bad');
+  await sp(300);
+  await digita('$ enviando para servidor externo...', 'bad', 12);
+  await sp(1200);
+
+  document.body.classList.add('dead','glitch');
+  alarme(); vibra([400,100,400]);
+  await sp(700);
+  telaFinal();
+}
+
+/* ---------- tela final ---------- */
+function telaFinal(){
+  const loot = [
+    ['fotos',      rnd(340,4820) + ' arquivos'],
+    ['contatos',   rnd(60,780) + ' registros'],
+    ['mensagens',  rnd(900,21000) + ' linhas'],
+    ['credenciais',rnd(4,64) + ' pares salvos'],
+    ['localização', 'histórico de ' + rnd(20,180) + ' dias']
+  ];
+  $('#loot').innerHTML = loot.map(([k,v]) =>
+    '<div>› ' + k + ': <b>' + v + '</b></div>'
+  ).join('');
+
+  $('#final').classList.add('on');
+
+  let t = CONFIG.segundosFinal;
+  const el = $('#timer');
+  const tick = () => {
+    const m = String(Math.floor(t/60)).padStart(2,'0');
+    const s = String(t%60).padStart(2,'0');
+    el.textContent = m + ':' + s;
+    if(t % 10 === 0) { beep(660,.08,'square',.04); vibra(40); }
+    if(t <= 0){ clearInterval(iv); el.textContent = 'ENVIADO'; alarme(); vibra([600]); return; }
+    t--;
+  };
+  tick();
+  const iv = setInterval(tick, 1000);
+
+  setTimeout(() => {
+    const b = $('#sair');
+    b.href = CONFIG.urlContinuar;
+    b.classList.add('show');
+  }, 6000);
+}
+
+roteiro();
+</script>
+</body>
+</html>
