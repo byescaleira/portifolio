@@ -3,197 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#000000">
-<title>Autenticação de Rede</title>
+<meta name="theme-color" content="#0a0000">
+<title>Alerta de Segurança da Rede</title>
 <style>
   /* ============================================================
-     PORTAL WI-FI — TELA DE "SEGURANÇA"
-     Edite apenas o bloco CONFIG lá embaixo no <script>.
+     PORTAL WI-FI — TELA "DISPOSITIVO COMPROMETIDO"
+     Arquivo único. Edite só o bloco CONFIG no <script>.
      ============================================================ */
 
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
   html,body{
     height:100%;
-    background:#000;
+    background:#080002;
     overflow:hidden;
     font-family:"SF Mono",ui-monospace,Menlo,Consolas,"Courier New",monospace;
-    color:#22ff66;
+    color:#ff6b81;
     -webkit-font-smoothing:none;
   }
 
-  /* ---------- chuva matrix ---------- */
-  #matrix{
-    position:fixed;inset:0;z-index:0;
-    opacity:.18;
-    transition:opacity 1.2s ease;
-  }
-  body.hot #matrix{opacity:.42}
-  body.dead #matrix{opacity:.75}
+  /* ---------- chuva de código (vermelha) ---------- */
+  #matrix{position:fixed;inset:0;z-index:0;opacity:.34}
 
-  /* ---------- scanlines + vinheta de CRT ---------- */
+  /* ---------- camadas de CRT ---------- */
   .crt{
-    position:fixed;inset:0;z-index:50;pointer-events:none;
-    background:
-      repeating-linear-gradient(
-        to bottom,
-        rgba(0,0,0,0) 0px,
-        rgba(0,0,0,0) 2px,
-        rgba(0,0,0,.28) 3px,
-        rgba(0,0,0,.28) 4px
-      );
+    position:fixed;inset:0;z-index:40;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,
+      rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,
+      rgba(0,0,0,.30) 3px,rgba(0,0,0,.30) 4px);
     mix-blend-mode:multiply;
   }
   .vig{
-    position:fixed;inset:0;z-index:51;pointer-events:none;
-    background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(0,0,0,.85) 100%);
+    position:fixed;inset:0;z-index:41;pointer-events:none;
+    background:radial-gradient(ellipse at center,rgba(0,0,0,0) 38%,rgba(0,0,0,.9) 100%);
   }
-  .flick{
-    position:fixed;inset:0;z-index:52;pointer-events:none;
-    background:#22ff66;opacity:0;
-    animation:flick 7s steps(1) infinite;
+  /* pulso vermelho de alerta, sempre rodando */
+  .pulso{
+    position:fixed;inset:0;z-index:42;pointer-events:none;
+    box-shadow:inset 0 0 140px rgba(255,0,40,.55);
+    animation:pulso 2.2s ease-in-out infinite;
   }
-  @keyframes flick{
-    0%,96%,100%{opacity:0}
-    97%{opacity:.035}
-    98%{opacity:0}
-    99%{opacity:.02}
+  @keyframes pulso{0%,100%{opacity:.35}50%{opacity:1}}
+  /* flash branco de abertura */
+  .flash{
+    position:fixed;inset:0;z-index:70;pointer-events:none;
+    background:#fff;opacity:0;
   }
-
-  /* ---------- terminal ---------- */
-  .wrap{
-    position:relative;z-index:10;
-    height:100%;
-    padding:16px 14px 18px;
-    display:flex;flex-direction:column;
+  .flash.go{animation:flash .55s steps(1) forwards}
+  @keyframes flash{
+    0%{opacity:1}12%{opacity:0}20%{opacity:.9}30%{opacity:0}
+    42%{opacity:.6}50%{opacity:0}70%{opacity:.25}100%{opacity:0}
   }
-
-  .bar{
-    flex:0 0 auto;
-    display:flex;align-items:center;gap:8px;
-    border:1px solid #165c2c;
-    background:rgba(0,20,6,.7);
-    padding:7px 10px;
-    font-size:11px;letter-spacing:.5px;
-    text-transform:uppercase;
-  }
-  .dot{width:8px;height:8px;border-radius:50%;background:#22ff66;box-shadow:0 0 8px #22ff66;animation:pulse 1s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.15}}
-  .bar b{font-weight:400;color:#7dffa8}
-  .bar span.r{margin-left:auto;color:#0f8f3d}
-
-  #out{
-    flex:1 1 auto;
-    margin-top:12px;
-    overflow:hidden;
-    font-size:clamp(11px,3.2vw,14px);
-    line-height:1.55;
-    text-shadow:0 0 6px rgba(34,255,102,.55);
-    word-break:break-word;
-  }
-  .ln{white-space:pre-wrap;min-height:1.55em}
-  .dim{color:#0f8f3d}
-  .ok{color:#22ff66}
-  .warn{color:#ffd23f;text-shadow:0 0 6px rgba(255,210,63,.6)}
-  .bad{color:#ff2e4d;text-shadow:0 0 8px rgba(255,46,77,.7)}
-  .hl{background:#22ff66;color:#000;text-shadow:none;padding:0 4px}
-  .cursor::after{content:"█";animation:blink .8s steps(1) infinite;margin-left:1px}
-  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
-
-  /* ---------- glitch ---------- */
-  body.glitch .wrap{animation:shake .18s infinite}
-  body.glitch #out{animation:rgbsplit .12s infinite}
-  @keyframes shake{
-    0%{transform:translate(0,0)}
-    25%{transform:translate(-3px,2px)}
-    50%{transform:translate(2px,-3px)}
-    75%{transform:translate(-2px,-1px)}
-    100%{transform:translate(3px,1px)}
-  }
-  @keyframes rgbsplit{
-    0%{text-shadow:2px 0 #ff2e4d,-2px 0 #00e5ff}
-    50%{text-shadow:-3px 0 #ff2e4d,3px 0 #00e5ff}
-    100%{text-shadow:1px 0 #ff2e4d,-1px 0 #00e5ff}
-  }
+  /* faixa de tearing horizontal */
   .tear{
-    position:fixed;left:0;right:0;height:0;z-index:40;
-    background:rgba(34,255,102,.12);
-    backdrop-filter:invert(1);
-    -webkit-backdrop-filter:invert(1);
+    position:fixed;left:0;right:0;height:0;z-index:43;
+    background:rgba(255,46,77,.18);
+    backdrop-filter:invert(1);-webkit-backdrop-filter:invert(1);
     pointer-events:none;opacity:0;
   }
-  body.glitch .tear{animation:tear .9s steps(1) infinite}
+  body.glitch .tear{animation:tear .8s steps(1) infinite}
   @keyframes tear{
-    0%{opacity:0;top:10%;height:0}
-    10%{opacity:1;top:22%;height:18px}
-    20%{opacity:0}
-    45%{opacity:1;top:61%;height:9px}
-    55%{opacity:0}
-    80%{opacity:1;top:38%;height:26px}
-    90%{opacity:0}
+    0%{opacity:0;top:8%;height:0}
+    12%{opacity:1;top:24%;height:22px}
+    22%{opacity:0}
+    46%{opacity:1;top:63%;height:10px}
+    56%{opacity:0}
+    78%{opacity:1;top:41%;height:30px}
+    88%{opacity:0}
   }
 
-  /* ---------- tela final ---------- */
-  #final{
-    position:fixed;inset:0;z-index:60;
-    display:none;
-    flex-direction:column;align-items:center;justify-content:center;
+  /* ---------- conteúdo ---------- */
+  .tela{
+    position:relative;z-index:20;
+    height:100%;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .inner{
+    min-height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
-    padding:28px 20px;
-    background:radial-gradient(ellipse at center,rgba(60,0,10,.92) 0%,rgba(0,0,0,.97) 70%);
-    animation:fadein .5s ease both;
+    padding:18px 16px 22px;
   }
-  #final.on{display:flex}
-  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  body.glitch .inner{animation:shake .16s infinite}
+  @keyframes shake{
+    0%{transform:translate(0,0) skewX(0)}
+    25%{transform:translate(-4px,2px) skewX(.6deg)}
+    50%{transform:translate(3px,-3px) skewX(-.7deg)}
+    75%{transform:translate(-2px,-1px) skewX(.3deg)}
+    100%{transform:translate(4px,1px) skewX(-.4deg)}
+  }
 
-  #final .skull{font-size:clamp(46px,16vw,110px);line-height:1;filter:drop-shadow(0 0 22px #ff2e4d);animation:breathe 1.6s ease-in-out infinite}
-  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+  .surge{opacity:0;transform:translateY(14px);animation:surge .5s cubic-bezier(.2,.9,.3,1) forwards}
+  @keyframes surge{to{opacity:1;transform:translateY(0)}}
 
-  #final h1{
-    margin-top:16px;
-    font-size:clamp(19px,6.4vw,40px);
-    letter-spacing:2px;
+  .skull{
+    font-size:clamp(42px,13vw,92px);line-height:1;
     color:#ff2e4d;
-    text-shadow:0 0 18px rgba(255,46,77,.8), 2px 0 #00e5ff, -2px 0 #ff2e4d;
-    animation:jitter .25s steps(1) infinite;
+    filter:drop-shadow(0 0 26px rgba(255,46,77,.95));
+    animation:respira 1.5s ease-in-out infinite;
   }
-  @keyframes jitter{
-    0%{transform:translate(0,0)}
-    33%{transform:translate(-1px,1px)}
-    66%{transform:translate(1px,-1px)}
+  @keyframes respira{0%,100%{transform:scale(1)}50%{transform:scale(1.11)}}
+
+  h1{
+    margin-top:12px;
+    font-size:clamp(19px,6.2vw,38px);
+    font-weight:400;letter-spacing:2px;line-height:1.15;
+    color:#ff2e4d;
+    text-shadow:0 0 20px rgba(255,46,77,.85);
+    position:relative;
+  }
+  h1::before,h1::after{
+    content:attr(data-txt);
+    position:absolute;left:0;top:0;width:100%;
+    clip-path:inset(0 0 0 0);
+  }
+  h1::before{color:#00e5ff;animation:gA 2.4s steps(1) infinite}
+  h1::after {color:#ff0040;animation:gB 3.1s steps(1) infinite}
+  @keyframes gA{
+    0%,92%,100%{transform:translate(0,0);clip-path:inset(100% 0 0 0)}
+    93%{transform:translate(-4px,-2px);clip-path:inset(12% 0 62% 0)}
+    95%{transform:translate(3px,1px);clip-path:inset(58% 0 18% 0)}
+    97%{transform:translate(-2px,2px);clip-path:inset(32% 0 44% 0)}
+  }
+  @keyframes gB{
+    0%,88%,100%{transform:translate(0,0);clip-path:inset(100% 0 0 0)}
+    89%{transform:translate(4px,2px);clip-path:inset(44% 0 30% 0)}
+    92%{transform:translate(-3px,-1px);clip-path:inset(8% 0 70% 0)}
+    95%{transform:translate(2px,-2px);clip-path:inset(70% 0 6% 0)}
   }
 
-  #final .sub{margin-top:12px;font-size:clamp(11px,3.4vw,14px);color:#ff8b9c;line-height:1.7;max-width:520px}
-  #final .loot{
-    margin-top:18px;text-align:left;
-    font-size:clamp(10px,3vw,13px);
-    border:1px solid #7a1024;background:rgba(40,0,8,.6);
-    padding:12px 14px;width:100%;max-width:440px;
-    color:#ff6b81;line-height:1.85;
+  .sub{
+    margin-top:12px;
+    font-size:clamp(11px,3.4vw,14px);line-height:1.7;
+    color:#ff8b9c;max-width:520px;
   }
-  #final .loot b{color:#fff;font-weight:400}
-  #final .timer{
-    margin-top:20px;
-    font-size:clamp(26px,9vw,52px);
-    color:#fff;letter-spacing:4px;
-    text-shadow:0 0 24px #ff2e4d;
+  .sub b{color:#fff;font-weight:400}
+
+  .painel{
+    margin-top:16px;width:100%;max-width:440px;
+    border:1px solid #7a1024;background:rgba(38,0,8,.72);
+    box-shadow:0 0 40px rgba(255,0,40,.22) inset;
+    text-align:left;
+    font-size:clamp(10.5px,3vw,13px);
   }
-  #final .timerlbl{margin-top:4px;font-size:11px;letter-spacing:2px;color:#ff8b9c;text-transform:uppercase}
+  .painel .cab{
+    display:flex;align-items:center;gap:7px;
+    background:#7a1024;color:#ffd9df;
+    padding:5px 10px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  }
+  .painel .cab i{width:7px;height:7px;border-radius:50%;background:#ff2e4d;
+    box-shadow:0 0 8px #ff2e4d;animation:pisca .9s infinite;font-style:normal}
+  @keyframes pisca{0%,100%{opacity:1}50%{opacity:.1}}
+  .painel .cab span{margin-left:auto;letter-spacing:.5px;text-transform:none;color:#ffb3bf}
+  .painel .corpo{padding:9px 11px}
+
+  .row{
+    display:flex;align-items:baseline;gap:6px;
+    padding:3px 0;line-height:1.5;
+    opacity:0;transform:translateX(-10px);
+  }
+  .row.on{animation:entra .32s ease forwards}
+  @keyframes entra{to{opacity:1;transform:translateX(0)}}
+  .row .k{color:#ff6b81;white-space:nowrap}
+  .row .p{flex:1;overflow:hidden;color:#5e0f1c;white-space:nowrap}
+  .row .v{color:#fff;white-space:nowrap}
+  .row.crit .v{color:#ff2e4d;text-shadow:0 0 10px rgba(255,46,77,.9)}
+
+  .divisor{height:1px;background:#5e0f1c;margin:8px 0}
+
+  .status{
+    margin-top:2px;padding:6px 11px 9px;
+    font-size:10.5px;color:#ff2e4d;letter-spacing:.3px;
+    border-top:1px dashed #5e0f1c;
+  }
+  .status::before{content:"› "}
+
+  .timer{
+    margin-top:16px;
+    font-size:clamp(27px,8.6vw,50px);
+    color:#fff;letter-spacing:5px;line-height:1;
+    text-shadow:0 0 28px rgba(255,46,77,.95);
+  }
+  .timer.urg{color:#ff2e4d;animation:urg .5s steps(1) infinite}
+  @keyframes urg{0%,100%{opacity:1}50%{opacity:.25}}
+  .timerlbl{margin-top:6px;font-size:10px;letter-spacing:2.5px;color:#ff8b9c;text-transform:uppercase}
 
   #sair{
-    margin-top:30px;
+    margin-top:22px;margin-bottom:2px;
     display:inline-block;
-    font-family:inherit;font-size:11px;letter-spacing:1.5px;
+    font-family:inherit;font-size:10.5px;letter-spacing:1.5px;
     color:#5c5c66;background:none;border:1px solid #3a3a44;
-    padding:9px 16px;cursor:pointer;text-decoration:none;
-    opacity:0;transition:opacity .6s ease,color .2s,border-color .2s;
+    padding:9px 16px;text-decoration:none;
+    opacity:0;pointer-events:none;
+    transition:opacity .8s ease,color .2s,border-color .2s;
   }
-  #sair.show{opacity:1}
-  #sair:hover,#sair:active{color:#22ff66;border-color:#22ff66}
+  #sair.show{opacity:1;pointer-events:auto}
+  #sair:hover,#sair:active{color:#ff2e4d;border-color:#ff2e4d}
 
-  @media (max-height:520px){
-    #final .loot{display:none}
-    #final .skull{font-size:clamp(34px,11vw,60px)}
+  /* telas menores: compacta pra caber sem rolagem */
+  @media (max-height:740px){
+    .skull{font-size:clamp(32px,9vw,52px)}
+    h1{margin-top:8px;font-size:clamp(18px,5.6vw,32px)}
+    .sub{margin-top:8px;font-size:11px;line-height:1.55}
+    .painel{margin-top:10px}
+    .painel .corpo{padding:6px 10px}
+    .row{padding:1.5px 0;line-height:1.45}
+    .status{padding:5px 10px 7px}
+    .timer{margin-top:11px;font-size:clamp(24px,7.4vw,40px)}
+    .timerlbl{margin-top:4px;font-size:9px}
+    #sair{margin-top:14px}
+  }
+  @media (max-height:560px){
+    .skull{display:none}
+    .sub br{display:none}
   }
 </style>
 </head>
@@ -202,335 +225,294 @@
 <canvas id="matrix"></canvas>
 <div class="tear"></div>
 
-<div class="wrap">
-  <div class="bar">
-    <span class="dot"></span>
-    <b id="ssid">CONECTANDO...</b>
-    <span class="r" id="clock">--:--:--</span>
+<div class="tela">
+ <div class="inner">
+  <div class="surge" style="animation-delay:.15s"><div class="skull">&#9760;&#65038;</div></div>
+
+  <h1 class="surge" data-txt="DISPOSITIVO COMPROMETIDO" style="animation-delay:.35s">DISPOSITIVO COMPROMETIDO</h1>
+
+  <div class="sub surge" style="animation-delay:.6s">
+    Sua sessão foi interceptada durante a autenticação em
+    <b id="ssid">esta rede</b>.<br>
+    Não desconecte. A extração ainda está em andamento.
   </div>
-  <div id="out"></div>
+
+  <div class="painel surge" style="animation-delay:.8s">
+    <div class="cab"><i>●</i> extração em andamento <span id="hora">--:--:--</span></div>
+    <div class="corpo" id="corpo"></div>
+    <div class="status" id="status">estabelecendo túnel...</div>
+  </div>
+
+  <div class="timer surge" id="timer" style="animation-delay:1s">--:--</div>
+  <div class="timerlbl surge" style="animation-delay:1s">tempo até o envio do pacote</div>
+
+  <a id="sair" href="#">continuar mesmo assim →</a>
+ </div>
 </div>
 
 <div class="crt"></div>
 <div class="vig"></div>
-<div class="flick"></div>
-
-<div id="final">
-  <div class="skull">&#9760;&#65038;</div>
-  <h1>DISPOSITIVO COMPROMETIDO</h1>
-  <div class="sub">
-    Sua sessão foi interceptada durante a autenticação.<br>
-    Não desconecte da rede. A extração ainda está em andamento.
-  </div>
-  <div class="loot" id="loot"></div>
-  <div class="timer" id="timer">00:00</div>
-  <div class="timerlbl">tempo até o envio do pacote</div>
-  <a id="sair" href="#">continuar mesmo assim →</a>
-</div>
+<div class="pulso"></div>
+<div class="flash" id="flash"></div>
 
 <script>
 /* ==============================================================
    CONFIG — mexa só aqui
    ============================================================== */
 const CONFIG = {
-  nomeRede:     'WIFI_ESCALEIRA_5G',   // nome que aparece na barra do topo
-  urlContinuar: 'https://www.google.com', // pra onde vai o botão discreto do final
-  velocidade:   1,      // 1 = normal | 0.6 = mais rápido | 1.6 = mais lento
-  vibrar:       true,   // vibração no celular nos sustos
-  som:          true,   // bips de terminal (pode ser bloqueado até o 1º toque)
-  segundosFinal: 90     // contagem regressiva da tela final
+  nomeRede:      'WIFI_ESCALEIRA_5G',      // nome da sua rede
+  urlContinuar:  'https://www.google.com', // destino do botão de escape
+  segundosFinal: 90,     // contagem regressiva
+  atrasoBotao:   7,      // segundos até o botão de escape aparecer
+  vibrar:        true,
+  som:           true
 };
 /* ============================================================== */
 
-const $  = s => document.querySelector(s);
-const out = $('#out');
-const sp  = ms => new Promise(r => setTimeout(r, ms * CONFIG.velocidade));
+const $ = s => document.querySelector(s);
 const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
 const pick = a => a[Math.floor(Math.random()*a.length)];
 
-/* ---------- relógio + ssid ---------- */
-$('#ssid').textContent = 'REDE: ' + CONFIG.nomeRede;
-setInterval(() => {
-  $('#clock').textContent = new Date().toLocaleTimeString('pt-BR');
-}, 1000);
+$('#ssid').textContent = CONFIG.nomeRede;
+setInterval(() => { $('#hora').textContent = new Date().toLocaleTimeString('pt-BR'); }, 1000);
+$('#hora').textContent = new Date().toLocaleTimeString('pt-BR');
 
 /* ---------- áudio ---------- */
 let ac = null;
 function audio(){ if(!CONFIG.som) return null; try{ ac = ac || new (window.AudioContext||window.webkitAudioContext)(); if(ac.state==='suspended') ac.resume(); return ac; }catch(e){ return null; } }
-function beep(freq=880, dur=.03, type='square', vol=.03){
-  const c = audio(); if(!c) return;
+function beep(f=880,d=.03,t='square',v=.03){
+  const c=audio(); if(!c) return;
   try{
-    const o=c.createOscillator(), g=c.createGain();
-    o.type=type; o.frequency.value=freq;
-    g.gain.setValueAtTime(vol,c.currentTime);
-    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
-    o.connect(g); g.connect(c.destination);
-    o.start(); o.stop(c.currentTime+dur);
+    const o=c.createOscillator(),g=c.createGain();
+    o.type=t;o.frequency.value=f;
+    g.gain.setValueAtTime(v,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d);
+    o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d);
   }catch(e){}
 }
-function alarme(){
-  const c = audio(); if(!c) return;
+function sirene(){
+  const c=audio(); if(!c) return;
   try{
-    const o=c.createOscillator(), g=c.createGain();
+    const o=c.createOscillator(),g=c.createGain();
     o.type='sawtooth';
-    o.frequency.setValueAtTime(220,c.currentTime);
-    o.frequency.linearRampToValueAtTime(880,c.currentTime+.35);
-    o.frequency.linearRampToValueAtTime(180,c.currentTime+.8);
-    g.gain.setValueAtTime(.05,c.currentTime);
-    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.85);
-    o.connect(g); g.connect(c.destination);
-    o.start(); o.stop(c.currentTime+.9);
+    o.frequency.setValueAtTime(200,c.currentTime);
+    o.frequency.linearRampToValueAtTime(900,c.currentTime+.38);
+    o.frequency.linearRampToValueAtTime(170,c.currentTime+.85);
+    g.gain.setValueAtTime(.055,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.9);
+    o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.95);
   }catch(e){}
 }
 ['pointerdown','touchstart','keydown'].forEach(ev =>
-  document.addEventListener(ev, () => audio(), { once:true, passive:true })
-);
+  document.addEventListener(ev, () => { audio(); }, { once:true, passive:true }));
 function vibra(p){ if(CONFIG.vibrar && navigator.vibrate){ try{ navigator.vibrate(p); }catch(e){} } }
 
-/* ---------- chuva matrix ---------- */
+/* ---------- chuva de código ---------- */
 (function(){
-  const cv = $('#matrix'), ctx = cv.getContext('2d');
-  const chars = 'アカサタナハマヤラワイキシチニヒミリヰウクスツヌフムユルエケセテネヘメレヱオコソトノホモヨロヲﾝ0123456789ABCDEF@#$%&*<>/\\|=+-'.split('');
-  let cols, drops, size;
+  const cv=$('#matrix'), ctx=cv.getContext('2d');
+  const chars='アカサタナハマヤラワイキシチニヒミリヰウクスツヌフムユルエケセテネヘメレヱオコソトノホモヨロヲﾝ0123456789ABCDEF@#$%&*<>/\\|=+-'.split('');
+  let cols,drops,size;
   function resize(){
-    cv.width = cv.clientWidth = window.innerWidth;
-    cv.height = cv.clientHeight = window.innerHeight;
-    size = window.innerWidth < 480 ? 13 : 16;
-    cols = Math.ceil(cv.width / size);
-    drops = new Array(cols).fill(0).map(() => Math.random() * -80);
+    cv.width=window.innerWidth; cv.height=window.innerHeight;
+    size = window.innerWidth<480?13:16;
+    cols = Math.ceil(cv.width/size);
+    drops = new Array(cols).fill(0).map(()=>Math.random()*-70);
   }
-  resize();
-  window.addEventListener('resize', resize);
-  function draw(){
-    ctx.fillStyle = 'rgba(0,0,0,.075)';
+  resize(); window.addEventListener('resize',resize);
+  (function draw(){
+    ctx.fillStyle='rgba(6,0,2,.09)';
     ctx.fillRect(0,0,cv.width,cv.height);
-    ctx.font = size + 'px monospace';
+    ctx.font=size+'px monospace';
     for(let i=0;i<cols;i++){
-      const t = pick(chars);
-      const y = drops[i]*size;
-      ctx.fillStyle = document.body.classList.contains('dead') ? '#ff2e4d' : '#22ff66';
-      if(Math.random() > .975){ ctx.fillStyle = '#dfffe9'; }
-      ctx.fillText(t, i*size, y);
-      if(y > cv.height && Math.random() > .972) drops[i] = 0;
-      drops[i] += document.body.classList.contains('hot') ? 1.4 : .8;
+      const y=drops[i]*size;
+      ctx.fillStyle = Math.random()>.975 ? '#ffe3e8' : '#ff2e4d';
+      ctx.fillText(pick(chars), i*size, y);
+      if(y>cv.height && Math.random()>.968) drops[i]=0;
+      drops[i] += document.body.classList.contains('glitch') ? 2.2 : 1.1;
     }
     requestAnimationFrame(draw);
-  }
-  draw();
+  })();
 })();
 
-/* ---------- motor do terminal ---------- */
-function novaLinha(cls){
-  const d = document.createElement('div');
-  d.className = 'ln ' + (cls||'');
-  out.appendChild(d);
-  while(out.scrollHeight > out.clientHeight && out.firstChild) out.removeChild(out.firstChild);
-  return d;
-}
-async function digita(txt, cls, vel=18){
-  const d = novaLinha(cls);
-  d.classList.add('cursor');
-  for(let i=0;i<txt.length;i++){
-    d.textContent += txt[i];
-    if(i % 2 === 0) beep(rnd(1500,2100), .012, 'square', .015);
-    await sp(vel + (Math.random()*vel));
-  }
-  d.classList.remove('cursor');
-  return d;
-}
-function imprime(txt, cls){ const d = novaLinha(cls); d.textContent = txt; return d; }
-async function barra(rotulo, dur, cls){
-  const d = novaLinha(cls);
-  // barra se adapta à largura da tela pra não quebrar linha no celular
-  const estreito = window.innerWidth < 420;
-  const total = estreito ? 12 : 22;
-  const pad   = estreito ? 19 : 26;
-  const t0 = Date.now(), fim = dur * CONFIG.velocidade;
-  return new Promise(res => {
-    const iv = setInterval(() => {
-      let p = Math.min(1,(Date.now()-t0)/fim);
-      const n = Math.round(p*total);
-      d.textContent = rotulo.slice(0,pad-2).padEnd(pad,'.') + '[' + '█'.repeat(n) + '░'.repeat(total-n) + ']' + String(Math.round(p*100)).padStart(4,' ') + '%';
-      if(p>=1){ clearInterval(iv); beep(1200,.05); res(); }
-    }, 45);
-  });
-}
-
-/* ---------- coleta de "inteligência" (dados públicos do próprio navegador) ---------- */
-function hexPar(){ return rnd(0,255).toString(16).toUpperCase().padStart(2,'0'); }
-const FAKE_MAC = Array.from({length:6},hexPar).join(':');
-const LOCAL_IP = '192.168.' + rnd(0,4) + '.' + rnd(20,240);
-
+/* ---------- identificação real do aparelho (dados do próprio navegador) ---------- */
 function sistema(){
-  const u = navigator.userAgent;
-  if(/iPhone|iPad|iPod/i.test(u)){
-    const m = u.match(/OS (\d+[_\d]*)/);
-    return 'Apple iOS ' + (m ? m[1].replace(/_/g,'.') : '17.x');
-  }
-  if(/Android/i.test(u)){ const m = u.match(/Android (\d+(\.\d+)?)/); return 'Android ' + (m?m[1]:'14'); }
+  const u=navigator.userAgent;
+  if(/iPhone|iPad|iPod/i.test(u)){ const m=u.match(/OS (\d+[_\d]*)/); return 'iOS '+(m?m[1].replace(/_/g,'.'):'17.x'); }
+  if(/Android/i.test(u)){ const m=u.match(/Android (\d+(\.\d+)?)/); return 'Android '+(m?m[1]:'14'); }
   if(/Mac OS X/i.test(u)) return 'macOS';
   if(/Windows NT 10/i.test(u)) return 'Windows 10/11';
   if(/Windows/i.test(u)) return 'Windows';
   if(/Linux/i.test(u)) return 'Linux';
   return 'desconhecido';
 }
+function aparelho(){
+  const u=navigator.userAgent;
+  if(/iPhone/i.test(u)) return 'iPhone';
+  if(/iPad/i.test(u)) return 'iPad';
+  if(/Android/i.test(u)){ const m=u.match(/;\s?([^;)]+)\s+Build/i); return m?m[1].trim():'Android'; }
+  if(/Macintosh/i.test(u)) return 'Mac';
+  if(/Windows/i.test(u)) return 'PC Windows';
+  return 'terminal';
+}
 function navegador(){
-  const u = navigator.userAgent;
-  if(/CriOS|Chrome/i.test(u) && !/Edg/i.test(u)) return 'Chrome';
+  const u=navigator.userAgent;
+  if(/CriOS|Chrome/i.test(u)&&!/Edg/i.test(u)) return 'Chrome';
   if(/Edg/i.test(u)) return 'Edge';
   if(/FxiOS|Firefox/i.test(u)) return 'Firefox';
   if(/Safari/i.test(u)) return 'Safari';
   return 'WebView';
 }
-function aparelho(){
-  const u = navigator.userAgent;
-  if(/iPhone/i.test(u)) return 'iPhone';
-  if(/iPad/i.test(u)) return 'iPad';
-  if(/Android/i.test(u)){ const m = u.match(/;\s?([^;)]+)\s+Build/i); return m ? m[1].trim() : 'Smartphone Android'; }
-  if(/Macintosh/i.test(u)) return 'Mac';
-  if(/Windows/i.test(u)) return 'PC Windows';
-  return 'terminal não identificado';
-}
 async function bateria(){
-  try{
-    if(navigator.getBattery){
-      const b = await navigator.getBattery();
-      return Math.round(b.level*100) + '%' + (b.charging ? ' (carregando)' : '');
-    }
-  }catch(e){}
+  try{ if(navigator.getBattery){ const b=await navigator.getBattery();
+    return Math.round(b.level*100)+'%'+(b.charging?' ⚡':''); } }catch(e){}
   return 'protegida';
 }
+const MAC = Array.from({length:6},()=>rnd(0,255).toString(16).toUpperCase().padStart(2,'0')).join(':');
+const IP  = '192.168.'+rnd(0,4)+'.'+rnd(20,240);
 
-/* ---------- roteiro ---------- */
-async function roteiro(){
-  await sp(250);
-  await digita('$ conectando ao ponto de acesso ' + CONFIG.nomeRede + ' ...', 'dim', 14);
-  await sp(300);
-  imprime('  handshake WPA2 ......... OK', 'dim');
-  await sp(200);
-  imprime('  ip atribuído ........... ' + LOCAL_IP, 'dim');
-  await sp(400);
-  await digita('$ autenticando cliente...', 'dim', 14);
-  await sp(500);
-  imprime('  aguardando liberação do portal', 'dim');
-  await sp(900);
-
-  /* susto 1 */
-  beep(300,.12,'sawtooth',.05); vibra(60);
-  imprime('', '');
-  await digita('!! ANOMALIA DETECTADA NO PACOTE DE AUTENTICAÇÃO', 'warn', 12);
-  await sp(500);
-  await digita('$ injetando payload... ', 'bad', 10);
-  document.body.classList.add('hot');
-  await sp(400);
-
-  await barra('bypass firewall', 1400, 'ok');
-  await barra('privilégios root', 1200, 'ok');
-  await sp(200);
-  imprime('  root@dispositivo:~# acesso total concedido', 'hl');
-  vibra([40,60,40]);
-  await sp(700);
-
-  /* fingerprint */
-  imprime('', '');
-  await digita('$ fingerprint --alvo=cliente_conectado', 'dim', 12);
-  await sp(350);
-  const bat = await bateria();
-  const linhas = [
-    ['aparelho',      aparelho()],
-    ['sistema',       sistema()],
-    ['navegador',     navegador()],
-    ['idioma',        navigator.language || 'pt-BR'],
-    ['fuso horário',  (Intl.DateTimeFormat().resolvedOptions().timeZone) || '—'],
-    ['resolução',     screen.width + 'x' + screen.height + ' @' + (window.devicePixelRatio||1) + 'x'],
-    ['núcleos cpu',   (navigator.hardwareConcurrency || rnd(4,8)) + ' threads'],
-    ['memória ram',   (navigator.deviceMemory ? navigator.deviceMemory + ' GB' : rnd(4,12) + ' GB (estimado)')],
-    ['bateria',       bat],
-    ['toque',         (('ontouchstart' in window) ? 'tela sensível ativa' : 'periférico físico')],
-    ['mac clonado',   FAKE_MAC],
-    ['ip interno',    LOCAL_IP]
-  ];
-  for(const [k,v] of linhas){
-    imprime('  ' + (k+' ').padEnd(16,'.') + ' ' + v, 'ok');
-    beep(rnd(900,1400), .02);
-    await sp(rnd(90,190));
-  }
-  await sp(600);
-
-  /* susto 2 */
-  imprime('', '');
-  await digita('$ iniciando extração remota...', 'bad', 12);
-  document.body.classList.add('glitch');
-  alarme(); vibra([120,50,120]);
-  await sp(900);
-  document.body.classList.remove('glitch');
-
-  await barra('galeria de fotos', 1500, 'warn');
-  await barra('contatos', 1100, 'warn');
-  await barra('histórico web', 1300, 'warn');
-  await barra('senhas salvas', 1600, 'bad');
-  await sp(200);
-  imprime('  ' + rnd(1120,8940) + ' arquivos indexados', 'bad');
-  await sp(500);
-
-  imprime('', '');
-  await digita('$ ativando câmera frontal...', 'bad', 14);
-  document.body.classList.add('glitch');
-  vibra([200,80,200,80,300]); alarme();
-  await sp(1200);
-  imprime('  [CAM0] transmissão ao vivo estabelecida', 'bad');
-  await sp(900);
-  imprime('  [MIC0] captura de áudio em segundo plano', 'bad');
-  await sp(1000);
-  document.body.classList.remove('glitch');
-
-  await barra('empacotando', 1700, 'bad');
-  await sp(300);
-  await digita('$ enviando para servidor externo...', 'bad', 12);
-  await sp(1200);
-
-  document.body.classList.add('dead','glitch');
-  alarme(); vibra([400,100,400]);
-  await sp(700);
-  telaFinal();
+/* ---------- monta o painel ---------- */
+function linha(k, v, crit){
+  const d=document.createElement('div');
+  d.className='row'+(crit?' crit':'');
+  d.innerHTML='<span class="k">'+k+'</span><span class="p"></span><span class="v">'+v+'</span>';
+  return d;
+}
+function preencherPontos(){
+  document.querySelectorAll('.row .p').forEach(p=>{
+    if(p.dataset.done) return;
+    const w=p.clientWidth; if(!w) return;
+    const ch=parseFloat(getComputedStyle(p).fontSize)*.6;
+    p.textContent='.'.repeat(Math.max(2,Math.floor(w/ch)));
+    p.dataset.done='1';
+  });
 }
 
-/* ---------- tela final ---------- */
-function telaFinal(){
-  const loot = [
-    ['fotos',      rnd(340,4820) + ' arquivos'],
-    ['contatos',   rnd(60,780) + ' registros'],
-    ['mensagens',  rnd(900,21000) + ' linhas'],
-    ['credenciais',rnd(4,64) + ' pares salvos'],
-    ['localização', 'histórico de ' + rnd(20,180) + ' dias']
+async function montar(){
+  const corpo=$('#corpo');
+  const bat=await bateria();
+
+  const alvo=[
+    ['alvo',      aparelho()+' · '+sistema()],
+    ['navegador', navegador()+' · '+(navigator.language||'pt-BR')],
+    ['tela',      screen.width+'x'+screen.height],
+    ['bateria',   bat],
+    ['mac',       MAC],
+    ['ip interno',IP]
   ];
-  $('#loot').innerHTML = loot.map(([k,v]) =>
-    '<div>› ' + k + ': <b>' + v + '</b></div>'
-  ).join('');
+  const roubo=[
+    ['fotos',       rnd(340,4820),  ' arquivos', true],
+    ['contatos',    rnd(60,780),    ' registros', false],
+    ['mensagens',   rnd(900,21000), ' linhas', false],
+    ['credenciais', rnd(4,64),      ' senhas', true],
+    ['localização', rnd(20,180),    ' dias de histórico', false]
+  ];
 
-  $('#final').classList.add('on');
+  const seq=[];
+  alvo.forEach(([k,v])=>seq.push(linha(k,v,false)));
+  const div=document.createElement('div'); div.className='divisor';
+  roubo.forEach(([k,n,suf,crit])=>{
+    const el=linha(k,'0'+suf,crit);
+    el.dataset.alvo=n; el.dataset.suf=suf;
+    seq.push(el);
+  });
 
-  let t = CONFIG.segundosFinal;
-  const el = $('#timer');
-  const tick = () => {
-    const m = String(Math.floor(t/60)).padStart(2,'0');
-    const s = String(t%60).padStart(2,'0');
-    el.textContent = m + ':' + s;
-    if(t % 10 === 0) { beep(660,.08,'square',.04); vibra(40); }
-    if(t <= 0){ clearInterval(iv); el.textContent = 'ENVIADO'; alarme(); vibra([600]); return; }
+  // revela linha por linha
+  for(let i=0;i<seq.length;i++){
+    if(i===alvo.length) corpo.appendChild(div);
+    corpo.appendChild(seq[i]);
+    preencherPontos();
+    seq[i].classList.add('on');
+    beep(rnd(900,1500),.022,'square',.022);
+    if(i===alvo.length) vibra(50);
+    await new Promise(r=>setTimeout(r, i<alvo.length?150:230));
+    if(seq[i].dataset.alvo) contar(seq[i]);
+  }
+  vibra([90,50,90]);
+  ativos = seq.filter(e=>e.dataset.alvo);
+}
+
+/* contador que sobe rápido e depois continua subindo devagar */
+let ativos=[];
+function contar(el){
+  const alvo=+el.dataset.alvo, suf=el.dataset.suf, v=el.querySelector('.v');
+  let n=0, passo=Math.max(1,Math.round(alvo/24)), i=0;
+  const iv=setInterval(()=>{
+    n=Math.min(alvo,n+passo+rnd(0,passo));
+    v.textContent=n.toLocaleString('pt-BR')+suf;
+    if(++i%4===0) beep(rnd(1400,1900),.012,'square',.012);
+    if(n>=alvo){ clearInterval(iv); el.dataset.atual=alvo; }
+  },35);
+}
+setInterval(()=>{
+  ativos.forEach(el=>{
+    if(!el.dataset.atual) return;
+    const n=+el.dataset.atual + rnd(1,4);
+    el.dataset.atual=n;
+    el.querySelector('.v').textContent=n.toLocaleString('pt-BR')+el.dataset.suf;
+  });
+}, 2600);
+
+/* ---------- status rotativo ---------- */
+const STATUS=[
+  'copiando galeria para servidor remoto...',
+  'câmera frontal: transmissão ativa',
+  'microfone: captura em segundo plano',
+  'indexando conversas do aplicativo de mensagens...',
+  'chaveiro do sistema: descriptografando...',
+  'clonando sessões de login ativas...',
+  'compactando pacote de saída...',
+  'rota de saída: 45.'+rnd(10,240)+'.'+rnd(10,240)+'.'+rnd(2,250)+' [oculto]'
+];
+let si=0;
+setTimeout(()=>{
+  setInterval(()=>{
+    si=(si+1)%STATUS.length;
+    $('#status').textContent=STATUS[si];
+    beep(520,.04,'sine',.02);
+  },3200);
+  $('#status').textContent=STATUS[0];
+}, 2600);
+
+/* ---------- glitch periódico ---------- */
+function surto(dur){
+  document.body.classList.add('glitch');
+  sirene(); vibra([160,60,160]);
+  setTimeout(()=>document.body.classList.remove('glitch'), dur);
+}
+function agendarSurto(){
+  setTimeout(()=>{ surto(rnd(400,900)); agendarSurto(); }, rnd(5000,11000));
+}
+
+/* ---------- contagem regressiva ---------- */
+function iniciarTimer(){
+  let t=CONFIG.segundosFinal;
+  const el=$('#timer');
+  const tick=()=>{
+    el.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+    if(t<=10){ el.classList.add('urg'); beep(880,.08,'square',.05); vibra(60); }
+    else if(t%10===0){ beep(660,.07,'square',.035); vibra(40); }
+    if(t<=0){ clearInterval(iv); el.textContent='ENVIADO'; el.classList.remove('urg'); surto(1400); return; }
     t--;
   };
   tick();
-  const iv = setInterval(tick, 1000);
-
-  setTimeout(() => {
-    const b = $('#sair');
-    b.href = CONFIG.urlContinuar;
-    b.classList.add('show');
-  }, 6000);
+  const iv=setInterval(tick,1000);
 }
 
-roteiro();
+/* ---------- abertura ---------- */
+(function abrir(){
+  $('#flash').classList.add('go');
+  surto(900);
+  setTimeout(()=>{ montar(); }, 700);
+  setTimeout(iniciarTimer, 1100);
+  agendarSurto();
+  setTimeout(()=>{
+    const b=$('#sair'); b.href=CONFIG.urlContinuar; b.classList.add('show');
+  }, CONFIG.atrasoBotao*1000);
+  window.addEventListener('resize', ()=>{
+    document.querySelectorAll('.row .p').forEach(p=>p.dataset.done='');
+    preencherPontos();
+  });
+})();
 </script>
 </body>
 </html>
