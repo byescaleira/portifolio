@@ -591,3 +591,80 @@ export function BranchGraph() {
     </svg>
   );
 }
+
+/**
+ * A 404 in the orbital language: the route is still running, you just drifted
+ * off it. Hairlines everywhere; the single orange mark is where you actually
+ * are — which is the one thing that matters on this page.
+ */
+export function OffCourse() {
+  return (
+    <svg
+      viewBox="0 0 420 250"
+      className="block h-[250px] w-full max-w-[420px]"
+      aria-hidden="true"
+    >
+      {/* the route */}
+      <ellipse
+        cx="190"
+        cy="128"
+        rx="132"
+        ry="66"
+        fill="none"
+        stroke="var(--hairline)"
+        strokeWidth="1.4"
+      />
+      <g stroke="var(--hairline)" strokeWidth="1">
+        <path d="M58 128h-8" />
+        <path d="M322 128h8" />
+        <path d="M190 62v-8" />
+        <path d="M190 194v8" />
+      </g>
+
+      {/* the product at the centre — everything orbits it */}
+      <circle
+        cx="190"
+        cy="128"
+        r="5"
+        fill="var(--card)"
+        stroke="var(--ink-3)"
+        strokeWidth="1.6"
+      />
+
+      {/* where the address should have landed */}
+      <circle
+        cx="291"
+        cy="86"
+        r="5.5"
+        fill="var(--background)"
+        stroke="var(--ink-3)"
+        strokeWidth="1.6"
+      />
+
+      {/* the drift, past tense — dashed, never animated */}
+      <path
+        d="M291 86C322 108 348 150 374 200"
+        fill="none"
+        stroke="var(--hairline)"
+        strokeWidth="1.4"
+        strokeDasharray="2 5"
+        strokeLinecap="round"
+      />
+
+      {/* you are here */}
+      <circle cx="376" cy="204" r="5.5" fill="#FF6B00" />
+      <circle
+        cx="376"
+        cy="204"
+        r="5.5"
+        fill="none"
+        stroke="#FF6B00"
+        strokeWidth="1.4"
+        style={{
+          transformOrigin: "376px 204px",
+          animation: "bye-pulse-ring 2.8s ease-out infinite",
+        }}
+      />
+    </svg>
+  );
+}
