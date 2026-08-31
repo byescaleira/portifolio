@@ -8,7 +8,7 @@ export function Wordmark({ size = 26, className }: { size?: number; className?: 
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
       <span
-        className="relative flex shrink-0 items-center justify-center rounded-[7px] bg-accent font-semibold tracking-[-0.02em] text-white"
+        className="relative flex shrink-0 items-center justify-center rounded-[7px] bg-accent font-semibold tracking-[-0.02em] text-on-accent"
         style={{ width: size, height: size, fontSize: size * 0.5 }}
       >
         by

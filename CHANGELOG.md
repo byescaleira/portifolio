@@ -3,6 +3,11 @@
 ## [Unreleased]
 
 ### Fixed
+- Ink on the brand orange is near-black instead of white. White read 2.86:1 on the primary CTA, the wordmark tile and the badge glyphs — under AA on the most important control on the page, on a site that lists accessibility as a skill. The original mark always used `#111111` on its orange block, so this restores the brand rather than compromising it, and lands at 5.89:1. `#FF6B00` itself is untouched.
+- Dark-mode `--ink-3` lifted from `#6e6e73` to Apple's `#86868b`: the old value sat at 3.6:1 on the dark surfaces, under AA for the small labels it carries.
+- Both themes now audit clean for text contrast.
+
+### Fixed
 - Light mode colour pass. `--card` and `--surface` were both `#f5f5f7`, so every panel on an alternating section dissolved into the section behind it — cards are now white, with a light-only shadow so they still read on the white sections where a hairline alone was not enough.
 - Glass was built from `--card`, which in light mode meant near-white on white: the satellite chips and telemetry had almost no separation, and the same class was painting a grey tab bar inside the black phone. Glass now tints toward the surface grey, and the device carries its own fixed dark chrome.
 - The code strip was a hardcoded `#060607` band across a white page; it and the project artwork, their inner panels and the branch/prism strokes now follow theme tokens instead of fixed dark values (dark text was landing on dark artwork).

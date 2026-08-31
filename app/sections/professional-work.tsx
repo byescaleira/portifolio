@@ -44,7 +44,7 @@ export function ProfessionalWork() {
                       height="20"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="#FFFFFF"
+                      stroke="var(--on-accent)"
                       strokeWidth="1.9"
                       strokeLinecap="round"
                       strokeLinejoin="round"
