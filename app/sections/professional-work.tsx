@@ -1,116 +1,141 @@
-"use client";
-
-import { SectionHeading } from "../components/section-heading";
-import { ScrollReveal } from "../components/scroll-reveal";
-import { BrutalistCard } from "../components/brutalist-card";
-import { ArrowRight, Trophy, Zap, Users, Target } from "lucide-react";
 import Link from "next/link";
+import { ScrollReveal } from "../components/scroll-reveal";
+import { Panel } from "../components/panel";
+import { Chevron, Device, RoundRhythm } from "../components/illustrations";
 
 const highlights = [
-  { icon: Trophy, label: "Millions of active users", description: "Cartola FC during the Brazilian football season." },
-  { icon: Zap, label: "Performance at scale", description: "Spikes right after every match, handled reliably." },
-  { icon: Users, label: "Cross-team alignment", description: "iOS, backend, product, and design working as one unit." },
-  { icon: Target, label: "Native craft", description: "SwiftUI, UIKit, and Clean Architecture in production." },
+  { title: "Modular by SPM", body: "Less build friction per squad." },
+  { title: "Releases on rails", body: "Automated, so shipping is routine." },
+  { title: "Squads in step", body: "iOS, backend, product, design." },
 ];
 
-const previousRoles = [
-  { company: "Deliver IT / Letsbank", slug: "deliver-it-letsbank", role: "iOS Developer", focus: "Fintech, security, SDKs, CI/CD" },
-  { company: "Next", slug: "next", role: "iOS Developer", focus: "E-commerce, performance, design systems" },
-  { company: "TocaLivros", slug: "tocalivros", role: "Mobile Developer", focus: "React Native & iOS, marketplaces" },
-  { company: "Boviplan", slug: "boviplan", role: "Mobile Developer", focus: "Agtech iOS apps" },
-];
+const stack = ["Swift", "SwiftUI", "UIKit", "SPM", "Clean Architecture", "Fastlane"];
 
-const tags = ["Swift", "SwiftUI", "UIKit", "Clean Architecture", "Swift Concurrency", "SPM", "CI/CD"];
+const previous = [
+  { slug: "deliver-it-letsbank", kind: "Fintech", company: "Deliver IT / Letsbank", body: "Secure payment and account flows, modular feature architecture." },
+  { slug: "next", kind: "Product growth", company: "Next", body: "Onboarding, engagement mechanics and A/B experiments." },
+  { slug: "tocalivros", kind: "Edtech", company: "TocaLivros", body: "Reading and content discovery for students." },
+  { slug: "boviplan", kind: "Agtech", company: "Boviplan", body: "Offline-first field capture for ranchers and field teams." },
+];
 
 export function ProfessionalWork() {
   return (
-    <section id="work" className="relative overflow-hidden border-b border-border bg-background px-6 py-24 md:px-12 md:py-32">
-      <div className="pointer-events-none absolute inset-0 grid-brutal" />
+    <section id="work" className="bg-background px-6 py-24 md:px-12 md:py-28">
+      <div className="mx-auto max-w-[1120px]">
+        <ScrollReveal className="mx-auto mb-14 max-w-[760px] text-center">
+          <p className="t-eyebrow">Professional work</p>
+          <h2 className="t-section mt-2.5 text-balance">
+            A game the whole country plays.
+          </h2>
+        </ScrollReveal>
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Professional work"
-          title="Globo / Cartola FC"
-          description="Currently leading iOS development for Cartola FC, the largest fantasy football game in Brazil — where performance, reliability, and native craft matter at scale."
-        />
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          <ScrollReveal className="lg:col-span-2">
-            <BrutalistCard accent="pulsar" className="h-full">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex size-12 items-center justify-center border border-border bg-card">
-                  <Trophy className="size-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-xl font-black uppercase tracking-wide text-foreground">Cartola FC</h3>
-                  <p className="text-sm font-mono uppercase tracking-wider text-orbit">Globo · iOS Specialist · Present</p>
-                </div>
-              </div>
-
-              <p className="leading-relaxed text-muted-foreground">
-                Cartola FC is more than a game — it is a national ritual during the Brazilian football season. As an iOS Specialist at Globo, I work on the architecture, performance, and user experience of an app used by millions of fans every round. The challenge is not just shipping features; it is keeping a massive codebase healthy, fast, and ready for spikes of traffic right after each match.
-              </p>
-
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {highlights.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={item.label} className="flex items-start gap-3">
-                      <div className="flex size-8 shrink-0 items-center justify-center border border-border bg-card">
-                        <Icon className="size-4 text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">{item.label}</div>
-                        <div className="text-sm text-muted-foreground">{item.description}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <span key={tag} className="tag-brutal">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-6">
-                <Link
-                  href="/experience/globo"
-                  className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.15em] text-primary transition-colors hover:text-pulsar-light"
-                >
-                  View full experience
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-            </BrutalistCard>
-          </ScrollReveal>
-
-          <div className="space-y-6">
-            <ScrollReveal delay={0.1}>
-              <BrutalistCard accent="nebula" className="h-full">
-                <h3 className="mb-4 border-b border-border pb-3 text-sm font-black uppercase tracking-[0.2em] text-foreground">Previous roles</h3>
-                <div className="space-y-3">
-                  {previousRoles.map((role) => (
-                    <Link
-                      key={role.company}
-                      href={`/experience/${role.slug}`}
-                      className="group block border border-border bg-background p-4 transition-all hover:border-nebula hover:bg-card"
+        <ScrollReveal>
+          <Panel
+            tinted
+            hover={false}
+            className="overflow-hidden rounded-[28px] p-7 md:p-11"
+          >
+            <div className="grid items-center gap-11 lg:grid-cols-[1.3fr_1fr]">
+              <div>
+                <div className="flex items-center gap-3">
+                  <span className="flex size-10 items-center justify-center rounded-[12px] bg-accent">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#FFFFFF"
+                      strokeWidth="1.9"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-heading text-sm font-bold uppercase tracking-wide text-foreground transition-colors group-hover:text-nebula">{role.company}</span>
-                        <ArrowRight className="size-4 text-orbit transition-all group-hover:text-nebula group-hover:translate-x-0.5" />
-                      </div>
-                      <div className="text-sm text-muted-foreground">{role.role}</div>
-                      <div className="mt-1 text-xs font-mono uppercase text-nebula">{role.focus}</div>
-                    </Link>
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 3v18M3 12h18M6.5 5.6c2 2.2 2 10.6 0 12.8M17.5 5.6c-2 2.2-2 10.6 0 12.8" />
+                    </svg>
+                  </span>
+                  <span className="text-[15px] text-ink-2">
+                    Globo · iOS Specialist · Present
+                  </span>
+                </div>
+
+                <h3 className="t-sub mt-5">Cartola FC</h3>
+                <p className="mt-3.5 text-pretty text-[19px] leading-[1.5] text-ink-2">
+                  Cartola is less an app than a national ritual — millions of
+                  people setting their team before kickoff, then all opening it at
+                  once when the round ends. My work is the architecture, the
+                  performance and the native craft underneath that.
+                </p>
+
+                {/* the real engineering problem, drawn */}
+                <div className="mt-7 rounded-[18px] border border-hairline bg-black/35 px-5 pb-3.5 pt-4">
+                  <div className="flex items-baseline justify-between">
+                    <p className="text-[13px] font-semibold text-ink">
+                      The shape of a round
+                    </p>
+                    <p className="text-xs text-ink-3">load over 90 minutes</p>
+                  </div>
+                  <div className="mt-2.5">
+                    <RoundRhythm />
+                  </div>
+                </div>
+
+                <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                  {highlights.map((h) => (
+                    <div key={h.title}>
+                      <p className="text-[16px] font-semibold tracking-[-0.015em] text-ink">
+                        {h.title}
+                      </p>
+                      <p className="mt-1 text-sm leading-[1.42] text-ink-3">{h.body}</p>
+                    </div>
                   ))}
                 </div>
-              </BrutalistCard>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {stack.map((t) => (
+                    <span key={t} className="pill">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <Link
+                  href="/experience/globo"
+                  className="mt-7 inline-flex items-center gap-1.5 text-[17px] text-accent-ink"
+                >
+                  Read the case
+                  <Chevron />
+                </Link>
+              </div>
+
+              <div className="hidden justify-center lg:flex">
+                <Device width={236} />
+              </div>
+            </div>
+          </Panel>
+        </ScrollReveal>
+
+        <p className="mb-5 mt-14 text-[21px] font-semibold tracking-[-0.02em] text-ink">
+          Before that
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {previous.map((p, i) => (
+            <ScrollReveal key={p.slug} delay={i * 0.07}>
+              <Link href={`/experience/${p.slug}`} className="group block h-full">
+                <Panel className="h-full p-6">
+                  <p className="text-[13px] text-ink-3">{p.kind}</p>
+                  <h4 className="mt-2 text-[19px] font-semibold leading-tight tracking-[-0.02em] text-ink">
+                    {p.company}
+                  </h4>
+                  <p className="t-small mt-2">{p.body}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-[15px] text-accent-ink">
+                    Details
+                    <Chevron />
+                  </span>
+                </Panel>
+              </Link>
             </ScrollReveal>
-          </div>
+          ))}
         </div>
       </div>
     </section>

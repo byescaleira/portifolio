@@ -1,46 +1,89 @@
-"use client";
+import Link from "next/link";
+import { Wordmark } from "./wordmark";
 
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "./icons";
-import { ThemeToggle } from "./theme-toggle";
+const columns = [
+  {
+    title: "Site",
+    links: [
+      { label: "About", href: "/#about" },
+      { label: "Skills", href: "/#skills" },
+      { label: "Work", href: "/#work" },
+      { label: "Projects", href: "/#projects" },
+    ],
+  },
+  {
+    title: "Projects",
+    links: [
+      { label: "Prism", href: "/project/prism" },
+      { label: "Orbit", href: "/project/orbit" },
+      { label: "Cashly", href: "/project/cashly" },
+      { label: "Open Source", href: "/project/open-source" },
+    ],
+  },
+];
+
+const elsewhere = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/byescaleira" },
+  { label: "GitHub", href: "https://github.com/byescaleira" },
+  { label: "Instagram", href: "https://www.instagram.com/rafaelescaleira" },
+];
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
-    <footer className="border-t border-border bg-background px-6 py-12 md:px-12">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
-        <div className="text-center md:text-left">
-          <p className="font-heading text-sm font-black uppercase tracking-wide text-foreground">Rafael Escaleira</p>
-          <p className="text-sm text-orbit">© {year} byescaleira. All rights reserved.</p>
-        </div>
+    <footer className="border-t border-hairline bg-surface px-6 pb-32 pt-10 md:px-12 md:pb-11">
+      <div className="mx-auto max-w-[1120px]">
+        <div className="flex flex-col justify-between gap-10 border-b border-hairline pb-7 md:flex-row">
+          <div className="max-w-[300px]">
+            <Wordmark size={24} />
+            <p className="mt-3 text-[13px] leading-[1.5] text-ink-3">
+              iOS Specialist building native Apple products that scale. Currently
+              at Globo, on Cartola FC.
+            </p>
+          </div>
 
-        <div className="flex items-center gap-3">
-          {[
-            { href: "https://github.com/byescaleira", icon: GithubIcon, label: "GitHub" },
-            { href: "https://www.linkedin.com/in/byescaleira", icon: LinkedinIcon, label: "LinkedIn" },
-            { href: "https://www.instagram.com/rafaelescaleira", icon: InstagramIcon, label: "Instagram" },
-          ].map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex size-10 items-center justify-center border border-border bg-card text-muted-foreground transition-all hover:border-primary hover:text-primary"
-              aria-label={social.label}
-            >
-              <social.icon className="size-4" />
-            </a>
-          ))}
-          <div className="md:hidden">
-            <ThemeToggle />
+          <div className="flex flex-wrap gap-x-16 gap-y-8">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <p className="text-[13px] font-semibold text-ink">{col.title}</p>
+                <div className="mt-3 flex flex-col gap-2.5">
+                  {col.links.map((l) => (
+                    <Link
+                      key={l.label}
+                      href={l.href}
+                      className="text-[13px] text-ink-3 transition-colors hover:text-accent-ink"
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div>
+              <p className="text-[13px] font-semibold text-ink">Elsewhere</p>
+              <div className="mt-3 flex flex-col gap-2.5">
+                {elsewhere.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[13px] text-ink-3 transition-colors hover:text-accent-ink"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mx-auto mt-8 max-w-7xl text-center">
-        <p className="text-xs font-mono uppercase tracking-wider text-orbit">
-          Brutalist edition · Built with Next.js, Tailwind CSS, Framer Motion
-        </p>
+        <div className="flex flex-col justify-between gap-3 pt-5 sm:flex-row">
+          <p className="text-xs text-ink-3">
+            © {new Date().getFullYear()} Rafael Escaleira. Built with Next.js,
+            deployed on Vercel.
+          </p>
+          <p className="text-xs text-ink-3">Made in Brazil.</p>
+        </div>
       </div>
     </footer>
   );

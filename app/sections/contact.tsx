@@ -1,58 +1,65 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { SectionHeading } from "../components/section-heading";
-import { BrutalistCard } from "../components/brutalist-card";
+import { ScrollReveal } from "../components/scroll-reveal";
+import { Nebula } from "../components/illustrations";
 import { GithubIcon, LinkedinIcon, InstagramIcon } from "../components/icons";
 
+const channels = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/byescaleira", icon: LinkedinIcon, primary: true },
+  { label: "GitHub", href: "https://github.com/byescaleira", icon: GithubIcon },
+  { label: "Instagram", href: "https://www.instagram.com/rafaelescaleira", icon: InstagramIcon },
+];
+
 export function Contact() {
-  const cardRef = useRef(null);
-  const cardInView = useInView(cardRef, { once: true, margin: "-100px" });
-
   return (
-    <section id="contact" className="relative overflow-hidden border-b border-border bg-background px-6 py-24 md:px-12 md:py-32">
-      <div className="pointer-events-none absolute inset-0 grid-brutal" />
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-background px-6 py-28 md:px-12 md:py-32"
+    >
+      <Nebula className="bottom-[-300px] left-1/2 h-[700px] w-[1000px] -translate-x-1/2" />
 
-      <div className="relative z-10 mx-auto max-w-3xl">
-        <SectionHeading
-          align="center"
-          eyebrow="Contact"
-          title="Let's build something native"
-        />
+      <svg
+        viewBox="0 0 900 500"
+        className="pointer-events-none absolute bottom-[-170px] left-1/2 h-[500px] w-[900px] -translate-x-1/2"
+        aria-hidden="true"
+      >
+        <ellipse cx="450" cy="250" rx="430" ry="180" fill="none" stroke="rgba(255,138,61,.16)" strokeWidth="1" />
+        <ellipse cx="450" cy="250" rx="320" ry="132" fill="none" stroke="var(--hairline)" strokeWidth="1" />
+        <circle r="3" fill="#FF8A3D">
+          <animateMotion dur="24s" repeatCount="indefinite" path="M 880,250 A 430,180 0 1,1 20,250 A 430,180 0 1,1 880,250" />
+        </circle>
+        <circle r="2.2" fill="rgba(255,255,255,.5)">
+          <animateMotion dur="17s" begin="-6s" repeatCount="indefinite" path="M 770,250 A 320,132 0 1,0 130,250 A 320,132 0 1,0 770,250" />
+        </circle>
+      </svg>
 
-        <motion.div
-          ref={cardRef}
-          initial={{ opacity: 0, y: 24 }}
-          animate={cardInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <BrutalistCard accent="pulsar">
-            <p className="mb-8 text-center text-lg leading-relaxed text-muted-foreground">
-              I am currently leading iOS at Globo, but I am always open to interesting conversations about architecture, products, or collaborations. Reach me on the public channels below.
-            </p>
+      <ScrollReveal className="relative mx-auto max-w-[1120px] text-center">
+        <p className="t-eyebrow">Contact</p>
+        <h2 className="t-section mt-2.5 text-balance">
+          Let&apos;s build something native.
+        </h2>
+        <p className="t-lead mx-auto mt-5 max-w-[620px] text-pretty">
+          I&apos;m heads-down on iOS at Globo, but always open to a good
+          conversation about architecture, products or collaboration.
+        </p>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/byescaleira", icon: LinkedinIcon },
-                { label: "GitHub", href: "https://github.com/byescaleira", icon: GithubIcon },
-                { label: "Instagram", href: "https://www.instagram.com/rafaelescaleira", icon: InstagramIcon },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-brutal-outline justify-center"
-                >
-                  <item.icon className="size-4" />
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </BrutalistCard>
-        </motion.div>
-      </div>
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          {channels.map((c) => (
+            <a
+              key={c.label}
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={c.primary ? "btn-primary" : "btn-secondary"}
+            >
+              <c.icon className="size-[17px]" />
+              {c.label}
+            </a>
+          ))}
+        </div>
+
+        <p className="mt-7 text-[15px] text-ink-3">
+          Campo Grande, MS · Rio de Janeiro, RJ
+        </p>
+      </ScrollReveal>
     </section>
   );
 }

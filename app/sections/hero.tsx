@@ -1,136 +1,93 @@
-"use client";
+import {
+  Chevron,
+  Comet,
+  LiveDot,
+  Nebula,
+  OrbitalConsole,
+  Starfield,
+} from "../components/illustrations";
 
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "../components/icons";
-
+/**
+ * No REVEAL animation in the hero, deliberately. This is the first thing a
+ * visitor sees; it must be on screen the instant the HTML lands, with or
+ * without JS. All the motion here is ORBITAL — continuous, and it never
+ * hides anything.
+ */
 export function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden border-b border-border bg-background px-6 pt-24 pb-12 md:px-12"
-    >
-      {/* Subtle grid background */}
-      <div className="pointer-events-none absolute inset-0 grid-brutal" />
+    <section className="relative overflow-hidden bg-background px-6 pb-20 pt-20 md:px-12 md:pb-24 md:pt-24">
+      <Starfield />
+      <Nebula className="-right-16 -top-32 h-[760px] w-[900px]" />
+      <Comet className="right-32 top-10" />
 
-      {/* Top status bar */}
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="absolute top-0 left-0 right-0 hidden border-b border-border md:block"
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2 text-xs font-mono uppercase tracking-wider text-orbit md:px-8">
-          <span>Campo Grande, MS / Rio de Janeiro, BR</span>
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 bg-teal" />
-              Available for select projects
-            </span>
-            <span>Swift / SwiftUI / AI workflows</span>
+      <div className="relative mx-auto max-w-[1120px]">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_1fr]">
+          <div>
+            <p className="t-eyebrow flex items-center gap-2.5">
+              <LiveDot />
+              iOS Specialist · Globo
+            </p>
+
+            <h1 className="t-display mt-3.5">
+              Rafael
+              <br />
+              Escaleira
+            </h1>
+
+            <p className="t-sub mt-3.5 text-balance text-ink-3">
+              Native craft, at national scale.
+            </p>
+
+            <p className="t-lead mt-5 max-w-[490px] text-pretty">
+              I turn mobile complexity into software that is simple, testable and
+              built to last. Today that means Cartola FC at Globo — played by
+              millions every round.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <a href="#contact" className="btn-primary">
+                Get in touch
+              </a>
+              <a
+                href="#work"
+                className="inline-flex items-center gap-1.5 text-[17px] text-accent-ink"
+              >
+                See my work
+                <Chevron />
+              </a>
+            </div>
+          </div>
+
+          {/* The console is 520px of fixed geometry. Rather than squeeze it into
+              a phone, mobile drops it — the code strip below carries the motion. */}
+          <div className="hidden justify-self-center lg:block">
+            <OrbitalConsole />
           </div>
         </div>
-      </motion.div>
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-6 inline-flex items-center gap-2 border border-border bg-card px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-muted-foreground"
-        >
-          <span className="h-2 w-2 bg-primary" />
-          Currently building Cartola FC at Globo
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="font-heading text-6xl font-black uppercase tracking-tighter text-foreground sm:text-7xl md:text-8xl lg:text-9xl"
-        >
-          Rafael
-          <br />
-          <span className="text-primary">Escaleira</span>
-        </motion.h1>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-8 flex max-w-3xl flex-wrap items-center gap-3 text-lg text-muted-foreground md:text-xl"
-        >
-          <span className="font-heading text-xl font-bold uppercase tracking-wide text-foreground md:text-2xl">
-            iOS Specialist.
-          </span>
-          {["Swift", "SwiftUI", "Clean Architecture", "AI-augmented workflows"].map((tag) => (
-            <span key={tag} className="tag-brutal">
-              {tag}
-            </span>
-          ))}
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground"
-        >
-          I help teams turn mobile complexity into simple, testable, scalable software.
-          Currently leading AI adoption in engineering workflows at Globo.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <a href="#contact" className="btn-brutal">
-            Get in touch
-          </a>
-          <a href="#work" className="btn-brutal-outline">
-            See my work
-            <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" />
-          </a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12 flex items-center gap-6"
-        >
-          {[
-            { href: "https://github.com/byescaleira", icon: GithubIcon, label: "GitHub" },
-            { href: "https://www.linkedin.com/in/byescaleira", icon: LinkedinIcon, label: "LinkedIn" },
-            { href: "https://www.instagram.com/rafaelescaleira", icon: InstagramIcon, label: "Instagram" },
-          ].map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.label}
-              className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-orbit transition-colors hover:text-primary"
-            >
-              <social.icon className="size-4" />
-              {social.label}
-            </a>
-          ))}
-        </motion.div>
+        {/* telemetry readout — spans the hero, so no value ever wraps */}
+        <div className="glass mt-11 grid overflow-hidden rounded-[16px] sm:grid-cols-3">
+          <div className="px-5 py-3.5">
+            <p className="text-[11px] tracking-[0.04em] text-ink-3">BASE</p>
+            <p className="mt-1 text-[15px] font-medium text-ink">
+              Campo Grande, MS · Rio de Janeiro, RJ
+            </p>
+          </div>
+          <div className="border-hairline px-5 py-3.5 sm:border-l">
+            <p className="text-[11px] tracking-[0.04em] text-ink-3">STATUS</p>
+            <p className="mt-1 flex items-center gap-2 text-[15px] font-medium text-ink">
+              <LiveDot size={6} />
+              Open to interesting conversations
+            </p>
+          </div>
+          <div className="border-hairline px-5 py-3.5 sm:border-l">
+            <p className="text-[11px] tracking-[0.04em] text-ink-3">FOCUS</p>
+            <p className="mt-1 text-[15px] font-medium text-ink">
+              Swift · Architecture · AI workflows
+            </p>
+          </div>
+        </div>
       </div>
-
-      <motion.a
-        href="#about"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.7 }}
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-orbit transition-colors hover:text-primary"
-      >
-        <span>Scroll</span>
-        <ArrowDown className="size-4 animate-bounce" />
-      </motion.a>
     </section>
   );
 }

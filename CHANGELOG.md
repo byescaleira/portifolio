@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+### Changed
+- Rebuilt the visual language around Apple's structure — SF system stack (no webfonts), continuous corners (radius 0 → 10/16/22/28/980), hairline separators, weights capped at 600, and Apple's neutral ramp. `#FF6B00` is kept as the primary but changes role: it marks the one thing that matters, instead of framing everything.
+- The differentiator is the brand's own space vocabulary: the site reads as a console tracking a live system. Hero is asymmetric with an orbital console; the career is a rising trajectory instead of a bullet list; Cartola is introduced by the shape of a round — flat load for ninety minutes, then everyone at once.
+- Skills became a bento grid; the mobile hamburger became a floating liquid-glass tab bar.
+- Theme toggle is a segmented pill control and no longer needs a mounted flag.
+- `body` uses `overflow-x: clip` rather than `hidden`, which was quietly turning it into a scroll container.
+
+### Added
+- `illustrations.tsx` — nine drawn, animated assets (orbital console, trajectory, round rhythm, pipeline, sparkline, code strip, starfield, prism panes, branch graph). All vector + CSS: no image files, no Lottie.
+- A motion system with exactly two families: ORBITAL (continuous, ambient, 15–90s, linear) and REVEAL (once on entry, 0.7s, 70ms stagger). Three easing curves and nothing else.
+- `Panel`/`PanelIcon` primitives and a `Wordmark` that keeps the "by" identity in the new language.
+
+### Fixed
+- Content can no longer be hidden by an animation that never runs. Reveals render visible from the server and only opt into the hidden state after mount; release is driven by three independent triggers (IntersectionObserver, a capture-phase scroll sweep, and `visibilitychange`), throttled on a timestamp rather than `requestAnimationFrame` — which is suspended in exactly the hidden-document case that would strand content. `prefers-reduced-motion` resolves every reveal visible.
+
+### Removed
+- The brutalist layer: `brutalist-card`, `glass-card`, `code-orbit`, `space-orbits`, `iphone-mockup`, `star-field`, and the `*-brutal` utilities.
+- DM Sans, Space Grotesk and JetBrains Mono webfonts.
+
 ## [1.2.0] - Mars - 2026-06-25
 
 ### Fixed
