@@ -71,7 +71,7 @@ const STARS_FRONT = [
 /** Two parallax star layers drifting in opposite directions. */
 export function Starfield({ className }: { className?: string }) {
   return (
-    <div className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)} aria-hidden="true">
+    <div className={cn("pointer-events-none absolute inset-0 hidden overflow-hidden dark:block", className)} aria-hidden="true">
       <svg
         viewBox="0 0 1600 1000"
         preserveAspectRatio="xMidYMin slice"
@@ -105,7 +105,7 @@ export function Comet({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className={cn("pointer-events-none absolute h-0.5 w-[150px] origin-right", className)}
+      className={cn("pointer-events-none absolute hidden h-0.5 w-[150px] origin-right dark:block", className)}
       style={{
         rotate: "33deg",
         background: "linear-gradient(270deg, rgba(255,178,122,0), rgba(255,178,122,.9))",
@@ -138,6 +138,9 @@ export function Device({
 }) {
   const s = width / 186;
   const px = (n: number) => `${n * s}px`;
+  // The phone is a dark object in both themes; theme-following ink would put
+  // the light build's dark orange on a black screen.
+  const deviceAccent = "#FF8A3D";
   const rows = [
     { w: 52, w2: 32, score: "12.4", delay: "-0.2s" },
     { w: 60, w2: 26, score: "9.8", delay: "0s" },
@@ -161,7 +164,7 @@ export function Device({
         className="flex h-full w-full flex-col overflow-hidden bg-[#08080A]"
         style={{ borderRadius: px(36), padding: `${px(28)} ${px(13)} ${px(11)}` }}
       >
-        <p className="font-semibold text-accent-ink" style={{ fontSize: px(10) }}>
+        <p className="font-semibold" style={{ fontSize: px(10), color: deviceAccent }}>
           ROUND 27
         </p>
 
@@ -207,7 +210,7 @@ export function Device({
                   style={{ height: px(4), width: px(r.w2), marginTop: px(4) }}
                 />
               </span>
-              <span className="font-semibold text-accent-ink" style={{ fontSize: px(11) }}>
+              <span className="font-semibold" style={{ fontSize: px(11), color: deviceAccent }}>
                 {r.score}
               </span>
             </div>
@@ -217,7 +220,7 @@ export function Device({
         <div className="grow" />
 
         <div
-          className="glass flex items-center justify-around"
+          className="glass-device flex items-center justify-around"
           style={{ height: px(42), borderRadius: px(21) }}
         >
           <TabGlyph active size={15 * s} d="home" />
@@ -288,18 +291,18 @@ export function OrbitalConsole({
   return (
     <div className={cn("relative", className)} style={{ width: 520, height: 520 }}>
       <svg viewBox="0 0 520 520" className="absolute inset-0 h-[520px] w-[520px]" aria-hidden="true">
-        <ellipse cx="260" cy="260" rx="246" ry="96" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth="1" />
-        <ellipse cx="260" cy="260" rx="176" ry="238" fill="none" stroke="rgba(255,255,255,.055)" strokeWidth="1" />
+        <ellipse cx="260" cy="260" rx="246" ry="96" fill="none" stroke="var(--hairline)" strokeWidth="1" />
+        <ellipse cx="260" cy="260" rx="176" ry="238" fill="none" stroke="var(--hairline)" strokeWidth="1" />
         <circle cx="260" cy="260" r="186" fill="none" stroke="rgba(255,138,61,.22)" strokeWidth="1" />
-        <circle cx="260" cy="260" r="118" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth="1" strokeDasharray="2 8" />
+        <circle cx="260" cy="260" r="118" fill="none" stroke="var(--hairline)" strokeWidth="1" strokeDasharray="2 8" />
 
         <circle r="2.6" fill="#FF8A3D">
           <animateMotion dur="21s" repeatCount="indefinite" path="M 506,260 A 246,96 0 1,1 14,260 A 246,96 0 1,1 506,260" />
         </circle>
-        <circle r="2.2" fill="rgba(255,255,255,.55)">
+        <circle r="2.2" fill="var(--ink-3)">
           <animateMotion dur="34s" repeatCount="indefinite" path="M 436,260 A 176,238 0 1,0 84,260 A 176,238 0 1,0 436,260" />
         </circle>
-        <circle r="1.8" fill="rgba(255,138,61,.7)">
+        <circle r="1.8" fill="var(--accent-ink)">
           <animateMotion dur="27s" begin="-9s" repeatCount="indefinite" path="M 378,260 A 118,118 0 1,1 142,260 A 118,118 0 1,1 378,260" />
         </circle>
       </svg>
@@ -335,29 +338,31 @@ export function OrbitalConsole({
 
 const CODE_LINES: React.ReactNode[] = [
   <>
-    <span className="text-accent-ink">actor</span> RoundStore {"{"} <span className="text-accent-ink">private var</span> cache: [Round: Lineup] {"}"}
+    <span style={{ color: "var(--code-keyword)" }}>actor</span> RoundStore {"{"} <span style={{ color: "var(--code-keyword)" }}>private var</span> cache: [Round: Lineup] {"}"}
   </>,
   <>
-    <span className="text-accent-ink">@MainActor func</span> refresh() <span className="text-accent-ink">async throws</span> {"{"} state = .loaded(<span className="text-accent-ink">try await</span> api.round()) {"}"}
+    <span style={{ color: "var(--code-keyword)" }}>@MainActor func</span> refresh() <span style={{ color: "var(--code-keyword)" }}>async throws</span> {"{"} state = .loaded(<span style={{ color: "var(--code-keyword)" }}>try await</span> api.round()) {"}"}
   </>,
   <>.target(name: <span className="text-ink-3">&quot;LineupFeature&quot;</span>, dependencies: [<span className="text-ink-3">&quot;DesignSystem&quot;</span>])</>,
   <>
-    <span className="text-accent-ink">func</span> test_scoreUpdates_onRoundClose() <span className="text-accent-ink">async</span> {"{"} #expect(sut.total == 84.62) {"}"}
+    <span style={{ color: "var(--code-keyword)" }}>func</span> test_scoreUpdates_onRoundClose() <span style={{ color: "var(--code-keyword)" }}>async</span> {"{"} #expect(sut.total == 84.62) {"}"}
   </>,
 ];
 
 /** Real Swift, moving. Text, so it stays crisp and searchable. */
 export function CodeStrip() {
   return (
-    <div className="relative overflow-hidden border-y border-hairline bg-[#060607] py-4">
+    <div className="relative overflow-hidden border-y border-hairline py-4"
+      style={{ background: "var(--code-bg)" }}>
       <div
         className="pointer-events-none absolute inset-0 z-10"
         style={{
           background:
-            "linear-gradient(90deg,#060607 0%,rgba(6,6,7,0) 12%,rgba(6,6,7,0) 88%,#060607 100%)",
+            "linear-gradient(90deg,var(--code-bg) 0%,transparent 12%,transparent 88%,var(--code-bg) 100%)",
         }}
       />
-      <div className="o-marquee flex w-max whitespace-nowrap font-mono text-[13px] leading-normal text-[#4C4C51]">
+      <div className="o-marquee flex w-max whitespace-nowrap font-mono text-[13px] leading-normal"
+        style={{ color: "var(--code-ink)" }}>
         {[...CODE_LINES, ...CODE_LINES].map((line, i) => (
           <span key={i} className="pr-11">
             {line}
@@ -543,7 +548,7 @@ export function PrismPanes() {
       {[
         { bg: "rgba(255,107,0,.55)", anim: "bye-prism-a" },
         { bg: "rgba(255,178,122,.42)", anim: "bye-prism-b" },
-        { bg: "rgba(255,255,255,.20)", anim: "bye-prism-c" },
+        { bg: "var(--art-pane-3)", anim: "bye-prism-c" },
       ].map((p) => (
         <span
           key={p.anim}
@@ -559,8 +564,8 @@ export function PrismPanes() {
 export function BranchGraph() {
   return (
     <svg viewBox="0 0 260 130" className="h-[130px] w-[260px]" aria-hidden="true">
-      <path d="M22 100 H70 a16 16 0 0 0 16-16 V46 a16 16 0 0 1 16-16 h44" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="2" />
-      <path d="M22 100 H120 a16 16 0 0 0 16-16 V30" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="2" />
+      <path d="M22 100 H70 a16 16 0 0 0 16-16 V46 a16 16 0 0 1 16-16 h44" fill="none" stroke="var(--art-line)" strokeWidth="2" />
+      <path d="M22 100 H120 a16 16 0 0 0 16-16 V30" fill="none" stroke="var(--art-line)" strokeWidth="2" />
       <path
         className="o-draw"
         style={{ ["--dur" as string]: "6s", strokeDasharray: 150, strokeDashoffset: 150 }}
@@ -570,9 +575,9 @@ export function BranchGraph() {
         strokeWidth="2"
       />
       <circle cx="22" cy="100" r="7" fill="#FF6B00" />
-      <circle cx="86" cy="66" r="6" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="2" />
-      <circle cx="136" cy="30" r="6" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="2" />
-      <circle cx="198" cy="66" r="6" fill="none" stroke="rgba(255,255,255,.4)" strokeWidth="2" />
+      <circle cx="86" cy="66" r="6" fill="none" stroke="var(--art-line)" strokeWidth="2" />
+      <circle cx="136" cy="30" r="6" fill="none" stroke="var(--art-line)" strokeWidth="2" />
+      <circle cx="198" cy="66" r="6" fill="none" stroke="var(--art-line)" strokeWidth="2" />
       <circle cx="238" cy="100" r="7" fill="#FF6B00" />
       <circle
         cx="238"

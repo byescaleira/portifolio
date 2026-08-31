@@ -21,7 +21,7 @@ export function Panel({
   return (
     <Tag
       className={cn(
-        "rounded-[22px] border border-hairline bg-panel",
+        "card-elev rounded-[22px] border border-hairline bg-panel",
         tinted &&
           "border-[color-mix(in_srgb,var(--accent-solid)_28%,transparent)] bg-[linear-gradient(140deg,color-mix(in_srgb,var(--accent-solid)_9%,var(--panel-base,var(--card)))_0%,var(--card)_48%)]",
         hover && "lift",

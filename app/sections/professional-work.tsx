@@ -68,7 +68,8 @@ export function ProfessionalWork() {
                 </p>
 
                 {/* the real engineering problem, drawn */}
-                <div className="mt-7 rounded-[18px] border border-hairline bg-black/35 px-5 pb-3.5 pt-4">
+                <div className="mt-7 rounded-[18px] border border-hairline px-5 pb-3.5 pt-4"
+                  style={{ background: "var(--inset-fill)" }}>
                   <div className="flex items-baseline justify-between">
                     <p className="text-[13px] font-semibold text-ink">
                       The shape of a round

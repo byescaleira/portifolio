@@ -71,15 +71,48 @@
   --background: #ffffff;
   --surface: #f5f5f7;
   --foreground: #1d1d1f;
-  --ink-2: #6e6e73;
-  --ink-3: #86868b;
+  /* Apple's #6e6e73 / #86868b pair clears AA on white but not on the #f5f5f7
+     sections, where most of this text actually sits. Each step is darkened
+     one notch so the three-level hierarchy survives on both grounds. */
+  --ink-2: #55555a;
+  --ink-3: #6e6e73;
   --hairline: #d2d2d7;
 
   --accent-solid: #ff6b00;
-  --accent-ink: #c2500a;
+  /* #c2500a reads 4.34:1 on #f5f5f7 — just under. */
+  --accent-ink: #bd4b00;
   --accent-soft: rgba(255, 107, 0, 0.12);
 
-  --card: #f5f5f7;
+  /* Cards are WHITE on the grey alternating sections. When card and surface
+     were both #f5f5f7 every panel dissolved into the section behind it. */
+  --card: #ffffff;
+
+  /* Glass needs something to sit against: near-white on white is invisible,
+     so the light build tints toward the surface grey instead. */
+  --glass-fill: color-mix(in srgb, var(--surface) 88%, transparent);
+  --bar-fill: color-mix(in srgb, var(--background) 72%, transparent);
+
+  /* The code strip recedes in both modes — near-black there, quiet grey here.
+     A pure black band across a white page reads as a hole. */
+  --code-bg: #f5f5f7;
+  --code-ink: #86868b;
+  --code-keyword: #bd4b00;
+
+  --tile-warm: linear-gradient(155deg, #fff3ea 0%, var(--card) 55%);
+  --inset-fill: rgba(0, 0, 0, 0.035);
+
+  /* On a white section a white card has only its hairline to stand on.
+     Dark mode separates by fill; light mode separates by shadow. */
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 20px rgba(0, 0, 0, 0.05);
+
+  /* Project artwork flips with the theme; its contents follow these. */
+  --art-warm: linear-gradient(150deg, #fff1e6, #fafafc);
+  --art-cool: linear-gradient(150deg, #f0f1f4, #fafafc);
+  --art-amber: linear-gradient(150deg, #fff3ea, #fafafc);
+  --art-slate: linear-gradient(150deg, #f2f3f5, #fafafc);
+  --art-panel: #ffffff;
+  --art-line: rgba(29, 29, 31, 0.22);
+  --art-pane-3: rgba(29, 29, 31, 0.18);
   --card-foreground: #1d1d1f;
   --popover: #ffffff;
   --popover-foreground: #1d1d1f;
@@ -125,6 +158,25 @@
   --accent-soft: rgba(255, 107, 0, 0.14);
 
   --card: #161617;
+
+  --glass-fill: color-mix(in srgb, var(--card) 68%, transparent);
+  --bar-fill: color-mix(in srgb, var(--background) 72%, transparent);
+
+  --code-bg: #060607;
+  --code-ink: #4c4c51;
+  --code-keyword: #ff8a3d;
+
+  --tile-warm: linear-gradient(155deg, #1c1719 0%, var(--card) 55%);
+  --inset-fill: rgba(0, 0, 0, 0.34);
+  --card-shadow: none;
+
+  --art-warm: linear-gradient(150deg, #241a16, #131314);
+  --art-cool: linear-gradient(150deg, #16191c, #131314);
+  --art-amber: linear-gradient(150deg, #1b1714, #131314);
+  --art-slate: linear-gradient(150deg, #17181b, #131314);
+  --art-panel: #08080a;
+  --art-line: rgba(255, 255, 255, 0.16);
+  --art-pane-3: rgba(255, 255, 255, 0.2);
   --card-foreground: #f5f5f7;
   --popover: #161617;
   --popover-foreground: #f5f5f7;
@@ -229,16 +281,34 @@
 
   /* Liquid glass — needs something behind it, never on a flat fill */
   .glass {
-    background: color-mix(in srgb, var(--card) 68%, transparent);
+    background: var(--glass-fill);
     backdrop-filter: saturate(180%) blur(26px);
     -webkit-backdrop-filter: saturate(180%) blur(26px);
     border: 1px solid var(--hairline);
   }
   .glass-bar {
-    background: color-mix(in srgb, var(--background) 72%, transparent);
+    background: var(--bar-fill);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
   }
+  /* A phone is a dark object in both themes, so its chrome never follows the
+     theme — otherwise the light build painted a grey bar on a black screen. */
+  .glass-device {
+    background: rgba(30, 30, 32, 0.74);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+  }
+  .card-elev {
+    box-shadow: var(--card-shadow);
+  }
+  .tile-warm {
+    background: var(--tile-warm);
+  }
+  .art-warm { background: var(--art-warm); }
+  .art-cool { background: var(--art-cool); }
+  .art-amber { background: var(--art-amber); }
+  .art-slate { background: var(--art-slate); }
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 text-[17px] text-white transition-opacity;

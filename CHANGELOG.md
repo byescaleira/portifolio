@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Fixed
+- Light mode colour pass. `--card` and `--surface` were both `#f5f5f7`, so every panel on an alternating section dissolved into the section behind it — cards are now white, with a light-only shadow so they still read on the white sections where a hairline alone was not enough.
+- Glass was built from `--card`, which in light mode meant near-white on white: the satellite chips and telemetry had almost no separation, and the same class was painting a grey tab bar inside the black phone. Glass now tints toward the surface grey, and the device carries its own fixed dark chrome.
+- The code strip was a hardcoded `#060607` band across a white page; it and the project artwork, their inner panels and the branch/prism strokes now follow theme tokens instead of fixed dark values (dark text was landing on dark artwork).
+- Light text colours darkened one notch each (`--ink-2` `#55555a`, `--ink-3` `#6e6e73`, `--accent-ink` `#bd4b00`): Apple's ramp clears AA on white but not on the `#f5f5f7` sections where most of this text actually sits.
+- Starfield and comet are hidden in light mode — white stars on a white page, and a night-sky layer has no business in daylight.
+
 ### Changed
 - Rebuilt the visual language around Apple's structure — SF system stack (no webfonts), continuous corners (radius 0 → 10/16/22/28/980), hairline separators, weights capped at 600, and Apple's neutral ramp. `#FF6B00` is kept as the primary but changes role: it marks the one thing that matters, instead of framing everything.
 - The differentiator is the brand's own space vocabulary: the site reads as a console tracking a live system. Hero is asymmetric with an orbital console; the career is a rising trajectory instead of a bullet list; Cartola is introduced by the shape of a round — flat load for ninety minutes, then everyone at once.

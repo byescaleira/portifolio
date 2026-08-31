@@ -119,14 +119,15 @@ export function Skills() {
         <div className="grid gap-4 md:grid-cols-4">
           {/* the one tile that writes itself */}
           <ScrollReveal className="md:col-span-2 md:row-span-2">
-            <Panel className="flex h-full flex-col overflow-hidden bg-[linear-gradient(155deg,#1C1719_0%,var(--card)_55%)] p-7 md:p-8">
+            <Panel className="tile-warm flex h-full flex-col overflow-hidden p-7 md:p-8">
               <h3 className="t-sub">Swift, SwiftUI &amp; UIKit</h3>
               <p className="t-body mt-2.5">
                 Seven years of production Apple code — declarative and imperative,
                 concurrency included, on codebases that never stop shipping.
               </p>
 
-              <div className="mt-6 rounded-[14px] border border-hairline bg-[#08080A] p-5 font-mono text-[13px] leading-[1.78] text-[#C7C7CC]">
+              <div className="mt-6 rounded-[14px] border border-hairline p-5 font-mono text-[13px] leading-[1.78] text-ink-2"
+                style={{ background: "var(--code-bg)" }}>
                 <div>
                   <span className="text-accent-ink">struct</span> RoundView:{" "}
                   <span className="text-accent-ink">View</span> {"{"}
@@ -143,7 +144,7 @@ export function Skills() {
                 <div className="o-type pl-11">
                   <span className="text-ink-3">.task</span> {"{"}{" "}
                   <span className="text-accent-ink">await</span> load() {"}"}
-                  <span className="o-caret text-accent">▌</span>
+                  <span className="o-caret text-accent-ink">▌</span>
                 </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
