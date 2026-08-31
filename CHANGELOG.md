@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Added
+- `DESIGN.md` — the design system written down: the thesis, every token by role, the type ramp, shape, materials, layout, the two motion families, the illustration rule, component specs, and the list of things not to do. Records the reasoning, so changes stay decisions rather than drift.
+
+### Changed
+- Header gutters aligned to the sections (`md:px-12`); the nav had been sitting 8px narrower than the content it sat above.
+
 ### Fixed
 - Ink on the brand orange is near-black instead of white. White read 2.86:1 on the primary CTA, the wordmark tile and the badge glyphs — under AA on the most important control on the page, on a site that lists accessibility as a skill. The original mark always used `#111111` on its orange block, so this restores the brand rather than compromising it, and lands at 5.89:1. `#FF6B00` itself is untouched.
 - Dark-mode `--ink-3` lifted from `#6e6e73` to Apple's `#86868b`: the old value sat at 3.6:1 on the dark surfaces, under AA for the small labels it carries.

@@ -27,7 +27,7 @@ export function Header() {
 
   return (
     <header className="glass-bar sticky top-0 z-50 h-[52px] border-b border-hairline">
-      <div className="mx-auto flex h-[52px] max-w-[1120px] items-center justify-between px-6 md:px-10">
+      <div className="mx-auto flex h-[52px] max-w-[1120px] items-center justify-between px-6 md:px-12">
         <Link href="/" aria-label="byescaleira — home">
           <Wordmark />
         </Link>
