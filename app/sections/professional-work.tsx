@@ -126,12 +126,8 @@ export function ProfessionalWork() {
           {previous.map((p, i) => (
             <ScrollReveal key={p.slug} delay={i * 0.07}>
               <Link href={`/experience/${p.slug}`} className="group block h-full">
-                <Panel className="h-full p-6">
-                  <p className="text-[13px] text-ink-3">{p.kind}</p>
-                  <h4 className="mt-2 text-[19px] font-semibold leading-tight tracking-[-0.02em] text-ink">
-                    {p.company}
-                  </h4>
-                  <p className="t-small mt-2">{p.body}</p>
+                <Panel title={p.company} index={p.kind} className="h-full">
+                  <p className="t-small">{p.body}</p>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-[15px] text-accent-ink">
                     Details
                     <Chevron />

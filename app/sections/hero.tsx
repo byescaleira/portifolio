@@ -1,5 +1,4 @@
 import { Chevron } from "../components/illustrations";
-import { Print } from "../components/print";
 
 /**
  * A printed sheet, not an app screen.
@@ -64,17 +63,26 @@ export function Hero() {
             </div>
           </div>
 
-          {/* the print. It carries its own bone paper, so it dissolves into the
-              sheet on the light build and reads as a pulled print pasted onto a
-              dark page on the other. */}
-          <Print
-            src="/astronaut.webp"
-            alt="A screenprinted astronaut standing on a rocky outcrop, a ringed planet low on the horizon behind him"
-            width={900}
-            height={900}
-            priority
-            className="self-center"
-          />
+          {/* the ink bar — a press colour bar, and an honest statement of the
+              system: two inks and the paper, nothing else. The astronaut print
+              lived here for a while and was pulled: the masthead is already the
+              loudest thing on the sheet, and a full illustration beside it gave
+              the eye two places to land instead of one. */}
+          <div className="self-end">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
+              Two inks, one paper
+            </p>
+            <div className="mt-3 flex h-14 overflow-hidden rounded-[12px] border-2 border-hairline">
+              <span className="flex-1 bg-accent" />
+              <span className="flex-1 border-l-2 border-hairline bg-foreground" />
+              <span className="flex-1 border-l-2 border-hairline bg-background" />
+            </div>
+            <div className="mt-2 flex font-mono text-[10px] uppercase tracking-[0.1em] text-ink-3">
+              <span className="flex-1">Safety</span>
+              <span className="flex-1">Ink</span>
+              <span className="flex-1">Stock</span>
+            </div>
+          </div>
         </div>
       </div>
 

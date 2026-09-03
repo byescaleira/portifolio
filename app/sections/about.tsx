@@ -149,9 +149,8 @@ export function About() {
 
         <div className="mt-16 grid items-start gap-5 lg:grid-cols-[1.35fr_1fr]">
           <ScrollReveal>
-            <Panel className="h-full p-7 md:p-8">
-              <h3 className="t-sub">How I work</h3>
-              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            <Panel title="How I work" index="04 principles" className="h-full">
+              <div className="grid gap-6 sm:grid-cols-2">
                 {principles.map((p) => (
                   <div key={p.title} className="flex gap-3.5">
                     <PanelIcon>
@@ -182,27 +181,8 @@ export function About() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.07}>
-            <Panel className="relative h-full overflow-hidden p-7 md:p-8">
-              <svg
-                viewBox="0 0 200 200"
-                className="pointer-events-none absolute -right-12 -top-12 size-[200px]"
-                aria-hidden="true"
-              >
-                <circle
-                  className="o-spin"
-                  style={{ ["--dur" as string]: "72s", transformOrigin: "100px 100px" }}
-                  cx="100"
-                  cy="100"
-                  r="72"
-                  fill="none"
-                  stroke="rgba(255,138,61,.14)"
-                  strokeWidth="1"
-                  strokeDasharray="4 10"
-                />
-                <circle cx="100" cy="100" r="48" fill="none" stroke="var(--hairline)" strokeWidth="1" />
-              </svg>
-              <h3 className="t-sub relative">Education</h3>
-              <div className="relative mt-6 flex flex-col gap-5">
+            <Panel title="Education" index="2017 — 2025" className="h-full">
+              <div className="flex flex-col gap-5">
                 {education.map((e, i) => (
                   <div key={e.school} className={i > 0 ? "border-t border-hairline pt-5" : ""}>
                     <p className="text-[17px] font-semibold tracking-[-0.015em] text-ink">
