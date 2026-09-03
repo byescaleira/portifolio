@@ -41,14 +41,17 @@ const stats = [
 
 function StatBand() {
   return (
-    <section className="bg-background px-6 py-20 md:px-12 md:py-24">
-      <div className="mx-auto grid max-w-[1120px] gap-px bg-hairline sm:grid-cols-3">
-        {stats.map((s) => (
-          <div key={s.value} className="bg-background px-8 py-1.5 text-center">
-            <p className="text-[56px] font-semibold leading-[1.05] tracking-[-0.03em] text-accent-ink">
+    <section className="border-b-2 border-foreground bg-background">
+      <div className="mx-auto grid max-w-[1120px] px-6 sm:grid-cols-3 md:px-12">
+        {stats.map((s, i) => (
+          <div
+            key={s.value}
+            className={`py-9 ${i > 0 ? "border-hairline sm:border-l sm:pl-8" : ""}`}
+          >
+            <p className="font-display text-[64px] font-extrabold uppercase leading-[0.9] tracking-[-0.01em] text-accent-ink">
               {s.value}
             </p>
-            <p className="t-body mt-2">{s.label}</p>
+            <p className="mt-2 max-w-[24ch] text-[15px] text-ink-2">{s.label}</p>
           </div>
         ))}
       </div>

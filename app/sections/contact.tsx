@@ -31,9 +31,12 @@ export function Contact() {
         </circle>
       </svg>
 
-      <ScrollReveal className="relative mx-auto max-w-[1120px] text-center">
-        <p className="t-eyebrow">Contact</p>
-        <h2 className="t-section mt-2.5 text-balance">
+      <ScrollReveal className="relative mx-auto max-w-[1120px]">
+        <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Contact</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">06</p>
+          </div>
+        <h2 className="t-section mt-5 max-w-[20ch] text-balance">
           Let&apos;s build something native.
         </h2>
         <p className="t-lead mx-auto mt-5 max-w-[620px] text-pretty">

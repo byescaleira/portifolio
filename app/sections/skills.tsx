@@ -107,9 +107,12 @@ export function Skills() {
   return (
     <section id="skills" className="bg-background px-6 py-24 md:px-12 md:py-28">
       <div className="mx-auto max-w-[1120px]">
-        <ScrollReveal className="mx-auto mb-14 max-w-[720px] text-center">
-          <p className="t-eyebrow">Capabilities</p>
-          <h2 className="t-section mt-2.5 text-balance">
+        <ScrollReveal className="mb-12">
+          <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Capabilities</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">02</p>
+          </div>
+          <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             The full iOS stack.
             <br />
             Pixels to pipelines.

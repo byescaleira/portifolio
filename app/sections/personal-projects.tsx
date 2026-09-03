@@ -19,10 +19,13 @@ export function PersonalProjects() {
       className="border-t border-hairline bg-surface px-6 py-24 md:px-12 md:py-28"
     >
       <div className="mx-auto max-w-[1120px]">
-        <ScrollReveal className="mx-auto mb-14 max-w-[760px] text-center">
-          <p className="t-eyebrow">Personal work</p>
-          <h2 className="t-section mt-2.5 text-balance">The system behind this page.</h2>
-          <p className="t-lead mt-5 text-pretty">
+        <ScrollReveal className="mb-12">
+          <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Personal work</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">05</p>
+          </div>
+          <h2 className="t-section mt-5 max-w-[20ch] text-balance">The system behind this page.</h2>
+          <p className="t-lead mt-5 max-w-[58ch] text-pretty">
             Everything with my name on it runs on one set of decisions — colour,
             type, motion, the character, and what things are called.
           </p>

@@ -20,24 +20,31 @@ const socials = [
   { href: "https://www.instagram.com/rafaelescaleira", icon: InstagramIcon, label: "Instagram" },
 ];
 
-/** Apple's global nav: 52px, translucent, one hairline. It does not resize on scroll. */
+/**
+ * The masthead rule, not a floating bar.
+ *
+ * This was Apple's global nav — 52px, translucent, backdrop-blurred. A printed
+ * sheet has no glass and nothing hovering over the page, so the bar is now
+ * opaque, sits on a rule, and sets its nav in mono small caps the way a running
+ * head is set. It still does not resize on scroll.
+ */
 export function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/" || pathname === "";
 
   return (
-    <header className="glass-bar sticky top-0 z-50 h-[52px] border-b border-hairline">
+    <header className="sticky top-0 z-50 h-[52px] border-b-2 border-foreground bg-background">
       <div className="mx-auto flex h-[52px] max-w-[1120px] items-center justify-between px-6 md:px-12">
         <Link href="/" aria-label="byescaleira — home">
           <Wordmark />
         </Link>
 
-        <nav className="hidden items-center gap-[34px] md:flex">
+        <nav className="hidden items-center gap-7 md:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={isHome ? item.href : `/${item.href}`}
-              className="text-[13px] text-ink-2 transition-colors hover:text-ink"
+              className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-2 transition-colors hover:text-accent-ink"
             >
               {item.label}
             </a>

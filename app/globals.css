@@ -247,6 +247,9 @@
   /* Type ramp — SF, weights 400/500/600 only, tight tracking */
   /* Poster weight. Condensed runs narrow, so the display steps up hard and the
      tracking opens back out — the opposite of what SF Display wanted. */
+  .font-display {
+    font-family: var(--font-display);
+  }
   .t-display {
     font-family: var(--font-display);
     font-weight: 800;

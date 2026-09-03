@@ -34,8 +34,11 @@ export function MissionControl() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.07}>
-            <p className="t-eyebrow">Mission Control</p>
-            <h2 className="t-section mt-2.5 text-balance">
+            <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Mission Control</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">03</p>
+          </div>
+            <h2 className="t-section mt-5 max-w-[20ch] text-balance">
               Everything orbits the product.
             </h2>
             <p className="t-lead mt-4 text-pretty">

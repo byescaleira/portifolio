@@ -69,14 +69,17 @@ export function About() {
       className="relative overflow-hidden border-t border-hairline bg-surface px-6 py-24 md:px-12 md:py-28"
     >
       <div className="mx-auto max-w-[1120px]">
-        <ScrollReveal className="mx-auto mb-14 max-w-[760px] text-center">
-          <p className="t-eyebrow">Who I am</p>
-          <h2 className="t-section mt-2.5 text-balance">
+        <ScrollReveal className="mb-12">
+          <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Who I am</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">01</p>
+          </div>
+          <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             Builder by instinct.
             <br />
             Engineer by choice.
           </h2>
-          <p className="t-lead mt-5 text-pretty">
+          <p className="t-lead mt-5 max-w-[58ch] text-pretty">
             Seven years of native Apple work, from offline-first field tools in
             Mato Grosso do Sul to a fantasy game the whole country plays on
             Sunday nights.
