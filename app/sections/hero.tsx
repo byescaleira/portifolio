@@ -35,7 +35,7 @@ export function Hero() {
             </h1>
 
             <p className="t-sub mt-3.5 text-balance text-ink-3">
-              Native craft, at national scale.
+              How native software gets built when it can&rsquo;t fail.
             </p>
 
             <p className="t-lead mt-5 max-w-[490px] text-pretty">

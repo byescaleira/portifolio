@@ -14,10 +14,7 @@ const columns = [
   {
     title: "Projects",
     links: [
-      { label: "Prism", href: "/project/prism" },
-      { label: "Orbit", href: "/project/orbit" },
-      { label: "Cashly", href: "/project/cashly" },
-      { label: "Open Source", href: "/project/open-source" },
+      { label: "Spica", href: "/project/spica" },
     ],
   },
 ];
@@ -36,7 +33,7 @@ export function Footer() {
           <div className="max-w-[300px]">
             <Wordmark size={24} />
             <p className="mt-3 text-[13px] leading-[1.5] text-ink-3">
-              iOS Specialist building native Apple products that scale. Currently
+              I build native Apple products that scale. Currently
               at Globo, on Cartola FC.
             </p>
           </div>

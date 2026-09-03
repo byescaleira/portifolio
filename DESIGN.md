@@ -14,7 +14,7 @@ Apple's structure — SF, continuous corners, hairlines, generous whitespace,
 restraint — is the grammar. It is not the differentiator: everyone can copy it.
 
 The differentiator is the brand's own vocabulary, which was already there in the
-project codenames (Orbit, Prism, Mission Control): **the site behaves like a
+project codenames (Rigel, Spica, Mission Control): **the site behaves like a
 console tracking a live system.** The product sits at the centre and everything
 else orbits it. That is the one idea every illustration, every animation and the
 accent colour all serve.

@@ -184,91 +184,25 @@ export const experiences: Experience[] = [
 
 export const projects: Project[] = [
   {
-    slug: "prism",
-    codename: "Prism",
-    title: "Design System",
-    status: "Experiment",
-    description:
-      "A personal design-system experiment: tokens, components, and patterns that bridge Figma and code with Apple-native aesthetics.",
-    longDescription:
-      "Prism is my ongoing exploration of how design tokens, components, and platform conventions can live in the same system. It borrows from SwiftUI composition patterns and applies them to a web-first component library built for the Deep Space / Liquid Glass look I use across byescaleira projects.",
-    tags: ["Design Tokens", "Components", "SwiftUI", "Tailwind CSS", "Accessibility"],
-    goals: [
-      "Keep visual decisions as structured code.",
-      "Build reusable components that feel native on Apple devices.",
-      "Document patterns, not just properties.",
-    ],
-    learnings: [
-      "Tokens reduce decision fatigue across projects.",
-      "Component APIs are architecture decisions.",
-      "Accessibility must be designed in, not added on.",
-    ],
-    link: "https://github.com/byescaleira",
-  },
-  {
-    slug: "orbit",
-    codename: "Orbit",
-    title: "CLI / Automation",
+    slug: "spica",
+    codename: "Spica",
+    title: "Brand & Design System",
     status: "Active",
     description:
-      "Automation tooling for repetitive engineering tasks — scaffolding, standardization, and release helpers that keep teams moving.",
+      "One set of design decisions behind everything with my name on it — the tokens and components running this page, plus the rules for the character and for what things are called.",
     longDescription:
-      "Orbit is a set of CLI helpers and scripts for the boring parts of engineering: scaffolding modules, generating boilerplate, enforcing conventions, and automating releases. The goal is to remove friction so teams spend time on product problems instead of process.",
-    tags: ["CLI", "Automation", "Developer Experience", "Swift", "Templates"],
+      "Spica is named after one of the navigation stars Apollo crews aligned by — which is the job: settle a decision once so it stops being re-decided. It is three things kept in sync: the tokens, type ramp, materials and motion behind this site; a written specification for the byescaleira astronaut, down to proportion and material roughness; and a naming system that says which things get a name at all. Every decision is committed with its reasoning, so a choice can be argued with instead of guessed at. Next step is lifting the tokens into a SwiftUI package so the apps and the web resolve the same values.",
+    tags: ["Design Tokens", "Design System", "Accessibility", "Brand", "SwiftUI"],
     goals: [
-      "Standardize project skeletons and module structure.",
-      "Automate release tagging and changelog updates.",
-      "Reduce setup time for new repositories.",
+      "Settle a decision once, in writing, and stop re-deciding it.",
+      "Keep the character reproducible without an illustrator on call.",
+      "Make naming cheap enough that a new package never stalls on it.",
     ],
     learnings: [
-      "Good DX compounds over time.",
-      "CLI tools should fail loudly and recover cleanly.",
-      "Conventions are cheaper than committees.",
+      "Ink on the brand orange must be near-black — white measures 2.86:1 and fails AA.",
+      "A character without written proportions becomes four different characters in six months.",
+      "Most things do not need a name. That removed more friction than any name did.",
     ],
-    link: "https://github.com/byescaleira",
-  },
-  {
-    slug: "cashly",
-    codename: "Cashly",
-    title: "Finance App",
-    status: "Concept",
-    description:
-      "A finance app concept focused on clarity, speed, and native iOS craft. Built to explore architecture and polished UX in a real product shape.",
-    longDescription:
-      "Cashly is a concept for a personal finance app where the real exercise is architecture and interaction design. It explores Clean Architecture in SwiftUI, modular feature boundaries, and the kind of micro-interactions that make a native app feel alive.",
-    tags: ["SwiftUI", "Architecture", "UX", "Clean Architecture", "SPM"],
-    goals: [
-      "Practice modular SwiftUI architecture end-to-end.",
-      "Design interactions that feel native and immediate.",
-      "Keep the codebase easy to test and extend.",
-    ],
-    learnings: [
-      "State management is the hardest part of finance UIs.",
-      "Motion should clarify, not decorate.",
-      "Small modules force clearer contracts.",
-    ],
-  },
-  {
-    slug: "open-source",
-    codename: "Open Source",
-    title: "Experiments & Tools",
-    status: "Ongoing",
-    description:
-      "Small tools, sample apps, and explorations shared on GitHub. Experiments in SwiftUI, concurrency patterns, and modular architecture.",
-    longDescription:
-      "My open-source work is a public lab: small SwiftUI samples, concurrency experiments, architecture templates, and tools I use to learn in the open. Not every repo is meant to be a product; some are meant to be read, forked, and challenged.",
-    tags: ["Swift", "Samples", "GitHub", "SwiftUI", "Concurrency"],
-    goals: [
-      "Share learning in a reusable form.",
-      "Build reference implementations for common patterns.",
-      "Invite feedback and collaboration.",
-    ],
-    learnings: [
-      "Teaching is the fastest way to find gaps in your own understanding.",
-      "Small repos are easier to maintain than big promises.",
-      "Documentation is part of the feature.",
-    ],
-    link: "https://github.com/byescaleira",
   },
 ];
 

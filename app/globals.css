@@ -8,10 +8,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Apple's system stack resolves to SF Pro on Apple devices. */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-heading: var(--font-sans);
+  /* Paper and ink. Archivo is the industrial grotesque that carries structure,
+     UI and headings; Newsreader is the editorial serif that carries anything
+     meant to be READ. The old system stack was Apple discipline — this brand
+     is a screenprint now, and a system UI face cannot say that. */
+  --font-sans: var(--font-archivo), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-display), "Haettenschweiler", "Arial Narrow", sans-serif;
+  --font-heading: var(--font-display);
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, monospace;
 
   /* semantic surface + ink */
@@ -58,36 +62,43 @@
   --color-card: var(--card);
 
   /* continuous corners — nothing is square any more */
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
-  --radius-xl: 28px;
-  --radius-2xl: 28px;
-  --radius-3xl: 34px;
-  --radius-4xl: 44px;
+  /* Print corners. The old 10/16/22/28 ladder was Apple's continuous-corner
+     language; a screenprinted panel has a tight radius or none at all. */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 5px;
+  --radius-2xl: 5px;
+  --radius-3xl: 6px;
+  --radius-4xl: 8px;
 }
 
 /* ---------- LIGHT ---------- */
 :root {
-  --background: #ffffff;
-  --surface: #f5f5f7;
-  --foreground: #1d1d1f;
+  /* Ink on bone paper. Values verified against AA on all three grounds. */
+  --background: #eae4d6;
+  --surface: #dcd3c0;
+  --foreground: #26241f;
   /* Apple's #6e6e73 / #86868b pair clears AA on white but not on the #f5f5f7
      sections, where most of this text actually sits. Each step is darkened
      one notch so the three-level hierarchy survives on both grounds. */
-  --ink-2: #55555a;
-  --ink-3: #6e6e73;
-  --hairline: #d2d2d7;
+  --ink-2: #4e4a41;
+  /* #6e6960 measured 3.92 on the surface — one notch darker to clear AA. */
+  --ink-3: #5f5a50;
+  --hairline: #4e4a41;
 
   --accent-solid: #ff6b00;
-  /* #c2500a reads 4.34:1 on #f5f5f7 — just under. */
-  --accent-ink: #bd4b00;
-  --accent-soft: rgba(255, 107, 0, 0.12);
-  --on-accent: #1d1d1f;
+  /* Paper is darker than white, so orange text has to go further down than it
+     did on #f5f5f7. #bd4b00 measured 3.62 on the surface; #9e3a00 clears 4.5
+     on all three grounds and reads as a burnt screenprint orange, which is
+     period-correct anyway. */
+  --accent-ink: #9e3a00;
+  --accent-soft: rgba(255, 107, 0, 0.16);
+  --on-accent: #26241f;
 
   /* Cards are WHITE on the grey alternating sections. When card and surface
      were both #f5f5f7 every panel dissolved into the section behind it. */
-  --card: #ffffff;
+  --card: #f6f2e9;
 
   /* Glass needs something to sit against: near-white on white is invisible,
      so the light build tints toward the surface grey instead. */
@@ -96,16 +107,16 @@
 
   /* The code strip recedes in both modes — near-black there, quiet grey here.
      A pure black band across a white page reads as a hole. */
-  --code-bg: #f5f5f7;
-  --code-ink: #86868b;
-  --code-keyword: #bd4b00;
+  --code-bg: #dcd3c0;
+  --code-ink: #6e6960;
+  --code-keyword: #9e3a00;
 
-  --tile-warm: linear-gradient(155deg, #fff3ea 0%, var(--card) 55%);
-  --inset-fill: rgba(0, 0, 0, 0.035);
+  --tile-warm: linear-gradient(155deg, #f6e3cf 0%, var(--card) 55%);
+  --inset-fill: rgba(38, 36, 31, 0.05);
 
   /* On a white section a white card has only its hairline to stand on.
      Dark mode separates by fill; light mode separates by shadow. */
-  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 20px rgba(0, 0, 0, 0.05);
+  --card-shadow: 0 1px 2px rgba(38, 36, 31, 0.06), 0 8px 20px rgba(38, 36, 31, 0.07);
 
   /* Project artwork flips with the theme; its contents follow these. */
   --art-warm: linear-gradient(150deg, #fff1e6, #fafafc);
@@ -135,7 +146,7 @@
   --chart-3: #ffb185;
   --chart-4: #86868b;
   --chart-5: #d2d2d7;
-  --radius: 22px;
+  --radius: 4px;
   --sidebar: #f5f5f7;
   --sidebar-foreground: #1d1d1f;
   --sidebar-primary: #ff6b00;
@@ -148,30 +159,30 @@
 
 /* ---------- DARK (the default the site ships in) ---------- */
 .dark {
-  --background: #000000;
-  --surface: #0a0a0c;
-  --foreground: #f5f5f7;
-  --ink-2: #a1a1a6;
-  /* #6e6e73 read 3.6:1 on the dark surfaces. #86868b is Apple's own dark
-     tertiary and clears AA without changing the character. */
-  --ink-3: #86868b;
-  --hairline: rgba(255, 255, 255, 0.09);
+  /* The same screenprint, pulled on black paper. Warm throughout — a cool grey
+     ink would give away that this is a screen and not a press. */
+  --background: #0b0a09;
+  --surface: #17150f;
+  --foreground: #eae4d6;
+  --ink-2: #ada595;
+  --ink-3: #918a7c;
+  --hairline: rgba(234, 228, 214, 0.34);
 
   --accent-solid: #ff6b00;
   --accent-ink: #ff8a3d;
   --accent-soft: rgba(255, 107, 0, 0.14);
-  --on-accent: #1d1d1f;
+  --on-accent: #26241f;
 
-  --card: #161617;
+  --card: #252019;
 
   --glass-fill: color-mix(in srgb, var(--card) 68%, transparent);
   --bar-fill: color-mix(in srgb, var(--background) 72%, transparent);
 
-  --code-bg: #060607;
-  --code-ink: #4c4c51;
+  --code-bg: #070605;
+  --code-ink: #5a544a;
   --code-keyword: #ff8a3d;
 
-  --tile-warm: linear-gradient(155deg, #1c1719 0%, var(--card) 55%);
+  --tile-warm: linear-gradient(155deg, #2e2418 0%, var(--card) 55%);
   --inset-fill: rgba(0, 0, 0, 0.34);
   --card-shadow: none;
 
@@ -234,39 +245,51 @@
   }
 
   /* Type ramp — SF, weights 400/500/600 only, tight tracking */
+  /* Poster weight. Condensed runs narrow, so the display steps up hard and the
+     tracking opens back out — the opposite of what SF Display wanted. */
   .t-display {
-    font-weight: 600;
-    font-size: clamp(2.75rem, 6vw, 5.5rem);
-    line-height: 1.03;
-    letter-spacing: -0.035em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(3.75rem, 8.5vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
   }
   .t-section {
-    font-weight: 600;
-    font-size: clamp(2rem, 4.2vw, 3.5rem);
-    line-height: 1.07;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: 0;
   }
   .t-sub {
+    font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
-    line-height: 1.12;
-    letter-spacing: -0.028em;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: 0;
   }
   .t-card {
     font-weight: 600;
     font-size: 1.3125rem;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
   }
+  /* Reading text is set in the serif; UI, labels and meta stay grotesque.
+     Newsreader runs small for its point size, so both step up a notch. */
   .t-lead {
     @apply text-ink-2;
-    font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
-    line-height: 1.48;
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 1.6vw, 1.4375rem);
+    line-height: 1.55;
+    letter-spacing: 0.002em;
   }
   .t-body {
     @apply text-ink-2;
-    font-size: 1.0625rem;
-    line-height: 1.47;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.56;
+    letter-spacing: 0.002em;
   }
   .t-small {
     @apply text-ink-3;
@@ -281,7 +304,7 @@
   .t-eyebrow {
     @apply font-semibold text-accent-ink;
     font-size: 1.0625rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.004em;
   }
 
   /* Liquid glass — needs something behind it, never on a flat fill */
@@ -347,6 +370,29 @@
    REVEAL:  once on entry, 0.7s, staggered 70ms.
    Rule that outranks both: content is never invisible by default.
    ============================================================ */
+/* ============================================================
+   PAPER — the grain that makes this a print and not a beige page.
+   Static SVG turbulence, no image file, no request. It multiplies
+   into the ink on paper and screens over it on black paper, which
+   is how the two presses actually behave.
+   ============================================================ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23p)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+.dark body::after,
+.dark::after {
+  mix-blend-mode: screen;
+  opacity: 0.3;
+}
+
 @keyframes bye-rise {
   from {
     opacity: 0;

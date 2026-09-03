@@ -30,9 +30,7 @@
 
 ## Existing Project Names (preserve)
 
-- **Prism** — design system
-- **Orbit** — CLI/automation
-- **Cashly** — finance app
+- **Spica** — brand & design system (site tokens, character spec, naming). The only live personal project.
 
 ## Design Direction
 
@@ -48,7 +46,7 @@
 2. **About / Who I Am** — short bio, working principles, career timeline.
 3. **Skills** — iOS/Swift/SwiftUI/Swift Concurrency, architecture, SPM, modularization, testing, CI/CD, design systems, performance, AI-augmented workflows.
 4. **Professional Work** — Globo/Cartola as main case; previous companies in compact timeline.
-5. **Personal Projects** — Prism, Orbit, Cashly, plus any open-source experiments.
+5. **Personal work** — Spica only. Earlier projects were retired; do not re-add them.
 6. **Contact / CTA** — LinkedIn and GitHub only; no email or phone in UI.
 
 ## New Requirements for This Iteration
@@ -56,7 +54,7 @@
 1. **Animated illustrations** of space, iPhone, and coding throughout the site (hero background, section accents, floating decorations).
 2. **Mobile iOS-style tab view** — replace the current mobile hamburger with a bottom Liquid Glass tab bar resembling iOS tab navigation.
 3. **Remove sensitive contact info** — no WhatsApp number and no email address in any public page or component.
-4. **Dedicated detail pages** for each experience (Globo, Deliver IT/Letsbank, Next, TocaLivros, Boviplan, A.A.A. UFMS, CATWORK) and each personal project (Prism, Orbit, Cashly, Open Source).
+4. **Dedicated detail pages** for each experience (Globo, Deliver IT/Letsbank, Next, TocaLivros, Boviplan, A.A.A. UFMS, CATWORK) and each personal project (Spica).
 5. **Animated coding/spacing illustrations for navigation and scroll** — visual cues that guide the user through the page, such as a scrolling code strip, parallax satellites, orbit paths, and iPhone mockups.
 
 ## Technical Stack
