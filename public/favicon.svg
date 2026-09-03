@@ -1,9 +1,0 @@
-<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="by.escaleira favicon">
-  <title>by.escaleira</title>
-  <!-- hard offset shadow -->
-  <rect x="20" y="20" width="170" height="170" fill="#111111"/>
-  <!-- accent block: solid orange, sharp corners, thick border -->
-  <rect x="10" y="10" width="170" height="170" fill="#FF4D00" stroke="#111111" stroke-width="6"/>
-  <!-- "by" reversed out of the block -->
-  <text x="95" y="131" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="100" fill="#111111">by</text>
-</svg>

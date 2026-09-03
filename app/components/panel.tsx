@@ -6,8 +6,9 @@ import { cn } from "@/lib/utils";
  * This was the one card in the system — 22px continuous corners, a hairline,
  * a 5px lift on hover. All three said "floating object", which is the grammar
  * of an interface. On a press sheet a block is defined by the rule around it
- * and it sits flat on the paper: a 2px ink border, a 3px corner, no shadow,
- * no lift. Hover moves the ink, not the block.
+ * and it sits flat on the paper: a 2px ink border, no shadow, no lift — hover
+ * moves the ink, not the block. The corner stays generous on purpose: the
+ * subject is space, and space is capsules and domes.
  */
 export function Panel({
   children,
@@ -26,7 +27,7 @@ export function Panel({
   return (
     <Tag
       className={cn(
-        "rounded-[3px] border-2 border-hairline bg-panel transition-colors duration-200",
+        "rounded-[18px] border-2 border-hairline bg-panel transition-colors duration-200",
         tinted &&
           "border-[color-mix(in_srgb,var(--accent-solid)_28%,transparent)] bg-[linear-gradient(140deg,color-mix(in_srgb,var(--accent-solid)_9%,var(--panel-base,var(--card)))_0%,var(--card)_48%)]",
         hover && "hover:border-accent",
@@ -40,7 +41,7 @@ export function Panel({
 
 export function PanelIcon({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[2px] border-2 border-hairline text-accent-ink">
+    <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[10px] border-2 border-hairline text-accent-ink">
       {children}
     </span>
   );

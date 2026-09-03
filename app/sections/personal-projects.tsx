@@ -1,14 +1,23 @@
 import Link from "next/link";
 import { ScrollReveal } from "../components/scroll-reveal";
 import { Panel } from "../components/panel";
-import { Chevron, PrismPanes } from "../components/illustrations";
+import { Chevron } from "../components/illustrations";
+import { Print } from "../components/print";
 import { projects } from "@/lib/content";
 
 /** Each project gets its own drawn, moving visual — never a stock icon. */
 const art: Record<string, { cls: string; node: React.ReactNode }> = {
   spica: {
     cls: "art-warm",
-    node: <PrismPanes />,
+    node: (
+      <Print
+        src="/spica.webp"
+        alt="A screenprinted star beside a printer's density scale of halftone patches"
+        width={900}
+        height={900}
+        className="w-full max-w-[300px]"
+      />
+    ),
   },
 };
 

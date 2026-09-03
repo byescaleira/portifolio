@@ -1,38 +1,34 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 /**
- * The mark, in the new language: the neubrutalist hard-shadow block became a
- * continuous-corner tile with a slow orbit around it. Same identity, same "by".
+ * The mark is the helmet.
+ *
+ * It was a "by" tile with a slow orbit drawn around it — a vector stand-in from
+ * before the character existed. Now that the screenprinted helmet is the
+ * primary mark (decision 005), the tile has no job: two marks competing in the
+ * same corner is one too many. The word is set in type beside it rather than
+ * printed into the art, so it stays crisp at every size and can be changed
+ * without regenerating the illustration.
  */
-export function Wordmark({ size = 26, className }: { size?: number; className?: string }) {
+export function Wordmark({ size = 30, className }: { size?: number; className?: string }) {
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
+      <Image
+        src="/logo.webp"
+        alt=""
+        width={size}
+        height={size}
+        priority
+        className="shrink-0"
+        style={{ width: size, height: size }}
+      />
       <span
-        className="relative flex shrink-0 items-center justify-center rounded-[7px] bg-accent font-semibold tracking-[-0.02em] text-on-accent"
-        style={{ width: size, height: size, fontSize: size * 0.5 }}
+        className="font-semibold tracking-[-0.01em] text-ink"
+        style={{ fontSize: size * 0.53 }}
       >
-        by
-        <svg
-          viewBox="0 0 40 40"
-          className="pointer-events-none absolute overflow-visible"
-          style={{ inset: -size * 0.27 }}
-          aria-hidden="true"
-        >
-          <ellipse
-            className="o-spin"
-            style={{ ["--dur" as string]: "46s", transformOrigin: "20px 20px" }}
-            cx="20"
-            cy="20"
-            rx="19"
-            ry="7.5"
-            fill="none"
-            stroke="rgba(255,138,61,.5)"
-            strokeWidth="1"
-          />
-        </svg>
-      </span>
-      <span className="text-[15px] font-semibold tracking-[-0.015em] text-ink">
-        escaleira
+        byescaleira
       </span>
     </span>
   );

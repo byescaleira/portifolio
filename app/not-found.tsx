@@ -2,7 +2,8 @@ import Link from "next/link";
 
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
-import { Chevron, Nebula, OffCourse, Starfield } from "./components/illustrations";
+import { Chevron } from "./components/illustrations";
+import { Print } from "./components/print";
 
 export const metadata = {
   title: "Page not found — Rafael Escaleira",
@@ -14,9 +15,6 @@ export default function NotFound() {
       <Header />
       <main className="relative z-10 flex flex-1 flex-col">
         <section className="relative overflow-hidden bg-background px-6 py-24 md:px-12 md:py-32">
-          <Starfield />
-          <Nebula className="-right-16 -top-32 h-[620px] w-[760px]" />
-
           <div className="relative mx-auto grid max-w-[1120px] items-center gap-14 lg:grid-cols-[1fr_auto]">
             <div>
               <p className="t-eyebrow font-mono">404</p>
@@ -45,7 +43,14 @@ export default function NotFound() {
             </div>
 
             <div className="justify-self-center lg:justify-self-end">
-              <OffCourse />
+              <Print
+                src="/404.webp"
+                alt="A screenprinted astronaut adrift in a debris field, a severed orange tether coiling away"
+                width={900}
+                height={900}
+                priority
+                className="max-w-[440px]"
+              />
             </div>
           </div>
         </section>

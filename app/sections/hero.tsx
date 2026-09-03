@@ -1,4 +1,5 @@
 import { Chevron } from "../components/illustrations";
+import { Print } from "../components/print";
 
 /**
  * A printed sheet, not an app screen.
@@ -36,7 +37,7 @@ export function Hero() {
         </h1>
 
         {/* the heavy rule under a masthead — the one thick thing on the page */}
-        <div className="mt-5 h-[6px] w-full bg-foreground" />
+        <div className="mt-5 h-[6px] w-full rounded-full bg-foreground" />
 
         <div className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-[1.15fr_1fr]">
           <div>
@@ -63,23 +64,17 @@ export function Hero() {
             </div>
           </div>
 
-          {/* the ink bar — a press colour bar, and an honest statement of the
-              system: two inks and the paper, nothing else */}
-          <div className="self-end">
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              Two inks, one paper
-            </p>
-            <div className="mt-3 flex h-14 border border-hairline">
-              <span className="flex-1 bg-accent" />
-              <span className="flex-1 border-l border-hairline bg-foreground" />
-              <span className="flex-1 border-l border-hairline bg-background" />
-            </div>
-            <div className="mt-2 flex font-mono text-[10px] uppercase tracking-[0.1em] text-ink-3">
-              <span className="flex-1">Safety</span>
-              <span className="flex-1">Ink</span>
-              <span className="flex-1">Stock</span>
-            </div>
-          </div>
+          {/* the print. It carries its own bone paper, so it dissolves into the
+              sheet on the light build and reads as a pulled print pasted onto a
+              dark page on the other. */}
+          <Print
+            src="/astronaut.webp"
+            alt="A screenprinted astronaut standing on a rocky outcrop, a ringed planet low on the horizon behind him"
+            width={900}
+            height={900}
+            priority
+            className="self-center"
+          />
         </div>
       </div>
 

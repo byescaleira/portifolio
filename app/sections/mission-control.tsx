@@ -1,5 +1,5 @@
 import { ScrollReveal } from "../components/scroll-reveal";
-import { Nebula, OrbitalConsole } from "../components/illustrations";
+import { Print } from "../components/print";
 
 const principles = [
   {
@@ -25,12 +25,16 @@ export function MissionControl() {
       id="mission"
       className="relative overflow-hidden border-y border-hairline bg-surface px-6 py-24 md:px-12 md:py-28"
     >
-      <Nebula className="left-16 top-1/2 h-[720px] w-[720px] -translate-y-1/2" />
 
       <div className="relative mx-auto max-w-[1120px]">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <ScrollReveal className="hidden justify-self-center lg:block">
-            <OrbitalConsole labels={["Architecture", "Automation", "AI"]} />
+            <Print
+              src="/orbital-chart.webp"
+              alt="A screenprinted orbital chart: a halftone planet with four tilted orbits, two small craft and a station"
+              width={900}
+              height={900}
+            />
           </ScrollReveal>
 
           <ScrollReveal delay={0.07}>

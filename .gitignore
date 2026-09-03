@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Fontes das ilustrações em PNG (10 MB). O site serve os .webp em public/.
+art-src/
