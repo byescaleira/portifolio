@@ -73,6 +73,25 @@ export default function DesignSystemPage() {
             themes are two stocks, not two designs.
           </Prose>
 
+          <SubHead>Two inks, one paper</SubHead>
+          <Prose small>
+            The whole palette, stated the way a press states it. This bar opened
+            the site for a while; it belongs here, where declaring the system is
+            the job rather than a distraction from the promise.
+          </Prose>
+          <div>
+            <div className="flex h-16 overflow-hidden rounded-[12px] border-2 border-hairline">
+              <span className="flex-1 bg-accent" />
+              <span className="flex-1 border-l-2 border-hairline bg-foreground" />
+              <span className="flex-1 border-l-2 border-hairline bg-background" />
+            </div>
+            <div className="mt-2 flex font-mono text-[11px] uppercase tracking-[0.12em] text-ink-3">
+              <span className="flex-1">Safety &mdash; the accent</span>
+              <span className="flex-1">Ink &mdash; the foreground</span>
+              <span className="flex-1">Stock &mdash; the paper</span>
+            </div>
+          </div>
+
           <SubHead>Ground and ink</SubHead>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <Swatch name="--background" light="#f3efe5" dark="#0b0a09" role="The paper. Page ground." />

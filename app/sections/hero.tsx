@@ -28,9 +28,9 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1120px] px-6 md:px-12">
+      <div className="mx-auto max-w-[1120px] px-6 pb-4 md:px-12">
         {/* masthead — type is the structure here, not a headline sitting on one */}
-        <h1 className="t-display mt-10 md:mt-14">
+        <h1 className="t-display mt-12 md:mt-24">
           <span className="block">Rafael</span>
           <span className="block">Escaleira</span>
         </h1>
@@ -38,53 +38,28 @@ export function Hero() {
         {/* the heavy rule under a masthead — the one thick thing on the page.
             It is PRINTED, not drawn: one squeegee pass on load, left to
             right, and it never replays. */}
-        <div className="o-squeegee mt-5 h-[7px] w-full rounded-full bg-accent" />
+        <div className="o-squeegee mt-6 h-[7px] w-full rounded-full bg-accent" />
 
-        <div className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-[1.15fr_1fr]">
-          <div>
-            <p className="t-sub max-w-[15ch] text-balance">
-              How native software gets built when it can&rsquo;t fail.
-            </p>
-            <p className="t-lead mt-5 max-w-[46ch] text-pretty">
-              I turn mobile complexity into software that is simple, testable and
-              built to last. Today that means Cartola at Globo &mdash; played
-              by millions every round.
-            </p>
+        {/* The promise, at the scale it deserves. This was set at t-sub under a
+            supporting paragraph, an ink bar and a second call to action — six
+            competing pieces on the first screen. All of that is gone: the deck
+            below is now the only thing the eye lands on after the name, and it
+            is the sentence the whole site answers to. */}
+        <p className="mt-10 max-w-[19ch] text-balance text-[clamp(1.75rem,3.4vw,3rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-accent-ink md:mt-14">
+          How native software gets built when it can&rsquo;t fail.
+        </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <a href="#contact" className="btn-primary">
-                Get in touch
-              </a>
-              <a
-                href="#work"
-                className="inline-flex items-center gap-1.5 text-[17px] text-accent-ink"
-              >
-                See my work
-                <Chevron />
-              </a>
-            </div>
-          </div>
-
-          {/* the ink bar — a press colour bar, and an honest statement of the
-              system: two inks and the paper, nothing else. The astronaut print
-              lived here for a while and was pulled: the masthead is already the
-              loudest thing on the sheet, and a full illustration beside it gave
-              the eye two places to land instead of one. */}
-          <div className="self-end">
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              Two inks, one paper
-            </p>
-            <div className="mt-3 flex h-14 overflow-hidden rounded-[12px] border-2 border-hairline">
-              <span className="flex-1 bg-accent" />
-              <span className="flex-1 border-l-2 border-hairline bg-foreground" />
-              <span className="flex-1 border-l-2 border-hairline bg-background" />
-            </div>
-            <div className="mt-2 flex font-mono text-[10px] uppercase tracking-[0.1em] text-ink-3">
-              <span className="flex-1">Safety</span>
-              <span className="flex-1">Ink</span>
-              <span className="flex-1">Stock</span>
-            </div>
-          </div>
+        <div className="mt-10 mb-12 flex flex-wrap items-center gap-x-7 gap-y-4 md:mb-24">
+          <a href="#work" className="btn-primary">
+            See my work
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-1.5 text-[17px] text-ink-2 transition-colors hover:text-accent-ink"
+          >
+            Get in touch
+            <Chevron />
+          </a>
         </div>
       </div>
 
