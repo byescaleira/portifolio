@@ -1,4 +1,5 @@
 import { Chevron } from "../components/illustrations";
+import { PrintedSky } from "../components/printed-sky";
 
 /**
  * A printed sheet, not an app screen.
@@ -15,9 +16,13 @@ import { Chevron } from "../components/illustrations";
  */
 export function Hero() {
   return (
-    <section className="relative bg-background">
+    <section className="relative overflow-hidden bg-background">
+      {/* The subject is space and the medium is a screenprint; the halftone dot
+          is the one mark that is both. Sits behind everything, never over it. */}
+      <PrintedSky />
+
       {/* running head — the line a printer sets above the plate */}
-      <div className="border-b border-hairline">
+      <div className="relative border-b border-hairline">
         <div className="mx-auto flex max-w-[1120px] items-center justify-between px-6 py-2.5 md:px-12">
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
             iOS Specialist · Globo · Cartola
@@ -28,7 +33,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1120px] px-6 pb-4 md:px-12">
+      <div className="relative mx-auto max-w-[1120px] px-6 pb-4 md:px-12">
         {/* masthead — type is the structure here, not a headline sitting on one */}
         <h1 className="t-display mt-12 md:mt-24">
           <span className="block">Rafael</span>
@@ -65,7 +70,7 @@ export function Hero() {
 
       {/* colophon — the strip along the foot of a printed sheet. Edge to edge,
           divided by rules, set in mono. Not a card. */}
-      <div className="mt-14 border-y border-hairline">
+      <div className="relative mt-14 border-y border-hairline">
         <div className="mx-auto grid max-w-[1120px] px-6 sm:grid-cols-3 md:px-12">
           <Colophon label="Base" value="Campo Grande, MS · Rio de Janeiro, RJ" />
           <Colophon label="Status" value="Open to interesting conversations" rule />

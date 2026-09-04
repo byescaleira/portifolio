@@ -177,6 +177,19 @@ pipeline dot. Slow enough that you only notice it if you stop and look.
 
 *Rules:* nothing orbital sits on top of text; no cycle shorter than 5s.
 
+**The printed sky** (`PrintedSky`, on the hero) is the one place the space
+theme and the print medium meet without either giving way. There is exactly one
+mark that belongs to both: **the halftone dot.** A press builds tone from dots;
+a night sky is dots. So the atmosphere is not a starfield dropped onto a print
+— it is the same dot the illustrations are made of, at two pitches: a 78px
+scatter drifting over 120s, and an 8px disc bleeding off the right edge, its
+dots crowding in shadow and opening toward the light exactly as the planet in
+the Mission Control plate does. A hairline arc gives it a terminator.
+
+It is masked so density falls away long before the type starts, and the hero's
+content is positioned above it. Reach for this before reaching for anything
+that glows.
+
 ### REVEAL — once on entry, 0.7s, 70ms stagger
 
 24px up, opacity 0→1, in reading order. Fires once and never replays.
