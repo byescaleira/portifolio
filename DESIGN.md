@@ -167,7 +167,7 @@ use the `--art-*` tokens rather than fixed values.
 
 ## Motion
 
-Two families. Anything that fits neither does not ship — that is what keeps heavy
+Three families. Anything that fits none does not ship — that is what keeps heavy
 animation from becoming noise.
 
 ### ORBITAL — continuous, ambient, 15–90s, `linear`
@@ -180,6 +180,23 @@ pipeline dot. Slow enough that you only notice it if you stop and look.
 ### REVEAL — once on entry, 0.7s, 70ms stagger
 
 24px up, opacity 0→1, in reading order. Fires once and never replays.
+
+### RESPONSE — on interaction only
+
+ORBITAL is ambient and REVEAL fires once on entry; neither covers what happens
+when a person touches something. Everything in this family is borrowed from the
+press rather than invented — **if an effect cannot be explained by how a
+screenprint is actually made, it does not belong here.**
+
+| Effect | What it is |
+|---|---|
+| `.misreg` | The two plates slip out of register under the pointer. A real pull is never perfectly aligned, and that hair of offset is the signature of the medium. On `Panel`, so it is felt everywhere. |
+| `.o-squeegee` | One pass, left to right, on load. The rule under the masthead is not drawn, it is **printed**. Fires once, never replays. |
+| `PressMarks` | Crop marks at the viewport corners, faded in once the reader has scrolled past 220px. A sheet is printed oversized and trimmed; these are the marks that guide the blade. Marks that greet you on load are decoration — marks that appear once you have committed to the page are a detail. |
+| `LivingMark` | The mark turns a few degrees toward the pointer. Decision 001 gives the character no face, so turning is the only way it can acknowledge you — and it works *because* there are no eyes to follow you. Pointer-fine devices only. |
+
+All four are transform/opacity only, and all resolve to nothing under
+`prefers-reduced-motion`.
 
 ### Easing — three curves, no others
 

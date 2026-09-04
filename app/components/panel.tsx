@@ -41,16 +41,18 @@ export function Panel({
   return (
     <Tag
       className={cn(
-        "overflow-hidden rounded-[18px] border-2 border-hairline bg-panel transition-colors duration-200",
+        "rounded-[18px] border-2 border-hairline bg-panel transition-colors duration-200",
         tinted && "border-accent",
-        hover && !tinted && "hover:border-accent",
+        // The plates slip out of register under the pointer — the signature
+        // of the medium, and the reason this is not just a bordered box.
+        hover && !tinted && "misreg",
         className
       )}
     >
       {title && (
         <div
           className={cn(
-            "flex items-baseline justify-between gap-4 border-b-2 px-5 py-2.5 sm:px-6",
+            "flex items-baseline justify-between gap-4 rounded-t-[16px] border-b-2 px-5 py-2.5 sm:px-6",
             tinted
               ? "border-accent bg-accent text-on-accent"
               : "border-hairline bg-foreground text-background"

@@ -623,6 +623,100 @@ body::after {
   }
 }
 
+/* ============================================================
+   RESPONSE — a third motion family, on interaction only.
+
+   ORBITAL is ambient and REVEAL fires once on entry; neither covers
+   what happens when a person touches something. Everything here is
+   borrowed from the press rather than invented: ink that slips out of
+   register, a squeegee pass, crop marks on the sheet. If an effect
+   cannot be explained by how a screenprint is actually made, it does
+   not belong in this file.
+   ============================================================ */
+
+/* Misregistration. The two plates never line up perfectly on a real
+   press, and a pull that is a hair out is the signature of the medium.
+   On hover the orange plate slips; on leave it snaps back. */
+.misreg {
+  position: relative;
+}
+.misreg::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--accent-solid);
+  border-radius: inherit;
+  opacity: 0;
+  transform: translate(0, 0);
+  pointer-events: none;
+  transition:
+    opacity 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.misreg:hover::after,
+.misreg:focus-visible::after {
+  opacity: 0.85;
+  transform: translate(3px, 3px);
+}
+
+/* The squeegee. One pass, left to right, on load — the rule under the
+   masthead is not drawn, it is PRINTED. Fires once and never replays. */
+@keyframes bye-squeegee {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.o-squeegee {
+  animation: bye-squeegee 0.9s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+/* Crop marks. A press sheet is trimmed after printing, and the marks
+   that guide the blade sit just outside the live area. Here they sit at
+   the viewport corners and fade in once the reader has committed to the
+   page — the one detail that says "sheet" without a word of copy. */
+.crop-mark {
+  position: fixed;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.crop-mark[data-shown="true"] {
+  opacity: 0.5;
+}
+.crop-mark::before,
+.crop-mark::after {
+  content: "";
+  position: absolute;
+  background: var(--ink-3);
+}
+.crop-mark::before {
+  width: 1px;
+  height: 100%;
+}
+.crop-mark::after {
+  height: 1px;
+  width: 100%;
+}
+
+/* The mark turns toward the pointer. The character has no face — the
+   visor is a mirror — so the only way it can acknowledge you is to
+   turn. A few degrees is the whole trick. */
+.living-mark {
+  transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .living-mark {
+    transform: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

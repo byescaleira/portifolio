@@ -35,8 +35,10 @@ export function Hero() {
           <span className="block">Escaleira</span>
         </h1>
 
-        {/* the heavy rule under a masthead — the one thick thing on the page */}
-        <div className="mt-5 h-[7px] w-full rounded-full bg-accent" />
+        {/* the heavy rule under a masthead — the one thick thing on the page.
+            It is PRINTED, not drawn: one squeegee pass on load, left to
+            right, and it never replays. */}
+        <div className="o-squeegee mt-5 h-[7px] w-full rounded-full bg-accent" />
 
         <div className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-[1.15fr_1fr]">
           <div>

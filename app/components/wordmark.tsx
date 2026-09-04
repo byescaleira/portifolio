@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
+import { LivingMark } from "./living-mark";
 
 /**
  * The mark is the helmet.
@@ -15,15 +16,17 @@ import { cn } from "@/lib/utils";
 export function Wordmark({ size = 30, className }: { size?: number; className?: string }) {
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
-      <Image
-        src="/logo.webp"
-        alt=""
-        width={size}
-        height={size}
-        priority
-        className="shrink-0"
-        style={{ width: size, height: size }}
-      />
+      <LivingMark>
+        <Image
+          src="/logo.webp"
+          alt=""
+          width={size}
+          height={size}
+          priority
+          className="shrink-0"
+          style={{ width: size, height: size }}
+        />
+      </LivingMark>
       <span
         className="font-semibold tracking-[-0.01em] text-ink"
         style={{ fontSize: size * 0.53 }}

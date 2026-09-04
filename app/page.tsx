@@ -1,6 +1,7 @@
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { ScrollProgress } from "./components/scroll-progress";
+import { PressMarks } from "./components/press-marks";
 import { MobileTabBar } from "./components/mobile-tab-bar";
 import { CodeStrip } from "./components/illustrations";
 import { Hero } from "./sections/hero";
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <>
       <ScrollProgress />
+      <PressMarks />
       <Header />
       <main id="hero" className="relative z-10 flex flex-1 flex-col">
         <Hero />
