@@ -35,7 +35,7 @@ export default function Home() {
 
 const stats = [
   { value: "7+", label: "years shipping native iOS" },
-  { value: "Millions", label: "of players on Cartola FC, every round" },
+  { value: "Millions", label: "of players on Cartola, every round" },
   { value: "7", label: "teams, from agtech to fintech" },
 ];
 

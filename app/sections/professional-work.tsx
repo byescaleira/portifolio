@@ -23,9 +23,9 @@ export function ProfessionalWork() {
     <section id="work" className="bg-background px-6 py-24 md:px-12 md:py-28">
       <div className="mx-auto max-w-[1120px]">
         <ScrollReveal className="mb-12">
-          <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+          <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Professional work</p>
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">04</p>
+            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">04</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             A game the whole country plays.
@@ -62,7 +62,7 @@ export function ProfessionalWork() {
                   </span>
                 </div>
 
-                <h3 className="t-sub mt-5">Cartola FC</h3>
+                <h3 className="t-sub mt-5">Cartola</h3>
                 <p className="mt-3.5 text-pretty text-[19px] leading-[1.5] text-ink-2">
                   Cartola is less an app than a national ritual — millions of
                   people setting their team before kickoff, then all opening it at

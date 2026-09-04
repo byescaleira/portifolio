@@ -20,7 +20,7 @@ export function Hero() {
       <div className="border-b border-hairline">
         <div className="mx-auto flex max-w-[1120px] items-center justify-between px-6 py-2.5 md:px-12">
           <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-            iOS Specialist · Globo · Cartola FC
+            iOS Specialist · Globo · Cartola
           </p>
           <p className="hidden font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3 sm:block">
             Campo Grande · Rio de Janeiro
@@ -36,7 +36,7 @@ export function Hero() {
         </h1>
 
         {/* the heavy rule under a masthead — the one thick thing on the page */}
-        <div className="mt-5 h-[6px] w-full rounded-full bg-foreground" />
+        <div className="mt-5 h-[7px] w-full rounded-full bg-accent" />
 
         <div className="mt-8 grid gap-x-12 gap-y-10 md:grid-cols-[1.15fr_1fr]">
           <div>
@@ -45,7 +45,7 @@ export function Hero() {
             </p>
             <p className="t-lead mt-5 max-w-[46ch] text-pretty">
               I turn mobile complexity into software that is simple, testable and
-              built to last. Today that means Cartola FC at Globo &mdash; played
+              built to last. Today that means Cartola at Globo &mdash; played
               by millions every round.
             </p>
 

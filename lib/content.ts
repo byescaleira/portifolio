@@ -31,12 +31,12 @@ export const experiences: Experience[] = [
     slug: "globo",
     company: "Globo",
     codename: "Cartola",
-    role: "iOS Specialist — Cartola FC",
+    role: "iOS Specialist — Cartola",
     period: "Present",
     location: "Rio de Janeiro, Brazil",
     focus: "iOS architecture, performance, and scale",
     summary:
-      "Cartola FC is the largest fantasy football game in Brazil. As an iOS Specialist at Globo, I work on the architecture, performance, and native craft of an app used by millions of fans every round.",
+      "Cartola is the largest fantasy football game in Brazil. As an iOS Specialist at Globo, I work on the architecture, performance, and native craft of an app used by millions of fans every round.",
     responsibilities: [
       "Own iOS architecture decisions for feature teams.",
       "Drive modularization with Swift Package Manager.",

@@ -11,7 +11,7 @@ const milestones = [
   { slug: "tocalivros", company: "TocaLivros", focus: "Edtech", year: "2020", x: 520, y: 112 },
   { slug: "next", company: "Next", focus: "Product growth", year: "2021", x: 669, y: 84 },
   { slug: "deliver-it-letsbank", company: "Deliver IT", focus: "Letsbank · fintech", year: "2022", x: 817, y: 54 },
-  { slug: "globo", company: "Globo", focus: "Cartola FC", year: "Present", x: 966, y: 24 },
+  { slug: "globo", company: "Globo", focus: "Cartola", year: "Present", x: 966, y: 24 },
 ];
 
 const principles = [
@@ -70,9 +70,9 @@ export function About() {
     >
       <div className="mx-auto max-w-[1120px]">
         <ScrollReveal className="mb-12">
-          <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+          <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Who I am</p>
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">01</p>
+            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">01</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             Builder by instinct.

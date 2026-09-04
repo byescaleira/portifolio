@@ -32,9 +32,9 @@ export function Contact() {
       </svg>
 
       <ScrollReveal className="relative mx-auto max-w-[1120px]">
-        <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+        <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Contact</p>
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">06</p>
+            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">06</p>
           </div>
         <h2 className="t-section mt-5 max-w-[20ch] text-balance">
           Let&apos;s build something native.

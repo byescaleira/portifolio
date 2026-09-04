@@ -78,8 +78,8 @@
 /* ---------- LIGHT ---------- */
 :root {
   /* Ink on bone paper. Values verified against AA on all three grounds. */
-  --background: #eae4d6;
-  --surface: #dcd3c0;
+  --background: #f3efe5;
+  --surface: #e6e0d2;
   --foreground: #26241f;
   /* Apple's #6e6e73 / #86868b pair clears AA on white but not on the #f5f5f7
      sections, where most of this text actually sits. Each step is darkened
@@ -90,17 +90,18 @@
   --hairline: #4e4a41;
 
   --accent-solid: #ff6b00;
-  /* Paper is darker than white, so orange text has to go further down than it
-     did on #f5f5f7. #bd4b00 measured 3.62 on the surface; #9e3a00 clears 4.5
-     on all three grounds and reads as a burnt screenprint orange, which is
-     period-correct anyway. */
-  --accent-ink: #9e3a00;
+  /* No orange bright enough to feel vibrant clears 4.5:1 on a light ground —
+     #ff6b00 measures 1.92 on the paper. That is physics, and it is why the
+     vibrancy lives in FILLS, not in type: a screenprint floods ink, it does not
+     set coloured text. #ad3e00 is the brightest that still clears AA on all
+     three grounds (4.60) now that the paper was lightened. */
+  --accent-ink: #ad3e00;
   --accent-soft: rgba(255, 107, 0, 0.16);
   --on-accent: #26241f;
 
   /* Cards are WHITE on the grey alternating sections. When card and surface
      were both #f5f5f7 every panel dissolved into the section behind it. */
-  --card: #f6f2e9;
+  --card: #fbf8f1;
 
   /* Glass needs something to sit against: near-white on white is invisible,
      so the light build tints toward the surface grey instead. */
@@ -252,27 +253,29 @@
   .font-display {
     font-family: var(--font-display);
   }
+  /* Baloo sets much wider than a condensed face, so the display steps back and
+     the leading opens up. Uppercase stays: it is a masthead. */
   .t-display {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(3.75rem, 8.5vw, 7.5rem);
-    line-height: 0.92;
-    letter-spacing: -0.005em;
+    font-size: clamp(2.75rem, 6.2vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.012em;
     text-transform: uppercase;
   }
   .t-section {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(2.5rem, 5.4vw, 4.5rem);
-    line-height: 0.98;
-    letter-spacing: 0;
+    font-size: clamp(2rem, 4.2vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.008em;
   }
   .t-sub {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    line-height: 1.08;
-    letter-spacing: 0;
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    line-height: 1.18;
+    letter-spacing: -0.006em;
   }
   .t-card {
     font-weight: 600;

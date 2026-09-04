@@ -34,7 +34,7 @@ export function Footer() {
             <Wordmark size={24} />
             <p className="mt-3 text-[13px] leading-[1.5] text-ink-3">
               I build native Apple products that scale. Currently
-              at Globo, on Cartola FC.
+              at Globo, on Cartola.
             </p>
           </div>
 

@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Archivo, Big_Shoulders, Newsreader } from "next/font/google";
+import { Archivo, Baloo_2, Newsreader } from "next/font/google";
 import "./globals.css";
 
 /* Three faces, three jobs — poster, interface, reading. Big Shoulders is an
-   industrial condensed with real printing character: it is what a screenprinted
-   headline looks like, and it is the reason this no longer reads as a system
-   UI. Archivo stays as the quiet workhorse for controls and labels, where
+   rounded heavy display: the illustration's contours are hand-drawn and chunky,
+   and a squared industrial condensed fought them. Round type, round art. Archivo stays as the quiet workhorse for controls and labels, where
    personality would only fight the display face. Newsreader carries anything
    meant to be READ. See DESIGN.md. */
-const display = Big_Shoulders({
+const display = Baloo_2({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["600", "700", "800"],
@@ -32,7 +31,7 @@ import { ThemeProvider } from "./components/theme-provider";
 export const metadata: Metadata = {
   title: "Rafael Escaleira — iOS Specialist",
   description:
-    "iOS Specialist focused on mobile architecture, code quality, modularization, and shipping native iOS products that scale. Currently leading AI adoption at Globo on Cartola FC.",
+    "iOS Specialist focused on mobile architecture, code quality, modularization, and shipping native iOS products that scale. Currently leading AI adoption at Globo on Cartola.",
   keywords: [
     "iOS",
     "Swift",

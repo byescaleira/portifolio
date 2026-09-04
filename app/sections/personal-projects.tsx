@@ -29,9 +29,9 @@ export function PersonalProjects() {
     >
       <div className="mx-auto max-w-[1120px]">
         <ScrollReveal className="mb-12">
-          <div className="flex items-baseline justify-between border-b border-hairline pb-2">
+          <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Personal work</p>
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">05</p>
+            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">05</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">The system behind this page.</h2>
           <p className="t-lead mt-5 max-w-[58ch] text-pretty">

@@ -100,22 +100,6 @@ export function Starfield({ className }: { className?: string }) {
   );
 }
 
-/** Crosses the frame roughly every fifteen seconds. */
-export function Comet({ className }: { className?: string }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={cn("pointer-events-none absolute hidden h-0.5 w-[150px] origin-right dark:block", className)}
-      style={{
-        rotate: "33deg",
-        background: "linear-gradient(270deg, rgba(255,178,122,0), rgba(255,178,122,.9))",
-        animation: "bye-comet 15s ease-in infinite",
-      }}
-    />
-  );
-}
-
-/** The breathing orange nebula. Opacity on its own layer — never a shadow. */
 export function Nebula({ className }: { className?: string }) {
   return (
     <div
@@ -273,69 +257,6 @@ function TabGlyph({ active, size, d }: { active?: boolean; size: number; d: stri
   );
 }
 
-/**
- * The orbital console. Rings are SVG and the probes ride them with
- * animateMotion; the labels sit on a rotating ring and counter-rotate
- * twice — once for the ring, once for their own fixed offset — so they
- * always read upright.
- */
-export function OrbitalConsole({
-  labels = ["Swift", "SwiftUI", "SPM", "CI/CD", "Testing"],
-  className,
-}: {
-  labels?: string[];
-  className?: string;
-}) {
-  const step = 360 / labels.length;
-
-  return (
-    <div className={cn("relative", className)} style={{ width: 520, height: 520 }}>
-      <svg viewBox="0 0 520 520" className="absolute inset-0 h-[520px] w-[520px]" aria-hidden="true">
-        <ellipse cx="260" cy="260" rx="246" ry="96" fill="none" stroke="var(--hairline)" strokeWidth="1" />
-        <ellipse cx="260" cy="260" rx="176" ry="238" fill="none" stroke="var(--hairline)" strokeWidth="1" />
-        <circle cx="260" cy="260" r="186" fill="none" stroke="rgba(255,138,61,.22)" strokeWidth="1" />
-        <circle cx="260" cy="260" r="118" fill="none" stroke="var(--hairline)" strokeWidth="1" strokeDasharray="2 8" />
-
-        <circle r="2.6" fill="#FF8A3D">
-          <animateMotion dur="21s" repeatCount="indefinite" path="M 506,260 A 246,96 0 1,1 14,260 A 246,96 0 1,1 506,260" />
-        </circle>
-        <circle r="2.2" fill="var(--ink-3)">
-          <animateMotion dur="34s" repeatCount="indefinite" path="M 436,260 A 176,238 0 1,0 84,260 A 176,238 0 1,0 436,260" />
-        </circle>
-        <circle r="1.8" fill="var(--accent-ink)">
-          <animateMotion dur="27s" begin="-9s" repeatCount="indefinite" path="M 378,260 A 118,118 0 1,1 142,260 A 118,118 0 1,1 378,260" />
-        </circle>
-      </svg>
-
-      <div className="o-spin absolute inset-0" style={{ ["--dur" as string]: "46s" }}>
-        {labels.map((label, i) => {
-          const angle = i * step;
-          return (
-            <div
-              key={label}
-              className="absolute left-1/2 top-1/2"
-              style={{ transform: `translate(-50%,-50%) rotate(${angle}deg) translateX(200px)` }}
-            >
-              <div className="o-spin-rev" style={{ ["--dur" as string]: "46s" }}>
-                <span
-                  className="glass block whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium text-ink"
-                  style={{ transform: `rotate(-${angle}deg)` }}
-                >
-                  {label}
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Device width={160} />
-      </div>
-    </div>
-  );
-}
-
 const CODE_LINES: React.ReactNode[] = [
   <>
     <span style={{ color: "var(--code-keyword)" }}>actor</span> RoundStore {"{"} <span style={{ color: "var(--code-keyword)" }}>private var</span> cache: [Round: Lineup] {"}"}
@@ -349,7 +270,6 @@ const CODE_LINES: React.ReactNode[] = [
   </>,
 ];
 
-/** Real Swift, moving. Text, so it stays crisp and searchable. */
 export function CodeStrip() {
   return (
     <div className="relative overflow-hidden border-y border-hairline py-4"
@@ -537,134 +457,6 @@ export function Sparkline() {
       <text x="0" y="46" className="font-mono" fontSize="10" fill="var(--ink-3)">
         frame time
       </text>
-    </svg>
-  );
-}
-
-/** Three translucent panes drifting out of register. */
-export function PrismPanes() {
-  return (
-    <div className="relative flex h-full w-full items-center justify-center overflow-hidden" aria-hidden="true">
-      {[
-        { bg: "rgba(255,107,0,.55)", anim: "bye-prism-a" },
-        { bg: "rgba(255,178,122,.42)", anim: "bye-prism-b" },
-        { bg: "var(--art-pane-3)", anim: "bye-prism-c" },
-      ].map((p) => (
-        <span
-          key={p.anim}
-          className="absolute h-[108px] w-[108px] rounded-[26px]"
-          style={{ background: p.bg, animation: `${p.anim} 11s ease-in-out infinite` }}
-        />
-      ))}
-    </div>
-  );
-}
-
-/** The orange branch draws and merges back; the others stay quiet. */
-export function BranchGraph() {
-  return (
-    <svg viewBox="0 0 260 130" className="h-[130px] w-[260px]" aria-hidden="true">
-      <path d="M22 100 H70 a16 16 0 0 0 16-16 V46 a16 16 0 0 1 16-16 h44" fill="none" stroke="var(--art-line)" strokeWidth="2" />
-      <path d="M22 100 H120 a16 16 0 0 0 16-16 V30" fill="none" stroke="var(--art-line)" strokeWidth="2" />
-      <path
-        className="o-draw"
-        style={{ ["--dur" as string]: "6s", strokeDasharray: 150, strokeDashoffset: 150 }}
-        d="M136 30 H182 a16 16 0 0 1 16 16 v38 a16 16 0 0 0 16 16 h24"
-        fill="none"
-        stroke="#FF6B00"
-        strokeWidth="2"
-      />
-      <circle cx="22" cy="100" r="7" fill="#FF6B00" />
-      <circle cx="86" cy="66" r="6" fill="none" stroke="var(--art-line)" strokeWidth="2" />
-      <circle cx="136" cy="30" r="6" fill="none" stroke="var(--art-line)" strokeWidth="2" />
-      <circle cx="198" cy="66" r="6" fill="none" stroke="var(--art-line)" strokeWidth="2" />
-      <circle cx="238" cy="100" r="7" fill="#FF6B00" />
-      <circle
-        cx="238"
-        cy="100"
-        r="7"
-        fill="none"
-        stroke="#FF6B00"
-        strokeWidth="1.4"
-        style={{ transformOrigin: "238px 100px", animation: "bye-pulse-ring 3s ease-out infinite" }}
-      />
-    </svg>
-  );
-}
-
-/**
- * A 404 in the orbital language: the route is still running, you just drifted
- * off it. Hairlines everywhere; the single orange mark is where you actually
- * are — which is the one thing that matters on this page.
- */
-export function OffCourse() {
-  return (
-    <svg
-      viewBox="0 0 420 250"
-      className="block h-[250px] w-full max-w-[420px]"
-      aria-hidden="true"
-    >
-      {/* the route */}
-      <ellipse
-        cx="190"
-        cy="128"
-        rx="132"
-        ry="66"
-        fill="none"
-        stroke="var(--hairline)"
-        strokeWidth="1.4"
-      />
-      <g stroke="var(--hairline)" strokeWidth="1">
-        <path d="M58 128h-8" />
-        <path d="M322 128h8" />
-        <path d="M190 62v-8" />
-        <path d="M190 194v8" />
-      </g>
-
-      {/* the product at the centre — everything orbits it */}
-      <circle
-        cx="190"
-        cy="128"
-        r="5"
-        fill="var(--card)"
-        stroke="var(--ink-3)"
-        strokeWidth="1.6"
-      />
-
-      {/* where the address should have landed */}
-      <circle
-        cx="291"
-        cy="86"
-        r="5.5"
-        fill="var(--background)"
-        stroke="var(--ink-3)"
-        strokeWidth="1.6"
-      />
-
-      {/* the drift, past tense — dashed, never animated */}
-      <path
-        d="M291 86C322 108 348 150 374 200"
-        fill="none"
-        stroke="var(--hairline)"
-        strokeWidth="1.4"
-        strokeDasharray="2 5"
-        strokeLinecap="round"
-      />
-
-      {/* you are here */}
-      <circle cx="376" cy="204" r="5.5" fill="#FF6B00" />
-      <circle
-        cx="376"
-        cy="204"
-        r="5.5"
-        fill="none"
-        stroke="#FF6B00"
-        strokeWidth="1.4"
-        style={{
-          transformOrigin: "376px 204px",
-          animation: "bye-pulse-ring 2.8s ease-out infinite",
-        }}
-      />
     </svg>
   );
 }
