@@ -56,7 +56,7 @@ export function Panel({
               : "border-hairline bg-foreground text-background"
           )}
         >
-          <h3 className="font-display text-[20px] font-bold uppercase leading-none tracking-[0.005em]">
+          <h3 className="text-[13px] font-semibold uppercase leading-none tracking-[0.09em]">
             {title}
           </h3>
           {index && (

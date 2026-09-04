@@ -48,7 +48,7 @@ function StatBand() {
             key={s.value}
             className={`py-9 ${i > 0 ? "border-hairline sm:border-l sm:pl-8" : ""}`}
           >
-            <p className="font-display text-[64px] font-extrabold uppercase leading-[0.9] tracking-[-0.01em] text-accent-ink">
+            <p className="text-[64px] font-semibold leading-[1.02] tracking-[-0.03em] text-accent-ink">
               {s.value}
             </p>
             <p className="mt-2 max-w-[24ch] text-[15px] text-ink-2">{s.label}</p>

@@ -1,31 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Baloo_2, Newsreader } from "next/font/google";
 import "./globals.css";
-
-/* Three faces, three jobs — poster, interface, reading. Big Shoulders is an
-   rounded heavy display: the illustration's contours are hand-drawn and chunky,
-   and a squared industrial condensed fought them. Round type, round art. Archivo stays as the quiet workhorse for controls and labels, where
-   personality would only fight the display face. Newsreader carries anything
-   meant to be READ. See DESIGN.md. */
-const display = Baloo_2({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["600", "700", "800"],
-  display: "swap",
-});
-const archivo = Archivo({
-  subsets: ["latin"],
-  variable: "--font-archivo",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-newsreader",
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
 import { ThemeProvider } from "./components/theme-provider";
 
 export const metadata: Metadata = {
@@ -83,7 +57,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`h-full antialiased ${display.variable} ${archivo.variable} ${newsreader.variable}`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col [overflow-x:clip] bg-background text-foreground transition-colors duration-300">
         <ThemeProvider defaultTheme="dark" enableSystem={true}>

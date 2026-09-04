@@ -8,14 +8,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Paper and ink. Archivo is the industrial grotesque that carries structure,
-     UI and headings; Newsreader is the editorial serif that carries anything
-     meant to be READ. The old system stack was Apple discipline — this brand
-     is a screenprint now, and a system UI face cannot say that. */
-  --font-sans: var(--font-archivo), "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
-  --font-display: var(--font-display), "Haettenschweiler", "Arial Narrow", sans-serif;
-  --font-heading: var(--font-display);
+  /* Apple's system stack resolves to SF Pro on Apple devices: nothing to
+     download, nothing to lay out twice. The webfont experiment (Baloo 2 for
+     display, Archivo for UI, Newsreader for reading) was reverted — the print
+     language lives in the layout, the rules and the ink, not in the type.
+     There is one stack now, so there is nothing to alias. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-sans);
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, monospace;
 
   /* semantic surface + ink */
@@ -250,54 +250,39 @@
   /* Type ramp — SF, weights 400/500/600 only, tight tracking */
   /* Poster weight. Condensed runs narrow, so the display steps up hard and the
      tracking opens back out — the opposite of what SF Display wanted. */
-  .font-display {
-    font-family: var(--font-display);
-  }
-  /* Baloo sets much wider than a condensed face, so the display steps back and
-     the leading opens up. Uppercase stays: it is a masthead. */
   .t-display {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(2.75rem, 6.2vw, 5.5rem);
-    line-height: 1.02;
-    letter-spacing: -0.012em;
-    text-transform: uppercase;
+    font-weight: 600;
+    font-size: clamp(2.75rem, 6vw, 5.5rem);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
   }
   .t-section {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 600;
     font-size: clamp(2rem, 4.2vw, 3.5rem);
-    line-height: 1.08;
-    letter-spacing: -0.008em;
+    line-height: 1.07;
+    letter-spacing: -0.03em;
   }
   .t-sub {
-    font-family: var(--font-display);
     font-weight: 600;
     font-size: clamp(1.5rem, 2.6vw, 2.125rem);
-    line-height: 1.18;
-    letter-spacing: -0.006em;
+    line-height: 1.12;
+    letter-spacing: -0.028em;
   }
   .t-card {
     font-weight: 600;
     font-size: 1.3125rem;
-    line-height: 1.22;
-    letter-spacing: -0.01em;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
-  /* Reading text is set in the serif; UI, labels and meta stay grotesque.
-     Newsreader runs small for its point size, so both step up a notch. */
   .t-lead {
     @apply text-ink-2;
-    font-family: var(--font-serif);
-    font-size: clamp(1.125rem, 1.6vw, 1.4375rem);
-    line-height: 1.55;
-    letter-spacing: 0.002em;
+    font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+    line-height: 1.48;
   }
   .t-body {
     @apply text-ink-2;
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    line-height: 1.56;
-    letter-spacing: 0.002em;
+    font-size: 1.0625rem;
+    line-height: 1.47;
   }
   .t-small {
     @apply text-ink-3;
@@ -312,7 +297,7 @@
   .t-eyebrow {
     @apply font-semibold text-accent-ink;
     font-size: 1.0625rem;
-    letter-spacing: -0.004em;
+    letter-spacing: -0.01em;
   }
 
   /* Liquid glass — needs something behind it, never on a flat fill */
