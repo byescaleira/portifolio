@@ -387,20 +387,15 @@ export default function DesignSystemPage() {
         <Section folio="06" label="System" title="Illustration">
           <Prose>
             Two tiers, and they are different languages. The mistake worth
-            avoiding is treating them as one.
+            avoiding is treating them as one &mdash; a rendered figure cannot
+            be reproduced at 32px, and a reduced mark cannot carry a scene.
           </Prose>
           <div className="grid gap-4 md:grid-cols-2">
             <Panel title="Tier 1 — the print" index="raster" hover={false}>
               <p className="t-small">
-                Two-ink screenprint: safety orange and graphite, with a painted
-                bone off-white doing the work of the paper so the art survives
-                on a transparent ground. Halftone builds every mid-tone; the
-                plates print slightly out of register; contours carry visible
-                hand pressure.
-              </p>
-              <p className="mt-3 font-mono text-[12px] text-ink-3">
-                Ships as WebP with alpha at 900px. PNG masters live in art-src/,
-                outside public/, because a static export copies public/ whole.
+                Two-ink screenprint. Scenes, poses, section art. Ships as WebP
+                with alpha at 900px; the PNG masters stay outside the served
+                folder, because a static export copies it whole.
               </p>
             </Panel>
             <Panel title="Tier 2 — the mark" index="vector" hover={false}>
@@ -410,19 +405,101 @@ export default function DesignSystemPage() {
                 &mdash; pods that protrude read as animal ears when reduced,
                 which three candidates all proved.
               </p>
-              <p className="mt-3 font-mono text-[12px] text-ink-3">
-                Primary mark and favicon. The name is set in type beside it,
-                never printed into the art.
-              </p>
             </Panel>
           </div>
+
+          <SubHead>The set</SubHead>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {[
+              ["/astronaut.webp", "The persona, full figure"],
+              ["/orbital-chart.webp", "An orbital chart"],
+              ["/spica.webp", "A star and a density scale"],
+              ["/404.webp", "Adrift, for the 404"],
+            ].map(([src, alt]) => (
+              <figure key={src} className="flex flex-col gap-2">
+                <div className="overflow-hidden rounded-[12px] border-2 border-hairline">
+                  <Image src={src} alt={alt} width={900} height={900} className="h-auto w-full" />
+                </div>
+                <figcaption className="font-mono text-[11px] text-ink-3">{alt}</figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <SubHead>The style block</SubHead>
+          <Prose>
+            This paragraph appears in every generation, word for word.{" "}
+            <Strong>
+              If it changes between one piece and the next, they stop looking
+              like the same brand.
+            </Strong>{" "}
+            Everything specific to a piece &mdash; the subject, the pose, the
+            props &mdash; is written around it, never inside it.
+          </Prose>
+          <Block>
+            {`The two inks are printed slightly out of register so they kiss and overlap at the edges. Ink breaks and skips over a visible paper grain. Dense halftone dots build every mid-tone and every shadow, at varying dot sizes. Bold hand-drawn contours with visible pressure — thicker where the line settles, thinner where it lifts. Three inks only: safety orange #FF6B00, deep graphite #2B2A28, and a bone off-white #EFE9DC that is PAINTED as a real ink on the suit and every lit surface, never left empty. The background outside the artwork is fully transparent — alpha channel, no paper rectangle, no card, no ground plane, no vignette.`}
+          </Block>
+          <SpecList
+            rows={[
+              ["Misregistration", "The two plates kiss and overlap. A real pull is never perfectly aligned, and that hair of offset is what says press rather than render"],
+              ["Halftone", "Every mid-tone and shadow is built from dots at varying size. Never a gradient — a gradient is the single clearest tell that something was rendered"],
+              ["Ink break", "The ink fails and skips over the paper grain. Perfectly flat fill reads as vector"],
+              ["Line pressure", "Contours thicken where the hand settles and thin where it lifts. Constant line weight gives away vector every time"],
+              ["The bone is an ink", "Painted, not left empty. If it relies on the paper showing through, the art develops holes the moment it sits on a dark page"],
+            ]}
+          />
+
+          <SubHead>Composition</SubHead>
+          <Prose>
+            This rule was learned the expensive way. The first set filled its
+            frame &mdash; ground running edge to edge, stars in every corner
+            &mdash; so the transparency did nothing and each piece landed on the
+            page as a square photograph rather than an illustration that
+            belonged there.
+          </Prose>
+          <Block>
+            {`COMPOSITION — this matters as much as the subject: the artwork must have an irregular, open outer silhouette. Elements cluster tightly around the subject and thin out quickly as they move away, so the four corners of the frame are completely empty and fully transparent. Never fill the frame to its edges. No horizon line running edge to edge, no rectangular field of stars, no border, no vignette, no ground plane spanning the full width. The silhouette of the whole piece should read as an irregular island floating in empty space.`}
+          </Block>
+          <Rule
+            title="Judge it on the silhouette, not the middle"
+            body="Squint at the result. If the outer contour is a rectangle it failed, however good the interior looks. Measure it if you can: the four corners should be empty."
+          />
+
+          <SubHead>The negative block</SubHead>
+          <Block>
+            {`no face, no eyes, no visible skin, no hair, no transparent visor, no two matched highlights on the visor, no white background, no paper rectangle, no card, no vignette, no gradients, no airbrush, no 3D render, no photorealism, no glossy plastic, no neon, no glowing outline, no die-cut sticker border, no keyline, no chest control box, no backpack, no hoses on the suit, no antennas on the helmet, no chibi proportions, no cute proportions, no baby face, no smiling, no mascot ears, no text, no lettering, no logos, no watermark, no signature`}
+          </Block>
+          <Prose small>
+            The four groups are the character&rsquo;s prohibitions: it must
+            never read as <Strong>cute</Strong>, <Strong>military</Strong>,{" "}
+            <Strong>NASA vintage</Strong> or <Strong>cyberpunk</Strong>.
+          </Prose>
+
+          <SubHead>Accepting a piece</SubHead>
+          <ul className="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+            {[
+              "No face, no eyes, no skin, no hair. The visor is fully opaque.",
+              "Exactly two reflections on the visor — one large slash, one small dot. Never two matched shapes side by side, which reads as eyes.",
+              "The four corners are empty and transparent.",
+              "The bone is painted as an ink, not left as a hole.",
+              "The plates are out of register and the ink breaks over the grain.",
+              "Contours vary in pressure. Constant weight means vector.",
+              "No backpack, no chest module, no hoses, no antennas.",
+              "No third-party mark anywhere.",
+            ].map((t) => (
+              <li key={t} className="flex gap-3">
+                <span aria-hidden="true" className="mt-[9px] h-[2px] w-4 shrink-0 bg-accent-solid" />
+                <span className="t-small">{t}</span>
+              </li>
+            ))}
+          </ul>
+
           <Rule
             title="Charts are drawn, not generated"
-            body="The career trajectory, pipeline, sparkline and round rhythm plot real values, so they stay vector and CSS. Generating them as images would fabricate data. Only scenic illustration is an image asset."
+            body="The career trajectory, pipeline, sparkline and round rhythm plot real values, so they stay vector and CSS. Generating them as images fabricates data. Only scenic illustration is an image asset."
           />
           <Rule
-            title="The character has no face, ever"
-            body="The visor is fully closed and opaque. Exactly two reflections — one large slash and one small dot — never two matched shapes side by side, which reads as eyes. Emotional states come from pose and context."
+            title="The name is set in type, never printed into the art"
+            body="The helmet's neck strip is left deliberately blank. Eleven characters at that scale come back mangled from any generator, and type set beside the art stays correct, stays yours, and can change without regenerating anything."
           />
         </Section>
 
@@ -543,6 +620,17 @@ function Prose({
 
 function Strong({ children }: { children: React.ReactNode }) {
   return <strong className="font-semibold text-ink">{children}</strong>;
+}
+
+/** A paste-ready block. Wraps, unlike CodeLine, because these are paragraphs. */
+function Block({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="rounded-[12px] border-2 border-hairline bg-panel px-5 py-4">
+      <p className="whitespace-pre-wrap font-mono text-[12.5px] leading-[1.7] text-ink-2">
+        {children}
+      </p>
+    </div>
+  );
 }
 
 function CodeLine({ children }: { children: React.ReactNode }) {
