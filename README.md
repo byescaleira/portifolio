@@ -1,4 +1,4 @@
-# byescaleira — frontend
+# byescaleira
 
 > How native software gets built when it can't fail.
 
