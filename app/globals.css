@@ -21,6 +21,7 @@
   --color-panel: var(--card);
   --color-hairline: var(--hairline);
   --color-regua: var(--regua);
+  --color-vazio: var(--vazio);
   --color-luz: var(--luz);
   --color-ink: var(--foreground);
   --color-ink-2: var(--ink-2);
@@ -158,6 +159,10 @@
   --sidebar-border: #e4e4e8;
   --sidebar-ring: #ff6b00;
   --regua: #7b7a81;
+  /* O vazio da regra da luz é uma COR fixa, não um papel. --foreground troca
+     com o tema; este não pode trocar, senão “luz sobre o vazio” vira laranja
+     sobre creme (2,18:1) no escuro — a própria regra invertida. */
+  --vazio: #131a38;
   --luz: #ff6b00;
 
 }
@@ -218,6 +223,7 @@
   --sidebar-border: rgba(255, 255, 255, 0.09);
   --sidebar-ring: #ff6b00;
   --regua: #6c6c76;
+  --vazio: #131a38;
   --luz: #ff6b00;
 
 }
@@ -338,9 +344,9 @@
      O mesmo botão muda de forma entre os modos, e isso é correto. */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 text-[17px] font-medium transition-colors;
-    background: var(--foreground);
+    background: var(--vazio);
     color: var(--luz);
-    border: 1px solid var(--foreground);
+    border: 1px solid var(--vazio);
     border-radius: 0;
     min-height: 46px;
     padding-block: 12px;
@@ -378,7 +384,7 @@
   }
   .pill-accent {
     @apply inline-flex items-center px-2.5 py-1 text-xs font-medium;
-    background: var(--foreground);
+    background: var(--vazio);
     color: var(--luz);
     border-radius: 0;
   }
@@ -825,7 +831,7 @@ body::after {
    dá 5,97:1. No escuro o fundo já é o vazio, então o bloco some e a luz
    fica solta — o mesmo componente muda de forma, e isso é correto. */
 .bloco-luz {
-  background: var(--foreground);
+  background: var(--vazio);
   color: var(--luz);
   padding: .12em .5em .22em;
   border-radius: 0;
@@ -884,11 +890,23 @@ body::after {
 .o-globo { animation: o-globo 260s linear infinite; transform-origin: 50% 50%; }
 @media (prefers-reduced-motion: reduce) { .o-globo { animation: none; } }
 
+/* A faixa da prancha em destaque. No claro é bloco de luz sobre o vazio
+   (5,97:1). No escuro o fundo da página JÁ é o vazio, então o bloco some e
+   sobra a régua — mesma assimetria do botão primário. */
+.faixa-destaque {
+  background: var(--vazio);
+  color: var(--luz);
+}
+.dark .faixa-destaque {
+  background: transparent;
+  border-bottom: 2px solid var(--luz);
+}
+
 /* O folio: a numeração da seção. Bloco de luz no claro (a luz não pode ser
    tipo no papel, 2,18:1); no escuro o fundo já é o vazio, então o bloco vira
    contorno e a luz fica solta a 5,49:1. Mesma regra do botão primário. */
 .folio {
-  background: var(--foreground);
+  background: var(--vazio);
   color: var(--luz);
   padding: .18rem .55rem .26rem;
   border: 1px solid var(--foreground);

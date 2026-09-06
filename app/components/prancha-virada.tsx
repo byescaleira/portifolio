@@ -61,7 +61,7 @@ export function PranchaVirada({
         <div
           className={cn(
             "flex items-baseline justify-between gap-4 px-5 py-2.5",
-            destaque ? "bg-foreground text-luz" : "bg-foreground text-background"
+            destaque ? "faixa-destaque" : "bg-foreground text-background"
           )}
         >
           <h3 className="versalete text-[13px] leading-none">{titulo}</h3>

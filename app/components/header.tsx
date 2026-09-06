@@ -1,18 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { GithubIcon, LinkedinIcon, InstagramIcon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
+import { Indice } from "./indice";
+import { TesteiraViva } from "./testeira-viva";
 import { Wordmark } from "./wordmark";
-
-const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Work", href: "#work" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
 
 const socials = [
   { href: "https://github.com/byescaleira", icon: GithubIcon, label: "GitHub" },
@@ -29,26 +22,18 @@ const socials = [
  * head is set. It still does not resize on scroll.
  */
 export function Header() {
-  const pathname = usePathname();
-  const isHome = pathname === "/" || pathname === "";
-
   return (
     <header className="sticky top-0 z-50 h-[52px] border-b-2 border-foreground bg-background">
       <div className="mx-auto flex h-[52px] max-w-[1120px] items-center justify-between px-6 md:px-12">
-        <Link href="/" aria-label="byescaleira — home">
-          <Wordmark />
-        </Link>
+        <div className="flex items-center gap-7">
+          <Link href="/" aria-label="byescaleira — home">
+            <Wordmark />
+          </Link>
+          <TesteiraViva />
+        </div>
 
-        <nav className="hidden items-center gap-7 md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={isHome ? item.href : `/${item.href}`}
-              className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-2 transition-colors hover:text-accent-ink"
-            >
-              {item.label}
-            </a>
-          ))}
+        <nav className="hidden md:flex" aria-label="Índice">
+          <Indice />
         </nav>
 
         <div className="flex items-center gap-4 md:gap-[18px]">

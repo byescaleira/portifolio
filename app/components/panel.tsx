@@ -72,7 +72,7 @@ export function Panel({
             className={cn(
               "flex items-baseline justify-between gap-4 px-5 py-2.5 sm:px-6",
               tinted
-                ? "bg-foreground text-luz"
+                ? "faixa-destaque"
                 : "bg-foreground text-background"
             )}
           >
