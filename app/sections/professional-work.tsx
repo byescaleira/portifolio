@@ -25,7 +25,7 @@ export function ProfessionalWork() {
         <ScrollReveal className="mb-12">
           <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Professional work</p>
-            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">04</p>
+            <p className="folio font-mono text-[10px] uppercase tracking-[0.2em]">04</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             A game the whole country plays.
@@ -35,19 +35,18 @@ export function ProfessionalWork() {
         <ScrollReveal>
           <Panel
             tinted
-            hover={false}
-            className="overflow-hidden rounded-[28px] p-7 md:p-11"
+            className="overflow-hidden p-7 md:p-11"
           >
             <div className="grid items-center gap-11 lg:grid-cols-[1.3fr_1fr]">
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="flex size-10 items-center justify-center rounded-[12px] bg-accent">
+                  <span className="flex size-10 items-center justify-center border border-foreground bg-foreground">
                     <svg
                       width="20"
                       height="20"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="var(--on-accent)"
+                      stroke="var(--luz)"
                       strokeWidth="1.9"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -71,7 +70,7 @@ export function ProfessionalWork() {
                 </p>
 
                 {/* the real engineering problem, drawn */}
-                <div className="mt-7 rounded-[18px] border border-hairline px-5 pb-3.5 pt-4"
+                <div className="mt-7 border border-hairline px-5 pb-3.5 pt-4"
                   style={{ background: "var(--inset-fill)" }}>
                   <div className="flex items-baseline justify-between">
                     <p className="text-[13px] font-semibold text-ink">

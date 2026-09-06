@@ -1,5 +1,5 @@
 import { ScrollReveal } from "../components/scroll-reveal";
-import { Print } from "../components/print";
+import { PranchaOrbital } from "../components/figuras";
 
 const principles = [
   {
@@ -29,18 +29,13 @@ export function MissionControl() {
       <div className="relative mx-auto max-w-[1120px]">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <ScrollReveal className="hidden justify-self-center lg:block">
-            <Print
-              src="/orbital-chart.webp"
-              alt="A screenprinted orbital chart: a halftone planet with four tilted orbits, two small craft and a station"
-              width={900}
-              height={900}
-            />
+            <PranchaOrbital className="w-full max-w-[520px]" />
           </ScrollReveal>
 
           <ScrollReveal delay={0.07}>
             <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Mission Control</p>
-            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">03</p>
+            <p className="folio font-mono text-[10px] uppercase tracking-[0.2em]">03</p>
           </div>
             <h2 className="t-section mt-5 max-w-[20ch] text-balance">
               Everything orbits the product.

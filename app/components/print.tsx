@@ -1,33 +1,30 @@
 import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 /**
- * A screenprint, pasted onto the page.
+ * A figura.
  *
- * The illustrations are two-ink prints composed against bone paper: safety
- * orange and graphite, with the paper itself doing the work of the third
- * colour. That has a consequence the rest of the site does not have — the art
- * cannot follow the theme. On the dark build the graphite ink would sit on
- * near-black paper and the halftone that gives every form its shape would
- * simply vanish.
+ * Era uma placa de serigrafia: a arte trazia o próprio papel osso assado no
+ * arquivo, porque no tema escuro o grafite sumiria sobre o preto. A decisão 006
+ * troca o meio por gravura em linha, e isso muda a economia: linha sobre papel
+ * chapado extrai por limiar e vira dois tons recoloríveis — a arte passa a
+ * obedecer ao tema em vez de carregar tinta própria.
  *
- * So the print brings its own stock — the artwork is generated on bone paper
- * and that baked-in ground IS the plate. On the light build the site's paper is
- * tuned to the artwork's paper, so the edge disappears and the print becomes
- * part of the sheet. On the dark build the same rectangle reads as a pulled
- * print pasted onto a dark page, which is what a screenprint actually is.
+ * Enquanto as artes novas não existem, os .webp antigos continuam com o papel
+ * assado. Por isso `rule` ainda declara a borda: no escuro a placa precisa da
+ * régua para não flutuar. Quando a arte gravada entrar, a régua vira opcional.
  *
- * One asset per illustration, forever, instead of a light and a dark copy that
- * drift apart.
- *
- * `rule` draws a border for art that needs its edge declared rather than
- * dissolved — mostly on the dark build, or against a surface section.
+ * A legenda é a de uma prancha: rótulo em versalete acima, legenda em mono
+ * abaixo. Sem o versalete não lê como figura, lê como imagem solta.
  */
 export function Print({
   src,
   alt,
   width,
   height,
+  /** Rótulo da figura, em versalete. `FIG. 1` sai automático de `figura`. */
+  figura,
   caption,
   rule = false,
   priority = false,
@@ -37,20 +34,20 @@ export function Print({
   alt: string;
   width: number;
   height: number;
-  /** Set in mono under the plate, the way a plate is captioned. */
+  figura?: string;
   caption?: string;
   rule?: boolean;
   priority?: boolean;
   className?: string;
 }) {
   return (
-    <figure className={cn("flex flex-col gap-2.5", className)}>
-      <div
-        className={cn(
-          "overflow-hidden rounded-[18px]",
-          rule && "border-2 border-hairline"
-        )}
-      >
+    <figure className={cn("flex flex-col gap-2", className)}>
+      {figura && (
+        <figcaption className="versalete text-[11px] text-ink">
+          {figura}
+        </figcaption>
+      )}
+      <div className={cn("overflow-hidden", rule && "border border-foreground")}>
         <Image
           src={src}
           alt={alt}
@@ -61,7 +58,7 @@ export function Print({
         />
       </div>
       {caption && (
-        <figcaption className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
+        <figcaption className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-3">
           {caption}
         </figcaption>
       )}

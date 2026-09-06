@@ -26,7 +26,7 @@ export function ThemeToggle() {
 
   return (
     <div
-      className="flex items-center gap-0.5 rounded-full border border-hairline p-0.5"
+      className="flex items-center gap-0.5 border border-hairline p-0.5"
       role="group"
       aria-label="Theme"
     >

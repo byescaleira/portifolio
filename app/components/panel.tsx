@@ -1,30 +1,45 @@
 import { cn } from "@/lib/utils";
 
 /**
- * A printed plate, not a card.
+ * A folga entre as duas réguas é fixa em 5px — é o corte da chapa, não espaço
+ * de conteúdo. Então o padding que o chamador passa precisa ir para DENTRO da
+ * régua grossa, senão ele abre o vão e o texto encosta na linha. Custou um
+ * layout quebrado em todas as pranchas sem título para descobrir.
+ */
+const PADDING = /^(p|px|py|pt|pr|pb|pl)-/;
+function separaPadding(className?: string) {
+  const todas = (className ?? "").split(/\s+/).filter(Boolean);
+  const dentro: string[] = [];
+  const fora: string[] = [];
+  for (const c of todas) {
+    const base = c.includes(":") ? c.slice(c.lastIndexOf(":") + 1) : c;
+    (PADDING.test(base) ? dentro : fora).push(c);
+  }
+  return { dentro: dentro.join(" "), fora: fora.join(" ") };
+}
+
+/**
+ * A prancha.
  *
- * It started as the one card in the system — 22px continuous corners, a
- * hairline, a 5px lift on hover — all of which said "floating object", the
- * grammar of an interface. Then it became a bordered rectangle, which was
- * honest but dull: a box with a line around it is not a design.
+ * Era um card: raio 18px, hairline, e um deslocamento de registro no hover —
+ * a gramática da serigrafia, que a decisão 006 aposentou. Agora é o corte da
+ * chapa: régua fina por fora, folga, régua grossa por dentro, canto vivo.
  *
- * A plate in a printed catalogue is built from two fields, not one: a solid
- * title band with the heading reversed out of it, and a body below on the
- * paper. That is where the structure comes from, and it costs no decoration —
- * the band does the work the heading was doing anyway. The corner stays
- * generous because the subject is space, and space is capsules and domes.
+ * A faixa de título é o cabeçalho da prancha, não um header de card: versalete
+ * em Bodoni sobre a tinta, com a numeração em mono à direita. `index` é o
+ * número da tabula, o ano, o estado — o que a prancha estiver catalogando.
  *
- * Pass `title` to get the band. Without it the plate is untitled and behaves as
- * before, for the cases where a heading already lives inside the content.
+ * `tinted` marca a única prancha da página que importa: a régua vira luz. No
+ * claro a faixa continua sendo tinta com texto laranja (bloco de luz, 5,97:1);
+ * soltar laranja no papel reprova a 2,18:1 e está proibido em SISTEMA.md §2.
  */
 export function Panel({
   children,
   className,
   title,
-  /** Small mono mark at the right of the band — a plate number, a status, a year. */
+  /** Numeração da prancha: tabula, ano, estado. Em mono, à direita da faixa. */
   index,
   tinted,
-  hover = true,
   bodyClassName,
   as: Tag = "div",
 }: {
@@ -32,50 +47,53 @@ export function Panel({
   className?: string;
   title?: string;
   index?: string;
-  /** The one plate on a page that matters: the band prints in accent, not ink. */
   tinted?: boolean;
-  hover?: boolean;
   bodyClassName?: string;
   as?: "div" | "article" | "li";
 }) {
+  const { dentro, fora } = separaPadding(className);
   return (
     <Tag
       className={cn(
-        "rounded-[18px] border-2 border-hairline bg-panel transition-colors duration-200",
-        tinted && "border-accent",
-        // The plates slip out of register under the pointer — the signature
-        // of the medium, and the reason this is not just a bordered box.
-        hover && !tinted && "misreg",
-        className
+        "border p-[5px] transition-colors duration-200",
+        tinted ? "border-luz" : "border-hairline",
+        fora
       )}
     >
-      {title && (
-        <div
-          className={cn(
-            "flex items-baseline justify-between gap-4 rounded-t-[16px] border-b-2 px-5 py-2.5 sm:px-6",
-            tinted
-              ? "border-accent bg-accent text-on-accent"
-              : "border-hairline bg-foreground text-background"
-          )}
-        >
-          <h3 className="text-[13px] font-semibold uppercase leading-none tracking-[0.09em]">
-            {title}
-          </h3>
-          {index && (
-            <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] opacity-75">
-              {index}
-            </span>
-          )}
-        </div>
-      )}
-      <div className={cn(title && "p-5 sm:p-6", bodyClassName)}>{children}</div>
+      <div
+        className={cn(
+          "h-full w-full min-w-0 border-[3px] bg-panel",
+          tinted ? "border-luz" : "border-foreground",
+          !title && dentro
+        )}
+      >
+        {title && (
+          <div
+            className={cn(
+              "flex items-baseline justify-between gap-4 px-5 py-2.5 sm:px-6",
+              tinted
+                ? "bg-foreground text-luz"
+                : "bg-foreground text-background"
+            )}
+          >
+            <h3 className="versalete text-[13px] leading-none">{title}</h3>
+            {index && (
+              <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.2em] opacity-80">
+                {index}
+              </span>
+            )}
+          </div>
+        )}
+        <div className={cn(title && (dentro || "p-5 sm:p-6"), bodyClassName)}>{children}</div>
+      </div>
     </Tag>
   );
 }
 
+/** O quadro de um instrumento: régua fina, canto vivo, tinta luz. */
 export function PanelIcon({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[10px] border-2 border-hairline text-accent-ink">
+    <span className="flex size-[34px] shrink-0 items-center justify-center border border-foreground text-foreground">
       {children}
     </span>
   );

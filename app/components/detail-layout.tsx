@@ -92,7 +92,7 @@ export function DetailLayout({
             )}
 
             {meta && meta.length > 0 && (
-              <div className="mt-11 grid overflow-hidden rounded-[18px] border border-hairline sm:grid-cols-3">
+              <div className="mt-11 grid overflow-hidden border border-hairline sm:grid-cols-3">
                 {meta.map((m, i) => (
                   <div
                     key={m.label}

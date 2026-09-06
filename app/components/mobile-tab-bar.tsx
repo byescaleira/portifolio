@@ -82,7 +82,7 @@ export function MobileTabBar() {
 
   return (
     <nav
-      className="glass fixed inset-x-4 bottom-[max(1.5rem,env(safe-area-inset-bottom))] z-50 flex h-[62px] items-center justify-around rounded-[31px] shadow-[0_12px_34px_rgba(0,0,0,.45)] md:hidden"
+      className="glass fixed inset-x-4 bottom-[max(1.5rem,env(safe-area-inset-bottom))] z-50 flex h-[62px] items-center justify-around shadow-[0_12px_34px_rgba(0,0,0,.45)] md:hidden"
       aria-label="Section navigation"
     >
       {tabs.map((tab) => {
@@ -98,7 +98,7 @@ export function MobileTabBar() {
             )}
           >
             {isActive && (
-              <span className="absolute -top-px h-[2.5px] w-[22px] rounded-full bg-accent" />
+              <span className="absolute -top-px h-[2.5px] w-[22px] bg-accent" />
             )}
             <svg
               width="21"

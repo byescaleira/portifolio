@@ -110,7 +110,7 @@ export function Skills() {
         <ScrollReveal className="mb-12">
           <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Capabilities</p>
-            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">02</p>
+            <p className="folio font-mono text-[10px] uppercase tracking-[0.2em]">02</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             The full iOS stack.
@@ -129,7 +129,7 @@ export function Skills() {
                 concurrency included, on codebases that never stop shipping.
               </p>
 
-              <div className="mt-6 rounded-[14px] border border-hairline p-5 font-mono text-[13px] leading-[1.78] text-ink-2"
+              <div className="mt-6 border border-hairline p-5 font-mono text-[13px] leading-[1.78] text-ink-2"
                 style={{ background: "var(--code-bg)" }}>
                 <div>
                   <span className="text-accent-ink">struct</span> RoundView:{" "}

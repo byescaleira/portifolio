@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
-import { Chevron } from "../components/illustrations";
-import { LivingMark } from "../components/living-mark";
-import { Panel, PanelIcon } from "../components/panel";
+import { PranchaEstrela, PranchaOrbital } from "../components/figuras";
 
 export const metadata: Metadata = {
   title: "Design system — Rafael Escaleira",
   description:
-    "The system behind byescaleira.com: colour, type, shape, motion, components and voice, with the reasoning and the measured numbers behind each decision.",
+    "A prancha de atlas: as tintas medidas, a regra da luz, a gravura em linha, o granulado e o vocabulário de componentes que governam este site.",
 };
 
 /* ============================================================
-   Every value on this page is read off the real tokens in
-   globals.css, and every contrast figure was measured rather than
-   estimated. A design system page that drifts from its source is
-   worse than none, because it is trusted.
+   Esta página documenta o sistema da decisão 006 do brand book.
+   Todo número aqui foi MEDIDO contra o fundo real em que o token
+   vive, e contra o pior dos três fundos — papel, seção alternada
+   e interior de moldura. A versão anterior desta página
+   documentava a serigrafia de duas tintas, que saiu de canon.
    ============================================================ */
 
 export default function DesignSystemPage() {
@@ -26,593 +24,338 @@ export default function DesignSystemPage() {
     <>
       <Header />
       <main className="relative z-10 flex flex-1 flex-col bg-background">
-        {/* running head */}
         <div className="border-b border-hairline">
           <div className="mx-auto flex max-w-[1120px] items-center justify-between px-6 py-2.5 md:px-12">
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              byescaleira · design system
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">
+              Tabula &mdash; o sistema
             </p>
             <Link
               href="/"
-              className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3 transition-colors hover:text-accent-ink"
+              className="buril font-mono text-[11px] uppercase tracking-[0.2em]"
             >
-              Back to the site
+              Voltar ao site
             </Link>
           </div>
         </div>
 
         <div className="mx-auto w-full max-w-[1120px] px-6 md:px-12">
-          <h1 className="t-display mt-10 max-w-[14ch] text-balance md:mt-14">
-            The system behind this page.
+          <h1 className="t-display mt-10 max-w-[16ch] text-balance md:mt-14">
+            A raiz e a copa.
           </h1>
-          <div className="o-squeegee mt-5 h-[7px] w-full rounded-full bg-accent" />
+          <div className="mt-5 h-[6px] w-full bg-accent" />
 
           <p className="t-lead mt-8 max-w-[62ch] text-pretty">
-            Every value here is read off the real tokens, and every contrast
-            figure was measured rather than estimated. This page exists so a
-            decision can be argued with instead of guessed at &mdash; each rule
-            carries the reason it exists, and most of them exist because
-            something broke without them.
+            A gratícula é a engenharia: régua, coordenada, medida &mdash; e
+            ninguém a olha. A massa gravada é o que a pessoa sente, e ela não
+            respeita a régua: passa por cima. Sem a gratícula embaixo, ela não
+            tem em quê crescer.
           </p>
           <p className="t-body mt-4 max-w-[62ch] text-pretty">
-            The source of truth is{" "}
-            <code className="font-mono text-[0.92em] text-accent-ink">
-              app/globals.css
-            </code>
-            . If this page and that file disagree, the file wins and this page
-            is stale.
+            Todo número desta página foi medido contra o <Strong>pior</Strong>{" "}
+            dos três fundos de uma peça, não contra o papel só. Medir contra um
+            fundo é o erro que deixa passar tinta que reprova na seção
+            alternada, que é onde mora a maior parte do texto.
           </p>
         </div>
 
-        <Section folio="01" label="Foundations" title="Colour">
+        {/* ============ I · AS TINTAS ============ */}
+        <Section folio="I" label="Fundamentos" title="As tintas">
           <Prose>
-            Three roles, never mixed up: <Strong>ground</Strong> is what you
-            paint on, <Strong>ink</Strong> is what you read, <Strong>accent</Strong>{" "}
-            is what matters right now. The palette is a two-ink screenprint, so
-            the same press runs on bone paper and on black paper &mdash; the
-            themes are two stocks, not two designs.
+            Três papéis, nunca confundidos. <Strong>Papel</Strong> é onde se
+            pinta, <Strong>tinta</Strong> é o que se lê, <Strong>luz</Strong> é
+            o que importa agora.
           </Prose>
 
-          <SubHead>Two inks, one paper</SubHead>
+          <div className="flex h-20 border border-foreground">
+            <span className="flex-[1.2] bg-background" />
+            <span className="flex-1 bg-foreground" />
+            <span className="flex-[.6] bg-accent" />
+          </div>
+          <div className="flex font-mono text-[10.5px] uppercase tracking-[0.14em] text-ink-3">
+            <span className="flex-[1.2]">papel</span>
+            <span className="flex-1">vazio</span>
+            <span className="flex-[.6]">luz</span>
+          </div>
+
+          <SubHead>A escada, nos dois modos</SubHead>
           <Prose small>
-            The whole palette, stated the way a press states it. This bar opened
-            the site for a while; it belongs here, where declaring the system is
-            the job rather than a distraction from the promise.
+            O piso é 4,52:1 nos dois. O modo escuro inverte a lógica de um jeito
+            fácil de errar: lá o pior fundo é o mais <Strong>claro</Strong> dos
+            três, porque a tinta é que é clara.
           </Prose>
-          <div>
-            <div className="flex h-16 overflow-hidden rounded-[12px] border-2 border-hairline">
-              <span className="flex-1 bg-accent" />
-              <span className="flex-1 border-l-2 border-hairline bg-foreground" />
-              <span className="flex-1 border-l-2 border-hairline bg-background" />
-            </div>
-            <div className="mt-2 flex font-mono text-[11px] uppercase tracking-[0.12em] text-ink-3">
-              <span className="flex-1">Safety &mdash; the accent</span>
-              <span className="flex-1">Ink &mdash; the foreground</span>
-              <span className="flex-1">Stock &mdash; the paper</span>
-            </div>
-          </div>
-
-          <SubHead>Ground and ink</SubHead>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <Swatch name="--background" light="#f3efe5" dark="#0b0a09" role="The paper. Page ground." />
-            <Swatch name="--surface" light="#e6e0d2" dark="#17150f" role="Alternating sections." />
-            <Swatch name="--card" light="#fbf8f1" dark="#252019" role="Plates. Never equal to surface." />
-            <Swatch name="--foreground" light="#26241f" dark="#eae4d6" role="Primary ink." />
-            <Swatch name="--ink-2" light="#4e4a41" dark="#ada595" role="Body secondary." />
-            <Swatch name="--ink-3" light="#5f5a50" dark="#918a7c" role="Captions, meta, labels." />
-            <Swatch name="--hairline" light="#4e4a41" dark="rgba(234,228,214,.34)" role="Every rule and border." />
-            <Swatch name="--accent-solid" light="#ff6b00" dark="#ff6b00" role="Fills only. Identical in both." />
-            <Swatch name="--accent-ink" light="#ad3e00" dark="#ff8a3d" role="Orange text. Never accent-solid." />
-          </div>
-
-          <Rule
-            title="Ink on the accent is near-black, never white"
-            body="White on #ff6b00 measures 2.86:1 — under AA on the primary CTA. Darkening the orange enough to carry white would take it to roughly #c75200, which is brown and no longer the brand. --on-accent is #26241f in both themes: 5.43:1, brand-correct and accessible."
-          />
-          <Rule
-            title="The vibrancy lives in fills, not in type"
-            body="No orange bright enough to feel vibrant clears 4.5:1 as text on a light ground — #ff6b00 measures 2.49:1 on the paper. That is physics, not caution. So orange type steps down to --accent-ink and the saturated orange goes into rules, folios and bands, which is what a screenprint does anyway: it floods ink, it does not set coloured text."
-          />
-
-          <SubHead>Measured contrast</SubHead>
-          <Prose small>
-            Worst case across all three grounds &mdash; background, surface and
-            card. AA floors: 4.5:1 for body text, 3:1 for text at 24px or above
-            and for meaningful graphics.
-          </Prose>
-          <ContrastTable />
-
-          <Rule
-            title="--card must never equal --surface"
-            body="Dark separates plates by fill lightness; light cannot do the same without the plate dissolving into the section behind it, so it separates by fill plus --card-shadow, which is none in dark. Setting them equal is the single most common way the light build breaks."
-          />
-        </Section>
-
-        <Section folio="02" label="Foundations" title="Typography">
-          <Prose>
-            <Strong>SF, from the system stack. No webfonts.</Strong>{" "}
-            On the Apple
-            devices this site is aimed at, the stack resolves to SF Pro: nothing
-            to download, nothing to lay out twice. A webfont experiment ran and
-            was reverted &mdash; the print language lives in the layout, the
-            rules and the ink, not in the type.
-          </Prose>
-          <CodeLine>{`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif`}</CodeLine>
-          <Prose small>
-            Mono is <code className="font-mono">ui-monospace, &quot;SF Mono&quot;, Menlo</code>.
-            Weights are <Strong>400, 500, 600 &mdash; nothing heavier</Strong>. 600
-            is the ceiling for headlines.
-          </Prose>
-
-          <SubHead>The ramp</SubHead>
-          <div className="flex flex-col divide-y divide-hairline border-y-2 border-hairline">
-            <RampRow cls="t-display" spec="clamp(2.75rem, 6vw, 5.5rem) · 600 · −0.035em">
-              <span className="t-display">Native craft</span>
-            </RampRow>
-            <RampRow cls="t-section" spec="clamp(2rem, 4.2vw, 3.5rem) · 600 · −0.03em">
-              <span className="t-section">Section heading</span>
-            </RampRow>
-            <RampRow cls="t-sub" spec="clamp(1.5rem, 2.6vw, 2.125rem) · 600 · −0.028em">
-              <span className="t-sub">Subheading</span>
-            </RampRow>
-            <RampRow cls="t-card" spec="1.3125rem · 600 · −0.02em">
-              <span className="t-card">Plate title</span>
-            </RampRow>
-            <RampRow cls="t-lead" spec="clamp(1.0625rem, 1.5vw, 1.3125rem) · 400">
-              <span className="t-lead">Lead paragraph, the deck under a heading.</span>
-            </RampRow>
-            <RampRow cls="t-body" spec="1.0625rem · 400 · 1.47">
-              <span className="t-body">Body copy, set at a comfortable measure.</span>
-            </RampRow>
-            <RampRow cls="t-small" spec="0.9375rem · 400">
-              <span className="t-small">Small &mdash; supporting detail.</span>
-            </RampRow>
-            <RampRow cls="t-caption" spec="0.8125rem · 400">
-              <span className="t-caption">Caption &mdash; meta and labels.</span>
-            </RampRow>
-            <RampRow cls="t-eyebrow" spec="1.0625rem · 600 · accent-ink">
-              <span className="t-eyebrow">Eyebrow</span>
-            </RampRow>
-          </div>
-
-          <Rule
-            title="The ramp carries size, weight and tracking — never colour"
-            body="Baking text-ink into t-sub once meant text-ink-3 could never override it, and the hero subtitle rendered white where it should have been grey. Colour is set at the use site."
-          />
-          <Rule
-            title="The larger the type, the tighter the tracking"
-            body="−0.035em at display down to none at body. Body text is never tracked. These values are tuned for SF Pro specifically: swapping the family without retuning them leaves the new face either cramped or loose."
-          />
-          <Rule
-            title="Eyebrows are sentence case in the accent"
-            body="Never uppercase with wide tracking — that was the old brutalist tic and it is gone. The one place uppercase survives is the mono running head and the plate title band, where it is a label rather than a heading, and there it takes positive tracking."
-          />
-        </Section>
-
-        <Section folio="03" label="Foundations" title="Shape and material">
-          <Prose>
-            Nothing is square, and nothing is Apple. What made the old system
-            read as an interface was not the radius &mdash; it was 22px{" "}
-            <em>plus</em> glass <em>plus</em> a shadow <em>plus</em> a hover
-            lift. With an ink border and no shadow, a generous curve reads as a
-            printed label instead. The subject is space, and space is capsules
-            and domes.
-          </Prose>
-
-          <SubHead>Radius ladder</SubHead>
-          <div className="flex flex-wrap gap-3">
-            {[
-              ["sm", 8],
-              ["md", 12],
-              ["lg", 18],
-              ["xl", 22],
-              ["3xl", 28],
-              ["4xl", 34],
-            ].map(([name, px]) => (
-              <div key={name as string} className="flex flex-col items-center gap-2">
-                <div
-                  className="size-[72px] border-2 border-hairline bg-panel"
-                  style={{ borderRadius: `${px}px` }}
-                />
-                <p className="font-mono text-[11px] text-ink-3">
-                  {name as string} · {px as number}px
-                </p>
-              </div>
-            ))}
-            <div className="flex flex-col items-center gap-2">
-              <div className="flex h-[72px] w-[104px] items-center justify-center rounded-full border-2 border-hairline bg-panel" />
-              <p className="font-mono text-[11px] text-ink-3">pill · 980px</p>
-            </div>
-          </div>
-          <Prose small>
-            <Strong>--radius is 18px</Strong>, the plate default. 980px is
-            reserved for controls: buttons, pills, chips.
-          </Prose>
-
-          <SubHead>Paper</SubHead>
-          <Prose>
-            A static SVG turbulence sits over the whole page &mdash; no image
-            file, no request. It <Strong>multiplies</Strong> into the ink on
-            bone paper and <Strong>screens</Strong> over it on black paper,
-            which is how the two presses actually behave. It is the difference
-            between a screenprint and a beige page.
-          </Prose>
-        </Section>
-
-        <Section folio="04" label="System" title="Motion">
-          <Prose>
-            Three families. Anything that fits none does not ship &mdash; that
-            is what keeps heavy animation from becoming noise. And one rule
-            outranks all three:{" "}
-            <Strong>content is never invisible by default.</Strong>{" "}
-            A reveal
-            renders visible from the server and only opts into the hidden state
-            after mount, so if JS never runs the content is simply there.
-          </Prose>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            <Panel title="Orbital" index="15–90s" hover={false}>
-              <p className="t-small">
-                Continuous, ambient, linear. Orbits, drift, the code strip, the
-                live dot. Slow enough that you only notice it if you stop and
-                look.
-              </p>
-              <p className="mt-3 font-mono text-[12px] text-ink-3">
-                Nothing orbital sits on top of text. No cycle under 5s.
-              </p>
-            </Panel>
-            <Panel title="Reveal" index="0.7s · 70ms" hover={false}>
-              <p className="t-small">
-                Once on entry, in reading order. 24px up, opacity 0 to 1. Fires
-                once and never replays.
-              </p>
-              <p className="mt-3 font-mono text-[12px] text-ink-3">
-                Released by three independent triggers, so a dead observer never
-                strands content at opacity 0.
-              </p>
-            </Panel>
-            <Panel title="Response" index="on interaction" hover={false}>
-              <p className="t-small">
-                Borrowed from the press, not invented. Misregistration, the
-                squeegee pass, crop marks, the mark that turns.
-              </p>
-              <p className="mt-3 font-mono text-[12px] text-ink-3">
-                If an effect cannot be explained by how a screenprint is made,
-                it does not belong here.
-              </p>
-            </Panel>
-          </div>
-
-          <SubHead>Response, in the open</SubHead>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Demo
-              title="Misregistration"
-              hint="Hover the plate"
-              body="The two plates slip out of register under the pointer. A real pull is never perfectly aligned, and that hair of offset is the signature of the medium."
-            >
-              <div className="misreg h-[92px] rounded-[18px] border-2 border-hairline bg-panel" />
-            </Demo>
-            <Demo
-              title="The mark turns"
-              hint="Move the pointer"
-              body="Decision 001 gives the character no face, so turning is the only way it can acknowledge you — and it lands precisely because there are no eyes to follow you."
-            >
-              <div className="flex h-[92px] items-center justify-center">
-                <LivingMark>
-                  <Image src="/logo.webp" alt="" width={64} height={64} />
-                </LivingMark>
-              </div>
-            </Demo>
-          </div>
-
-          <SubHead>Easing &mdash; three curves, no others</SubHead>
-          <SpecList
-            rows={[
-              ["cubic-bezier(.32,.72,0,1)", "Default. Reveals, hovers, the squeegee."],
-              ["cubic-bezier(.25,.1,.25,1)", "Colour and opacity only. Never position."],
-              ["linear", "Orbits, drift, marquee."],
+          <Tabela
+            cabecalho={["Token", "Claro", "Escuro", "Pior caso", "Uso"]}
+            linhas={[
+              ["--foreground", "#131a38", "#e9e0ce", "12,04:1", "Todo texto"],
+              ["--ink-2", "#3e4256", "#bab4ad", "7,01:1", "Secundário"],
+              ["--ink-3", "#5d5e6c", "#8b898c", "4,52:1", "Legenda. É o piso."],
+              ["--hairline", "#7b7a81", "#6c6c76", "3,00:1", "Régua, nunca texto"],
+              ["--accent-solid", "#ff6b00", "#ff6b00", "2,18:1 / 5,49:1", "Ver a regra da luz"],
             ]}
           />
-          <Rule
-            title="prefers-reduced-motion resolves every reveal visible"
-            body="Never hidden. All animation and transition durations collapse to 0.001ms, and anything still marked pending is forced to opacity 1 with no transform. Animate transform and opacity only."
+
+          <Regra
+            titulo="O vazio anil venceu o verde por medição, não por gosto"
+            corpo="Um verde profundo #1D3C30 chegava a 4,22:1 com a luz — passava raspando o piso de 4,5. O anil dá 5,97:1. Ir para o tema espacial fortaleceu a regra em vez de custar alguma coisa; foi o argumento que fechou a cor."
           />
         </Section>
 
-        <Section folio="05" label="System" title="Components">
-          <SubHead>Plate</SubHead>
+        {/* ============ II · A REGRA DA LUZ ============ */}
+        <Section folio="II" label="Fundamentos" title="A regra da luz">
           <Prose>
-            The one container. A plate in a printed catalogue is built from two
-            fields, not one: a solid title band with the heading reversed out of
-            it, and a body below on the paper. The band does the work the
-            heading was doing anyway, so the structure costs no decoration.
+            <Strong>No claro a luz reprova como texto. No escuro passa.</Strong>{" "}
+            É a única assimetria do sistema, e ela governa quase todo
+            componente.
           </Prose>
-          <div className="grid gap-4 md:grid-cols-3">
-            <Panel title="Titled" index="index">
-              <p className="t-small">
-                Band plus body. The index takes a plate number, a status or a
-                year &mdash; anything true, never a label.
-              </p>
-            </Panel>
-            <Panel title="Tinted" index="the one" tinted>
-              <p className="t-small">
-                Reserved for the one thing that matters on a page. The band
-                prints in accent with ink over it.
-              </p>
-            </Panel>
-            <Panel>
-              <p className="t-small">
-                Untitled, for when a heading already lives inside the content.
-                Hover to see the plates slip.
-              </p>
-            </Panel>
-          </div>
 
-          <SubHead>Controls</SubHead>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
-            <span className="btn-primary cursor-default">Primary</span>
-            <span className="inline-flex items-center gap-1.5 text-[17px] text-accent-ink">
-              Text link
-              <Chevron />
-            </span>
-            <span className="pill-accent">Status pill</span>
-            <PanelIcon>
-              <svg
-                width="17"
-                height="17"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="border border-hairline p-5">
+              <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-3">
+                Claro &middot; luz no papel = 2,18:1
+              </p>
+              <p className="t-body mt-3">
+                Reprova até em corpo grande, que precisa de 3:1. Precisa de
+                bloco anil embaixo.
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <span className="btn-primary text-[15px]">Ver o trabalho</span>
+                <span className="btn-secondary text-[15px]">Falar comigo</span>
+              </div>
+            </div>
+            <div className="border border-hairline bg-foreground p-5">
+              <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-3">
+                Escuro &middot; luz no vazio = 5,49:1
+              </p>
+              <p
+                className="t-body mt-3"
+                style={{ color: "var(--background)" }}
               >
-                <path d="M12 2.8 21 8v8l-9 5.2L3 16V8z" />
-                <path d="M12 12 21 8M12 12v9.2M12 12 3 8" />
-              </svg>
-            </PanelIcon>
-          </div>
-          <SpecList
-            rows={[
-              ["Primary button", "--accent-solid fill, --on-accent ink, radius 980, min-height 46px, 17px/500"],
-              ["Text link", "--accent-ink plus a chevron that slides 4px on hover"],
-              ["Status pill", "--accent-soft and --accent-ink when live; neutral when dormant"],
-              ["Icons", "Inline SVG on a 16/20/24 grid, stroke 1.8–1.9. Never emoji, never dingbats"],
-              ["Touch targets", "44px minimum on every tappable row, pill and tab item"],
-            ]}
-          />
-        </Section>
-
-        <Section folio="06" label="System" title="Illustration">
-          <Prose>
-            Two tiers, and they are different languages. The mistake worth
-            avoiding is treating them as one &mdash; a rendered figure cannot
-            be reproduced at 32px, and a reduced mark cannot carry a scene.
-          </Prose>
-          <div className="grid gap-4 md:grid-cols-2">
-            <Panel title="Tier 1 — the print" index="raster" hover={false}>
-              <p className="t-small">
-                Two-ink screenprint. Scenes, poses, section art. Ships as WebP
-                with alpha at 900px; the PNG masters stay outside the served
-                folder, because a static export copies it whole.
+                Aqui ela é texto direto. O bloco deixa de ser necessário &mdash;
+                e some.
               </p>
-            </Panel>
-            <Panel title="Tier 2 — the mark" index="vector" hover={false}>
-              <p className="t-small">
-                The helmet, reduced. It must survive 32px, one colour and a
-                circular crop. Side pods sit tangent inside the silhouette
-                &mdash; pods that protrude read as animal ears when reduced,
-                which three candidates all proved.
-              </p>
-            </Panel>
-          </div>
-
-          <SubHead>The set</SubHead>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {[
-              ["/astronaut.webp", "The persona, full figure"],
-              ["/orbital-chart.webp", "An orbital chart"],
-              ["/spica.webp", "A star and a density scale"],
-              ["/404.webp", "Adrift, for the 404"],
-            ].map(([src, alt]) => (
-              <figure key={src} className="flex flex-col gap-2">
-                <div className="overflow-hidden rounded-[12px] border-2 border-hairline">
-                  <Image src={src} alt={alt} width={900} height={900} className="h-auto w-full" />
-                </div>
-                <figcaption className="font-mono text-[11px] text-ink-3">{alt}</figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <SubHead>The style block</SubHead>
-          <Prose>
-            This paragraph appears in every generation, word for word.{" "}
-            <Strong>
-              If it changes between one piece and the next, they stop looking
-              like the same brand.
-            </Strong>{" "}
-            Everything specific to a piece &mdash; the subject, the pose, the
-            props &mdash; is written around it, never inside it.
-          </Prose>
-          <Block>
-            {`The two inks are printed slightly out of register so they kiss and overlap at the edges. Ink breaks and skips over a visible paper grain. Dense halftone dots build every mid-tone and every shadow, at varying dot sizes. Bold hand-drawn contours with visible pressure — thicker where the line settles, thinner where it lifts. Three inks only: safety orange #FF6B00, deep graphite #2B2A28, and a bone off-white #EFE9DC that is PAINTED as a real ink on the suit and every lit surface, never left empty. The background outside the artwork is fully transparent — alpha channel, no paper rectangle, no card, no ground plane, no vignette.`}
-          </Block>
-          <SpecList
-            rows={[
-              ["Misregistration", "The two plates kiss and overlap. A real pull is never perfectly aligned, and that hair of offset is what says press rather than render"],
-              ["Halftone", "Every mid-tone and shadow is built from dots at varying size. Never a gradient — a gradient is the single clearest tell that something was rendered"],
-              ["Ink break", "The ink fails and skips over the paper grain. Perfectly flat fill reads as vector"],
-              ["Line pressure", "Contours thicken where the hand settles and thin where it lifts. Constant line weight gives away vector every time"],
-              ["The bone is an ink", "Painted, not left empty. If it relies on the paper showing through, the art develops holes the moment it sits on a dark page"],
-            ]}
-          />
-
-          <SubHead>Composition</SubHead>
-          <Prose>
-            This rule was learned the expensive way. The first set filled its
-            frame &mdash; ground running edge to edge, stars in every corner
-            &mdash; so the transparency did nothing and each piece landed on the
-            page as a square photograph rather than an illustration that
-            belonged there.
-          </Prose>
-          <Block>
-            {`COMPOSITION — this matters as much as the subject: the artwork must have an irregular, open outer silhouette. Elements cluster tightly around the subject and thin out quickly as they move away, so the four corners of the frame are completely empty and fully transparent. Never fill the frame to its edges. No horizon line running edge to edge, no rectangular field of stars, no border, no vignette, no ground plane spanning the full width. The silhouette of the whole piece should read as an irregular island floating in empty space.`}
-          </Block>
-          <Rule
-            title="Judge it on the silhouette, not the middle"
-            body="Squint at the result. If the outer contour is a rectangle it failed, however good the interior looks. Measure it if you can: the four corners should be empty."
-          />
-
-          <SubHead>The negative block</SubHead>
-          <Block>
-            {`no face, no eyes, no visible skin, no hair, no transparent visor, no two matched highlights on the visor, no white background, no paper rectangle, no card, no vignette, no gradients, no airbrush, no 3D render, no photorealism, no glossy plastic, no neon, no glowing outline, no die-cut sticker border, no keyline, no chest control box, no backpack, no hoses on the suit, no antennas on the helmet, no chibi proportions, no cute proportions, no baby face, no smiling, no mascot ears, no text, no lettering, no logos, no watermark, no signature`}
-          </Block>
-          <Prose small>
-            The four groups are the character&rsquo;s prohibitions: it must
-            never read as <Strong>cute</Strong>, <Strong>military</Strong>,{" "}
-            <Strong>NASA vintage</Strong> or <Strong>cyberpunk</Strong>.
-          </Prose>
-
-          <SubHead>Accepting a piece</SubHead>
-          <ul className="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
-            {[
-              "No face, no eyes, no skin, no hair. The visor is fully opaque.",
-              "Exactly two reflections on the visor — one large slash, one small dot. Never two matched shapes side by side, which reads as eyes.",
-              "The four corners are empty and transparent.",
-              "The bone is painted as an ink, not left as a hole.",
-              "The plates are out of register and the ink breaks over the grain.",
-              "Contours vary in pressure. Constant weight means vector.",
-              "No backpack, no chest module, no hoses, no antennas.",
-              "No third-party mark anywhere.",
-            ].map((t) => (
-              <li key={t} className="flex gap-3">
-                <span aria-hidden="true" className="mt-[9px] h-[2px] w-4 shrink-0 bg-accent-solid" />
-                <span className="t-small">{t}</span>
-              </li>
-            ))}
-          </ul>
-
-          <Rule
-            title="Charts are drawn, not generated"
-            body="The career trajectory, pipeline, sparkline and round rhythm plot real values, so they stay vector and CSS. Generating them as images fabricates data. Only scenic illustration is an image asset."
-          />
-          <Rule
-            title="The name is set in type, never printed into the art"
-            body="The helmet's neck strip is left deliberately blank. Eleven characters at that scale come back mangled from any generator, and type set beside the art stays correct, stays yours, and can change without regenerating anything."
-          />
-        </Section>
-
-        <Section folio="07" label="System" title="Voice">
-          <Prose>
-            The promise is{" "}
-            <Strong>&ldquo;How native software gets built when it can&rsquo;t
-            fail.&rdquo;</Strong>{" "}
-            Nothing that contradicts it ships. The audience is the wider dev
-            community, not recruiters &mdash; which means every piece has to
-            teach something, not just show it.
-          </Prose>
-          <SpecList
-            rows={[
-              ["Tone", "Editorial. Paragraphs, context, an argument built — not a list of bullets"],
-              ["Person", "First. A one-person brand written in the third person sounds institutional and false"],
-              ["Language", "English only. Stale content in one of two languages is worse than not having the second"],
-            ]}
-          />
-          <Rule
-            title="Explain the why, not just the what"
-            body="Editorial only pays off if there is an argument. Without one it is just long text."
-          />
-          <Rule
-            title="No hyperbole"
-            body="Blazing fast, game-changing, revolutionary — none survives a positioning built on precision. A real number, or nothing."
-          />
-          <Rule
-            title="One piece, one idea"
-            body="Editorial is permission to develop one thing to the end, not permission to write long."
-          />
-        </Section>
-
-        <Section folio="08" label="System" title="Do not" last>
-          <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-            {[
-              "Uppercase headings with wide tracking, or weights above 600",
-              "White text or glyphs on an orange fill",
-              "Colour baked into a type-ramp class",
-              "--card equal to --surface",
-              "Glass, blur, or a drop shadow on a plate",
-              "Emoji as icons",
-              "Fixed dark values on artwork that flips with the theme",
-              "Any animation that content depends on to be visible",
-              "A motion effect that a screenprint could not produce",
-              "Generated imagery standing in for real data",
-            ].map((t) => (
-              <li key={t} className="flex gap-3">
+              <div className="mt-5 flex flex-wrap items-center gap-4">
                 <span
-                  aria-hidden="true"
-                  className="mt-[9px] h-[2px] w-4 shrink-0 bg-accent-solid"
-                />
-                <span className="t-body">{t}</span>
+                  className="versalete pb-1 text-[13px]"
+                  style={{
+                    color: "var(--luz)",
+                    borderBottom: "2px solid var(--luz)",
+                  }}
+                >
+                  Ver o trabalho
+                </span>
+                <span
+                  className="versalete px-4 py-2 text-[13px]"
+                  style={{
+                    color: "var(--background)",
+                    border: "1px solid var(--background)",
+                  }}
+                >
+                  Falar comigo
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <Regra
+            titulo="O mesmo componente muda de forma entre os modos, e isso é correto"
+            corpo="O botão primário é um bloco no claro e um contorno no escuro. Se isso incomodar, a saída é usar bloco nos dois — nunca soltar o laranja no papel. Quem “consertar” isso soltando a luz quebra o sistema inteiro."
+          />
+        </Section>
+
+        {/* ============ III · A TIPOGRAFIA ============ */}
+        <Section folio="III" label="Fundamentos" title="A tipografia">
+          <Prose>
+            Três famílias, três funções, nenhuma sobreposição. Isto encerra a
+            regra de <Strong>&ldquo;sem webfont&rdquo;</Strong>, que valia
+            enquanto o meio era serigrafia e a voz vinha do layout. Agora a voz
+            vem do tipo.
+          </Prose>
+
+          <div className="divide-y divide-hairline border-y border-hairline">
+            <Face
+              amostra="Bodoni Moda"
+              classe="font-heading text-[clamp(2rem,5vw,3.4rem)] font-bold"
+              nota="Display e versalete. O nome, a promessa, os rótulos de figura. Nunca corpo de texto."
+            />
+            <Face
+              amostra="Spectral"
+              classe="text-[clamp(1.4rem,3vw,2rem)]"
+              nota="Leitura. Peso 300 em corpo — é o peso que uma prancha imprime."
+            />
+            <Face
+              amostra="IBM Plex Mono"
+              classe="font-mono text-[clamp(1.1rem,2.4vw,1.5rem)]"
+              nota="Coordenada, numeração, legenda de instrumento. Tudo que é etiqueta."
+            />
+          </div>
+
+          <Regra
+            titulo="O versalete é o rótulo do sistema"
+            corpo="Bodoni em caixa alta com .22em de entreletra. É ele que dá a voz de prancha; sem ele, tudo vira site. E corpo nunca desce de .845rem: o granulado come tipo menor que isso, testado e não estimado."
+          />
+        </Section>
+
+        {/* ============ IV · A MOLDURA ============ */}
+        <Section folio="IV" label="Forma" title="A moldura e a gravura">
+          <Prose>
+            A prancha tem <Strong>régua dupla</Strong>: fina por fora, grossa
+            por dentro, com folga entre elas. Não é borda de caixa &mdash; é o
+            corte da chapa.
+          </Prose>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            <div>
+              <div className="border border-foreground p-[5px]">
+                <div className="h-24 border-[3px] border-foreground bg-panel" />
+              </div>
+              <p className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-3">
+                1px &middot; folga 5px &middot; 3px. Canto vivo, sempre.
+              </p>
+            </div>
+            <div>
+              <div
+                className="h-[104px] border border-hairline"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(to right, color-mix(in srgb, var(--foreground) 30%, transparent) 0 1px, transparent 1px 56px)," +
+                    "repeating-linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 30%, transparent) 0 1px, transparent 1px 56px)," +
+                    "repeating-linear-gradient(to right, color-mix(in srgb, var(--foreground) 11%, transparent) 0 .5px, transparent .5px 14px)," +
+                    "repeating-linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 11%, transparent) 0 .5px, transparent .5px 14px)",
+                }}
+              />
+              <p className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-3">
+                Gratícula &mdash; nunca por cima de texto
+              </p>
+            </div>
+          </div>
+
+          <SubHead>O buril</SubHead>
+          <Prose small>
+            <Strong>Tom é densidade de linha.</Strong> Nunca cinza, nunca
+            opacidade. E a linha acompanha a forma: num globo ela curva com o
+            meridiano e engrossa na sombra. Por isso a arte geométrica é{" "}
+            <Strong>gerada</Strong>, não desenhada a olho &mdash; as figuras
+            abaixo saem de <code className="font-mono text-[0.92em]">gravura.py</code>,
+            no brand book.
+          </Prose>
+
+          <div className="grid items-center gap-10 md:grid-cols-2">
+            <PranchaOrbital className="w-full max-w-[380px] justify-self-center" />
+            <PranchaEstrela className="w-full max-w-[340px] justify-self-center" />
+          </div>
+
+          <Regra
+            titulo="O granulado são três passadas, nunca uma"
+            corpo="Uma passada só lê como ruído de JPEG; três leem como fibra. E fica abaixo do ponto em que começa a comer o texto miúdo — a primeira versão da capa errou exatamente aí, e o conserto foi baixar a força, não trocar de tipo."
+          />
+        </Section>
+
+        {/* ============ V · O MOVIMENTO ============ */}
+        <Section folio="V" label="Comportamento" title="O movimento">
+          <Prose>
+            Três famílias. Nada reposiciona layout &mdash; só{" "}
+            <code className="font-mono text-[0.92em]">transform</code>,{" "}
+            <code className="font-mono text-[0.92em]">opacity</code> e{" "}
+            <code className="font-mono text-[0.92em]">clip-path</code>. Tudo
+            morre em{" "}
+            <code className="font-mono text-[0.92em]">prefers-reduced-motion</code>.
+          </Prose>
+          <Tabela
+            cabecalho={["Família", "Quando", "O quê"]}
+            linhas={[
+              ["REVEAL", "Uma vez, na entrada", "O buril abre a linha em vez de ela já estar lá"],
+              ["ORBITAL", "Ambiente, infinito", "O globo gira em 260s. Lento a ponto de você só notar se parar"],
+              ["RESPONSE", "Na interação", "A régua do link engrossa de 1px para 2px"],
+            ]}
+          />
+          <Regra
+            titulo="O hover do link é o gesto do buril"
+            corpo="A régua aprofunda, não muda de cor. É a única coisa que uma chapa gravada sabe fazer, e é por isso que nenhum link deste site troca de tinta ao passar o mouse."
+          />
+        </Section>
+
+        {/* ============ VI · O QUE NUNCA ENTRA ============ */}
+        <Section folio="VI" label="Limites" title="O que nunca entra">
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {[
+              ["Gradiente", "Tom é linha."],
+              ["Sombra suave", "Uma prancha não tem profundidade de campo."],
+              ["Cinza para fazer tom", "Cinza é uma tinta que este sistema não tem."],
+              ["Canto arredondado", "Uma chapa gravada tem canto vivo."],
+              ["Ícone de biblioteca", "Todo desenho é gravado, ou não entra."],
+              ["Laranja solto no papel", "2,18:1. Ver a regra da luz."],
+            ].map(([t, d]) => (
+              <li key={t} className="border border-hairline px-4 py-3">
+                <p className="versalete text-[12px]">{t}</p>
+                <p className="t-body mt-1 text-[14px]">{d}</p>
               </li>
             ))}
           </ul>
+          <Regra
+            titulo="E a palavra “profissional”"
+            corpo="Se a peça precisa dizer isso, ela falhou. Foi o ponto de partida do briefing e virou regra escrita."
+          />
         </Section>
+
+        <div className="mx-auto w-full max-w-[1120px] px-6 pb-16 md:px-12">
+          <div className="escala" />
+          <p className="mt-4 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-3">
+            A fonte da verdade é o brand book &mdash; decisão 006 e SISTEMA.md.
+            Se esta página e eles divergirem, eles vencem e esta está
+            desatualizada.
+          </p>
+        </div>
       </main>
       <Footer />
     </>
   );
 }
 
-/* ── page furniture ─────────────────────────────────────────── */
+/* ---------------- peças da página ---------------- */
 
 function Section({
   folio,
   label,
   title,
   children,
-  last = false,
 }: {
   folio: string;
   label: string;
   title: string;
   children: React.ReactNode;
-  last?: boolean;
 }) {
   return (
-    <section
-      className={`mx-auto w-full max-w-[1120px] px-6 py-16 md:px-12 md:py-20 ${last ? "" : "border-b border-hairline"}`}
-    >
-      <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">
-          {label}
-        </p>
-        <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">
-          {folio}
-        </p>
+    <section className="border-t border-hairline">
+      <div className="mx-auto w-full max-w-[1120px] px-6 py-14 md:px-12 md:py-20">
+        <div className="flex items-center justify-between gap-4">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">
+            {label}
+          </p>
+          <p className="folio font-mono text-[10px] uppercase tracking-[0.2em]">
+            {folio}
+          </p>
+        </div>
+        <div className="mt-2 h-[2px] w-full bg-accent" />
+        <h2 className="t-section mt-6">{title}</h2>
+        <div className="mt-8 flex flex-col gap-7">{children}</div>
       </div>
-      <h2 className="t-section mt-5 max-w-[20ch] text-balance">{title}</h2>
-      <div className="mt-8 flex flex-col gap-6">{children}</div>
     </section>
   );
 }
 
 function SubHead({ children }: { children: React.ReactNode }) {
-  return (
-    <h3 className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-      {children}
-    </h3>
-  );
+  return <p className="versalete text-[12px] text-ink">{children}</p>;
 }
 
 function Prose({
   children,
-  small = false,
+  small,
 }: {
   children: React.ReactNode;
   small?: boolean;
 }) {
   return (
-    <p className={`${small ? "t-small" : "t-body"} max-w-[64ch] text-pretty`}>
+    <p className={`${small ? "text-[15px]" : "t-body"} max-w-[68ch] text-pretty`}>
       {children}
     </p>
   );
@@ -622,115 +365,55 @@ function Strong({ children }: { children: React.ReactNode }) {
   return <strong className="font-semibold text-ink">{children}</strong>;
 }
 
-/** A paste-ready block. Wraps, unlike CodeLine, because these are paragraphs. */
-function Block({ children }: { children: React.ReactNode }) {
+function Face({
+  amostra,
+  classe,
+  nota,
+}: {
+  amostra: string;
+  classe: string;
+  nota: string;
+}) {
   return (
-    <div className="rounded-[12px] border-2 border-hairline bg-panel px-5 py-4">
-      <p className="whitespace-pre-wrap font-mono text-[12.5px] leading-[1.7] text-ink-2">
-        {children}
+    <div className="py-5">
+      <p className={classe}>{amostra}</p>
+      <p className="mt-1 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-3">
+        {nota}
       </p>
     </div>
   );
 }
 
-function CodeLine({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="overflow-x-auto rounded-[12px] border-2 border-hairline bg-panel px-4 py-3">
-      <code className="whitespace-nowrap font-mono text-[12.5px] text-ink-2">
-        {children}
-      </code>
-    </div>
-  );
-}
-
-/** A rule with the reason attached. A rule without its reason gets undone. */
-function Rule({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="flex gap-4 border-l-2 border-accent pl-5">
-      <div>
-        <p className="text-[16px] font-semibold tracking-[-0.01em] text-ink">
-          {title}
-        </p>
-        <p className="t-small mt-1.5 max-w-[64ch] text-pretty">{body}</p>
-      </div>
-    </div>
-  );
-}
-
-function Swatch({
-  name,
-  light,
-  dark,
-  role,
+function Tabela({
+  cabecalho,
+  linhas,
 }: {
-  name: string;
-  light: string;
-  dark: string;
-  role: string;
+  cabecalho: string[];
+  linhas: string[][];
 }) {
   return (
-    <div className="flex gap-3 rounded-[12px] border-2 border-hairline p-3">
-      <div className="flex shrink-0 overflow-hidden rounded-[8px] border border-hairline">
-        <span className="size-[38px]" style={{ background: light }} />
-        <span className="size-[38px]" style={{ background: dark }} />
-      </div>
-      <div className="min-w-0">
-        <p className="truncate font-mono text-[12px] text-ink">{name}</p>
-        <p className="mt-0.5 font-mono text-[11px] text-ink-3">
-          {light} · {dark}
-        </p>
-        <p className="mt-1 text-[13px] leading-snug text-ink-2">{role}</p>
-      </div>
-    </div>
-  );
-}
-
-const CONTRAST = [
-  ["--foreground", "11.78", "12.75", true],
-  ["--ink-2", "6.71", "6.61", true],
-  ["--ink-3", "5.21", "4.72", true],
-  ["--accent-ink", "4.60", "6.89", true],
-  ["--on-accent on --accent-solid", "5.43", "5.43", true],
-  ["white on --accent-solid", "2.86", "2.86", false],
-] as const;
-
-function ContrastTable() {
-  return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[520px] border-collapse text-left">
+      <table className="w-full min-w-[560px] border-collapse text-left font-mono text-[12px]">
         <thead>
-          <tr className="border-b-2 border-hairline">
-            <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              Token
-            </th>
-            <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              Bone paper
-            </th>
-            <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              Black paper
-            </th>
-            <th className="py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">
-              AA
-            </th>
+          <tr className="border-b-[2.5px] border-foreground">
+            {cabecalho.map((c) => (
+              <th
+                key={c}
+                className="py-2 pr-4 font-medium uppercase tracking-[0.12em] text-ink"
+              >
+                {c}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {CONTRAST.map(([token, l, d, pass]) => (
-            <tr key={token} className="border-b border-hairline">
-              <td className="py-2.5 pr-4 font-mono text-[12.5px] text-ink">{token}</td>
-              <td className="py-2.5 pr-4 font-mono text-[12.5px] tabular-nums text-ink-2">
-                {l}:1
-              </td>
-              <td className="py-2.5 pr-4 font-mono text-[12.5px] tabular-nums text-ink-2">
-                {d}:1
-              </td>
-              <td className="py-2.5">
-                <span
-                  className={`font-mono text-[11px] uppercase tracking-[0.1em] ${pass ? "text-accent-ink" : "text-ink-3"}`}
-                >
-                  {pass ? "passes" : "never used"}
-                </span>
-              </td>
+          {linhas.map((l) => (
+            <tr key={l[0]} className="border-b border-hairline">
+              {l.map((c, i) => (
+                <td key={i} className="py-2 pr-4 text-ink-2">
+                  {c}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
@@ -739,64 +422,12 @@ function ContrastTable() {
   );
 }
 
-function RampRow({
-  cls,
-  spec,
-  children,
-}: {
-  cls: string;
-  spec: string;
-  children: React.ReactNode;
-}) {
+/** Uma regra do sistema: por que ela existe, e o que quebrou sem ela. */
+function Regra({ titulo, corpo }: { titulo: string; corpo: string }) {
   return (
-    <div className="flex flex-col gap-2 py-5 lg:flex-row lg:items-baseline lg:gap-8">
-      <div className="lg:w-[180px] lg:shrink-0">
-        <p className="font-mono text-[12px] text-accent-ink">.{cls}</p>
-        <p className="mt-0.5 font-mono text-[11px] leading-snug text-ink-3">
-          {spec}
-        </p>
-      </div>
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
-  );
-}
-
-function SpecList({ rows }: { rows: readonly (readonly [string, string])[] }) {
-  return (
-    <div className="flex flex-col divide-y divide-hairline border-y border-hairline">
-      {rows.map(([k, v]) => (
-        <div key={k} className="flex flex-col gap-1 py-3 sm:flex-row sm:gap-6">
-          <p className="font-mono text-[12.5px] text-ink sm:w-[220px] sm:shrink-0">
-            {k}
-          </p>
-          <p className="t-small">{v}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Demo({
-  title,
-  hint,
-  body,
-  children,
-}: {
-  title: string;
-  hint: string;
-  body: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-baseline justify-between">
-        <p className="text-[15px] font-semibold text-ink">{title}</p>
-        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-accent-ink">
-          {hint}
-        </p>
-      </div>
-      {children}
-      <p className="t-small max-w-[46ch] text-pretty">{body}</p>
+    <div className="border-l-[3px] border-accent pl-5">
+      <p className="versalete text-[12px] text-ink">{titulo}</p>
+      <p className="t-body mt-2 max-w-[68ch] text-[15px]">{corpo}</p>
     </div>
   );
 }

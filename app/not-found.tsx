@@ -45,7 +45,7 @@ export default function NotFound() {
             <div className="justify-self-center lg:justify-self-end">
               <Print
                 src="/404.webp"
-                alt="A screenprinted astronaut adrift in a debris field, a severed orange tether coiling away"
+                alt="Um astronauta à deriva num campo de destroços, com um cabo laranja rompido se enrolando ao longe"
                 width={900}
                 height={900}
                 priority

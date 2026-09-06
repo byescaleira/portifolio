@@ -112,8 +112,8 @@
   --code-bg: #131a38;
   --code-ink: #bab4ad;
   --code-keyword: #ff6b00;
-
-  --tile-warm: linear-gradient(155deg, #f6e3cf 0%, var(--card) 55%);
+  /* Gradiente é proibido (SISTEMA.md §8): tom é linha, não mistura. */
+  --tile-warm: var(--card);
   --inset-fill: rgba(19, 26, 56, 0.06);
 
   /* On a white section a white card has only its hairline to stand on.
@@ -182,8 +182,8 @@
   --code-bg: #0b0f26;
   --code-ink: #bab4ad;
   --code-keyword: #ff6b00;
-
-  --tile-warm: linear-gradient(155deg, #2e2418 0%, var(--card) 55%);
+  /* Gradiente é proibido (SISTEMA.md §8): tom é linha, não mistura. */
+  --tile-warm: var(--card);
   --inset-fill: rgba(0, 0, 0, 0.30);
   --card-shadow: none;
 
@@ -668,27 +668,6 @@ body::after {
 /* Misregistration. The two plates never line up perfectly on a real
    press, and a pull that is a hair out is the signature of the medium.
    On hover the orange plate slips; on leave it snaps back. */
-.misreg {
-  position: relative;
-}
-.misreg::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border: 2px solid var(--accent-solid);
-  border-radius: inherit;
-  opacity: 0;
-  transform: translate(0, 0);
-  pointer-events: none;
-  transition:
-    opacity 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
-}
-.misreg:hover::after,
-.misreg:focus-visible::after {
-  opacity: 0.85;
-  transform: translate(3px, 3px);
-}
 
 /* The squeegee. One pass, left to right, on load — the rule under the
    masthead is not drawn, it is PRINTED. Fires once and never replays. */
@@ -699,9 +678,6 @@ body::after {
   to {
     clip-path: inset(0 0 0 0);
   }
-}
-.o-squeegee {
-  animation: bye-squeegee 0.9s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 
 /* Crop marks. A press sheet is trimmed after printing, and the marks
@@ -768,9 +744,9 @@ body::after {
 
 /* ============================================================
    A PRANCHA — decisão 006 / SISTEMA.md
-   Os primitivos do meio novo. As classes de serigrafia acima
-   (.misreg, .o-squeegee, .crop-mark) são do meio anterior e saem
-   quando as seções que ainda as usam forem convertidas.
+   Os primitivos do meio novo. .misreg e .o-squeegee eram gestos de
+   serigrafia e foram removidas com o meio. .crop-mark ficou: marca de
+   corte é dispositivo de prancha, não de serigrafia.
    ============================================================ */
 
 /* A moldura: fina por fora, grossa por dentro, com folga entre elas.
@@ -791,17 +767,17 @@ body::after {
 .graticula {
   background-image:
     repeating-linear-gradient(to right,
-      color-mix(in srgb, var(--foreground) 40%, transparent) 0 .9px,
-      transparent .9px 192px),
+      color-mix(in srgb, var(--foreground) 30%, transparent) 0 1px,
+      transparent 1px 224px),
     repeating-linear-gradient(to bottom,
-      color-mix(in srgb, var(--foreground) 40%, transparent) 0 .9px,
-      transparent .9px 192px),
+      color-mix(in srgb, var(--foreground) 30%, transparent) 0 1px,
+      transparent 1px 224px),
     repeating-linear-gradient(to right,
-      color-mix(in srgb, var(--foreground) 22%, transparent) 0 .5px,
-      transparent .5px 48px),
+      color-mix(in srgb, var(--foreground) 11%, transparent) 0 .5px,
+      transparent .5px 56px),
     repeating-linear-gradient(to bottom,
-      color-mix(in srgb, var(--foreground) 22%, transparent) 0 .5px,
-      transparent .5px 48px);
+      color-mix(in srgb, var(--foreground) 11%, transparent) 0 .5px,
+      transparent .5px 56px);
 }
 
 /* O granulado: TRÊS passadas de pitch diferente, nunca uma. Uma só lê como
@@ -879,4 +855,23 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   .buril { transition: none; }
+}
+
+/* ORBITAL: a esfera gira em 260s. Lento a ponto de você só notar se parar. */
+@keyframes o-globo { to { transform: rotate(360deg); } }
+.o-globo { animation: o-globo 260s linear infinite; transform-origin: 50% 50%; }
+@media (prefers-reduced-motion: reduce) { .o-globo { animation: none; } }
+
+/* O folio: a numeração da seção. Bloco de luz no claro (a luz não pode ser
+   tipo no papel, 2,18:1); no escuro o fundo já é o vazio, então o bloco vira
+   contorno e a luz fica solta a 5,49:1. Mesma regra do botão primário. */
+.folio {
+  background: var(--foreground);
+  color: var(--luz);
+  padding: .18rem .55rem .26rem;
+  border: 1px solid var(--foreground);
+}
+.dark .folio {
+  background: transparent;
+  border-color: var(--luz);
 }

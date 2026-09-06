@@ -40,13 +40,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       link={project.link}
       linkLabel="View on GitHub"
       badge={
-        <span className="relative flex size-[52px] shrink-0 items-center justify-center overflow-hidden rounded-[15px] bg-[linear-gradient(150deg,#241A16,#131314)]">
+        <span className="relative flex size-[52px] shrink-0 items-center justify-center overflow-hidden bg-[linear-gradient(150deg,#241A16,#131314)]">
           <span
-            className="absolute size-6 rounded-[7px]"
+            className="absolute size-6"
             style={{ background: "rgba(255,107,0,.75)", animation: "bye-prism-a 11s ease-in-out infinite" }}
           />
           <span
-            className="absolute size-6 rounded-[7px]"
+            className="absolute size-6"
             style={{ background: "rgba(255,255,255,.24)", animation: "bye-prism-c 11s ease-in-out infinite" }}
           />
         </span>

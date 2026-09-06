@@ -17,8 +17,8 @@ import { PrintedSky } from "../components/printed-sky";
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-background">
-      {/* The subject is space and the medium is a screenprint; the halftone dot
-          is the one mark that is both. Sits behind everything, never over it. */}
+      {/* O assunto é o céu e o meio é gravura: a gratícula e a esfera são o que
+          uma prancha de atlas realmente tem. Fica atrás de tudo, nunca por cima. */}
       <PrintedSky />
 
       {/* running head — the line a printer sets above the plate */}
@@ -43,7 +43,7 @@ export function Hero() {
         {/* the heavy rule under a masthead — the one thick thing on the page.
             It is PRINTED, not drawn: one squeegee pass on load, left to
             right, and it never replays. */}
-        <div className="o-squeegee mt-6 h-[7px] w-full rounded-full bg-accent" />
+        <div className="mt-6 h-[6px] w-full bg-accent" />
 
         {/* The promise, at the scale it deserves. This was set at t-sub under a
             supporting paragraph, an ink bar and a second call to action — six

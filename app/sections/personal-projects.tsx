@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ScrollReveal } from "../components/scroll-reveal";
 import { Panel } from "../components/panel";
 import { Chevron } from "../components/illustrations";
-import { Print } from "../components/print";
+import { PranchaEstrela } from "../components/figuras";
 import { projects } from "@/lib/content";
 
 /** Each project gets its own drawn, moving visual — never a stock icon. */
@@ -10,13 +10,7 @@ const art: Record<string, { cls: string; node: React.ReactNode }> = {
   spica: {
     cls: "art-warm",
     node: (
-      <Print
-        src="/spica.webp"
-        alt="A screenprinted star beside a printer's density scale of halftone patches"
-        width={900}
-        height={900}
-        className="w-full max-w-[300px]"
-      />
+      <PranchaEstrela className="w-full max-w-[380px]" />
     ),
   },
 };
@@ -31,7 +25,7 @@ export function PersonalProjects() {
         <ScrollReveal className="mb-12">
           <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Personal work</p>
-            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">05</p>
+            <p className="folio font-mono text-[10px] uppercase tracking-[0.2em]">05</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">The system behind this page.</h2>
           <p className="t-lead mt-5 max-w-[58ch] text-pretty">
@@ -47,7 +41,7 @@ export function PersonalProjects() {
             return (
               <ScrollReveal key={project.slug} delay={(i % 2) * 0.07}>
                 <Link href={`/project/${project.slug}`} className="group block h-full">
-                  <Panel className="flex h-full flex-col overflow-hidden rounded-[26px]">
+                  <Panel className="flex h-full flex-col overflow-hidden">
                     <div
                       className={`relative flex h-[208px] items-center justify-center overflow-hidden ${visual?.cls ?? ""}`}
                     >
@@ -62,7 +56,7 @@ export function PersonalProjects() {
                           className={
                             live
                               ? "pill-accent"
-                              : "inline-flex items-center rounded-full bg-[color-mix(in_srgb,var(--foreground)_9%,transparent)] px-2.5 py-1 text-xs font-medium text-ink-2"
+                              : "inline-flex items-center bg-[color-mix(in_srgb,var(--foreground)_9%,transparent)] px-2.5 py-1 text-xs font-medium text-ink-2"
                           }
                         >
                           {project.status}

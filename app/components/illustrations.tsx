@@ -49,7 +49,7 @@ export function ChevronLeft({ className }: { className?: string }) {
 export function LiveDot({ size = 8 }: { size?: number }) {
   return (
     <span
-      className="o-live inline-block shrink-0 rounded-full bg-accent"
+      className="o-live inline-block shrink-0 bg-accent"
       style={{ width: size, height: size }}
     />
   );
@@ -140,7 +140,9 @@ export function Device({
         borderRadius: px(38),
         padding: px(2.5),
         background: "linear-gradient(160deg,#5B5B60,#26262A 42%,#1D1D1F 70%,#4A4A4F)",
-        boxShadow: `0 ${px(30)} ${px(64)} rgba(0,0,0,.8)`,
+        /* Sem sombra: SISTEMA.md §8. Uma prancha não tem profundidade
+           de campo — o aparelho se separa pela régua, não por elevação. */
+        border: "1px solid var(--foreground)",
       }}
       aria-hidden="true"
     >
@@ -184,13 +186,13 @@ export function Device({
               }}
             >
               <span
-                className="shrink-0 rounded-full bg-white/10"
+                className="shrink-0 bg-white/10"
                 style={{ width: px(20), height: px(20) }}
               />
               <span className="grow">
-                <span className="block rounded-full bg-white/25" style={{ height: px(5), width: px(r.w) }} />
+                <span className="block bg-white/25" style={{ height: px(5), width: px(r.w) }} />
                 <span
-                  className="block rounded-full bg-white/10"
+                  className="block bg-white/10"
                   style={{ height: px(4), width: px(r.w2), marginTop: px(4) }}
                 />
               </span>

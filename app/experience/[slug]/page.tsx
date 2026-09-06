@@ -41,13 +41,13 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
       link={experience.link}
       linkLabel={experience.link?.replace(/^https?:\/\//, "")}
       badge={
-        <span className="flex size-[52px] shrink-0 items-center justify-center rounded-[15px] bg-accent">
+        <span className="flex size-[52px] shrink-0 items-center justify-center bg-accent">
           <svg
             width="26"
             height="26"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="var(--on-accent)"
+            stroke="var(--luz)"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -130,7 +130,7 @@ export default async function ExperiencePage({ params }: ExperiencePageProps) {
             </div>
           </Panel>
 
-          <Panel tinted hover={false} className="p-6 md:p-7">
+          <Panel tinted className="p-6 md:p-7">
             <h3 className="text-[19px] font-semibold tracking-[-0.02em] text-ink">
               Elsewhere on the arc
             </h3>

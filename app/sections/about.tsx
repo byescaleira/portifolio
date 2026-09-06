@@ -72,7 +72,7 @@ export function About() {
         <ScrollReveal className="mb-12">
           <div className="flex items-baseline justify-between border-b-2 border-accent pb-2">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent-ink">Who I am</p>
-            <p className="rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-on-accent">01</p>
+            <p className="folio font-mono text-[10px] uppercase tracking-[0.2em]">01</p>
           </div>
           <h2 className="t-section mt-5 max-w-[20ch] text-balance">
             Builder by instinct.
@@ -119,7 +119,7 @@ export function About() {
           </div>
 
           {/* a seven-point arc is unreadable on a phone — same data, as a list */}
-          <ul className="overflow-hidden rounded-[22px] border border-hairline bg-panel md:hidden">
+          <ul className="overflow-hidden border border-hairline bg-panel md:hidden">
             {[...milestones].reverse().map((m, i) => {
               const current = i === 0;
               return (

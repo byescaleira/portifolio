@@ -7,7 +7,7 @@ import { LivingMark } from "./living-mark";
  * The mark is the helmet.
  *
  * It was a "by" tile with a slow orbit drawn around it — a vector stand-in from
- * before the character existed. Now that the screenprinted helmet is the
+ * before the character existed. Now that the engraved helmet is the
  * primary mark (decision 005), the tile has no job: two marks competing in the
  * same corner is one too many. The word is set in type beside it rather than
  * printed into the art, so it stays crisp at every size and can be changed
