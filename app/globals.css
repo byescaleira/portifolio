@@ -780,6 +780,25 @@ body::after {
       transparent .5px 56px);
 }
 
+/* A gratícula fina: o passo de 224/56px é a régua da PÁGINA. Dentro de uma
+   prancha ela só mostra duas listras — o quadro é pequeno demais para a
+   escala. Esta é a mesma régua em passo de componente. */
+.graticula-fina {
+  background-image:
+    repeating-linear-gradient(to right,
+      color-mix(in srgb, var(--foreground) 22%, transparent) 0 1px,
+      transparent 1px 64px),
+    repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--foreground) 22%, transparent) 0 1px,
+      transparent 1px 64px),
+    repeating-linear-gradient(to right,
+      color-mix(in srgb, var(--foreground) 9%, transparent) 0 .5px,
+      transparent .5px 16px),
+    repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--foreground) 9%, transparent) 0 .5px,
+      transparent .5px 16px);
+}
+
 /* O granulado: TRÊS passadas de pitch diferente, nunca uma. Uma só lê como
    ruído de JPEG; três leem como fibra. E fica abaixo do ponto em que começa
    a comer o texto miúdo — foi assim que a primeira capa errou. */
@@ -877,4 +896,16 @@ body::after {
 .dark .folio {
   background: transparent;
   border-color: var(--luz);
+}
+
+/* REVEAL — a passada de buril quando a prancha vira. O conteúdo é aberto da
+   esquerda para a direita, como a linha que o buril abre. Nunca desliza nem
+   desvanece: uma chapa não tem profundidade de campo. */
+@keyframes r-buril-abre {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 -2% 0 0); }
+}
+.r-buril { animation: r-buril-abre 460ms cubic-bezier(.3,.75,.3,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .r-buril { animation: none; clip-path: none; }
 }
