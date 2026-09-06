@@ -839,18 +839,21 @@ body::after {
   font-weight: 500;
 }
 
-/* A escala graduada: divisor de seção e pé de página. */
+/* A escala graduada: divisor de seção e pé de página.
+   A primeira versão empilhava dois gradientes com background-size disputando
+   a mesma caixa, e saía como traços soltos sem linha de base. Agora a base é
+   uma borda de verdade e cada gradiente tem a própria altura declarada. */
 .escala {
-  height: 24px;
+  height: 26px;
   border-bottom: 1.6px solid var(--foreground);
-  background-image:
-    repeating-linear-gradient(to right, var(--foreground) 0 1.4px, transparent 1.4px 127px),
-    repeating-linear-gradient(to right,
-      color-mix(in srgb, var(--foreground) 70%, transparent) 0 .7px,
-      transparent .7px 31.75px);
-  background-size: 100% 100%, 100% 9px;
-  background-position: 0 0, 0 100%;
   background-repeat: repeat-x;
+  background-position: bottom left, bottom left;
+  background-size: 127px 20px, 31.75px 9px;
+  background-image:
+    linear-gradient(to right, var(--foreground) 0 1.4px, transparent 1.4px),
+    linear-gradient(to right,
+      color-mix(in srgb, var(--foreground) 70%, transparent) 0 .7px,
+      transparent .7px);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -16,6 +16,8 @@ const columns = [
     links: [
       { label: "Spica", href: "/project/spica" },
       { label: "Design system", href: "/design-system" },
+      { label: "Caderno de decisões", href: "/decisoes" },
+      { label: "API", href: "/api/docs" },
     ],
   },
 ];
