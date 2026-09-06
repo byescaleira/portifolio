@@ -8,20 +8,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Apple's system stack resolves to SF Pro on Apple devices: nothing to
-     download, nothing to lay out twice. The webfont experiment (Baloo 2 for
-     display, Archivo for UI, Newsreader for reading) was reverted — the print
-     language lives in the layout, the rules and the ink, not in the type.
-     There is one stack now, so there is nothing to alias. */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-heading: var(--font-sans);
-  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, monospace;
+  /* Decisão 006 — a prancha de atlas. Três famílias, três funções, nenhuma
+     sobreposição. Bodoni no display e versalete, Spectral 300 na leitura
+     (é o peso que uma prancha imprime), Plex Mono em coordenada e legenda.
+     A stack do sistema fica só de fallback, com métrica próxima. */
+  --font-sans: var(--f-leitura), "Iowan Old Style", Georgia, serif;
+  --font-heading: var(--f-display), Didot, "Bodoni MT", Georgia, serif;
+  --font-mono: var(--f-instrumento), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* semantic surface + ink */
   --color-surface: var(--surface);
   --color-panel: var(--card);
   --color-hairline: var(--hairline);
+  --color-regua: var(--regua);
+  --color-luz: var(--luz);
   --color-ink: var(--foreground);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
@@ -66,60 +66,59 @@
      orbits. What made the old system read as Apple was not the radius, it was
      22px PLUS glass PLUS a shadow PLUS a hover lift. With an ink border and no
      shadow, a generous curve reads as a printed label instead. */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 22px;
-  --radius-2xl: 22px;
-  --radius-3xl: 28px;
-  --radius-4xl: 34px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
 }
 
 /* ---------- LIGHT ---------- */
 :root {
   /* Ink on bone paper. Values verified against AA on all three grounds. */
-  --background: #f3efe5;
-  --surface: #e6e0d2;
-  --foreground: #26241f;
+  --background: #e9e0ce;
+  --surface: #e2d8c3;
+  --foreground: #131a38;
   /* Apple's #6e6e73 / #86868b pair clears AA on white but not on the #f5f5f7
      sections, where most of this text actually sits. Each step is darkened
      one notch so the three-level hierarchy survives on both grounds. */
-  --ink-2: #4e4a41;
+  --ink-2: #3e4256;
   /* #6e6960 measured 3.92 on the surface — one notch darker to clear AA. */
-  --ink-3: #5f5a50;
-  --hairline: #4e4a41;
-
+  --ink-3: #5d5e6c;
+  --hairline: #7b7a81;
   --accent-solid: #ff6b00;
   /* No orange bright enough to feel vibrant clears 4.5:1 on a light ground —
      #ff6b00 measures 1.92 on the paper. That is physics, and it is why the
      vibrancy lives in FILLS, not in type: a screenprint floods ink, it does not
      set coloured text. #ad3e00 is the brightest that still clears AA on all
      three grounds (4.60) now that the paper was lightened. */
-  --accent-ink: #ad3e00;
-  --accent-soft: rgba(255, 107, 0, 0.16);
-  --on-accent: #26241f;
+  --accent-ink: #131a38;
+  --accent-soft: rgba(255, 107, 0, 0.14);
+  --on-accent: #131a38;
 
   /* Cards are WHITE on the grey alternating sections. When card and surface
      were both #f5f5f7 every panel dissolved into the section behind it. */
-  --card: #fbf8f1;
+  --card: #efe8dc;
 
   /* Glass needs something to sit against: near-white on white is invisible,
      so the light build tints toward the surface grey instead. */
-  --glass-fill: color-mix(in srgb, var(--surface) 88%, transparent);
-  --bar-fill: color-mix(in srgb, var(--background) 72%, transparent);
+  --glass-fill: color-mix(in srgb, var(--surface) 90%, transparent);
+  --bar-fill: color-mix(in srgb, var(--background) 82%, transparent);
 
   /* The code strip recedes in both modes — near-black there, quiet grey here.
      A pure black band across a white page reads as a hole. */
-  --code-bg: #dcd3c0;
-  --code-ink: #6e6960;
-  --code-keyword: #9e3a00;
+  --code-bg: #131a38;
+  --code-ink: #bab4ad;
+  --code-keyword: #ff6b00;
 
   --tile-warm: linear-gradient(155deg, #f6e3cf 0%, var(--card) 55%);
-  --inset-fill: rgba(38, 36, 31, 0.05);
+  --inset-fill: rgba(19, 26, 56, 0.06);
 
   /* On a white section a white card has only its hairline to stand on.
      Dark mode separates by fill; light mode separates by shadow. */
-  --card-shadow: 0 1px 2px rgba(38, 36, 31, 0.06), 0 8px 20px rgba(38, 36, 31, 0.07);
+  --card-shadow: none;
 
   /* Project artwork flips with the theme; its contents follow these. */
   --art-warm: linear-gradient(150deg, #fff1e6, #fafafc);
@@ -149,7 +148,7 @@
   --chart-3: #ffb185;
   --chart-4: #86868b;
   --chart-5: #d2d2d7;
-  --radius: 18px;
+  --radius: 0px;
   --sidebar: #f5f5f7;
   --sidebar-foreground: #1d1d1f;
   --sidebar-primary: #ff6b00;
@@ -158,35 +157,34 @@
   --sidebar-accent-foreground: #1d1d1f;
   --sidebar-border: #e4e4e8;
   --sidebar-ring: #ff6b00;
+  --regua: #7b7a81;
+  --luz: #ff6b00;
+
 }
 
 /* ---------- DARK (the default the site ships in) ---------- */
 .dark {
   /* The same screenprint, pulled on black paper. Warm throughout — a cool grey
      ink would give away that this is a screen and not a press. */
-  --background: #0b0a09;
-  --surface: #17150f;
-  --foreground: #eae4d6;
-  --ink-2: #ada595;
-  --ink-3: #918a7c;
-  --hairline: rgba(234, 228, 214, 0.34);
-
+  --background: #131a38;
+  --surface: #0e1330;
+  --foreground: #e9e0ce;
+  --ink-2: #bab4ad;
+  --ink-3: #8b898c;
+  --hairline: #6c6c76;
   --accent-solid: #ff6b00;
-  --accent-ink: #ff8a3d;
-  --accent-soft: rgba(255, 107, 0, 0.14);
-  --on-accent: #26241f;
-
-  --card: #252019;
-
-  --glass-fill: color-mix(in srgb, var(--card) 68%, transparent);
-  --bar-fill: color-mix(in srgb, var(--background) 72%, transparent);
-
-  --code-bg: #070605;
-  --code-ink: #5a544a;
-  --code-keyword: #ff8a3d;
+  --accent-ink: #ff6b00;
+  --accent-soft: rgba(255, 107, 0, 0.18);
+  --on-accent: #131a38;
+  --card: #1a2142;
+  --glass-fill: color-mix(in srgb, var(--card) 74%, transparent);
+  --bar-fill: color-mix(in srgb, var(--background) 80%, transparent);
+  --code-bg: #0b0f26;
+  --code-ink: #bab4ad;
+  --code-keyword: #ff6b00;
 
   --tile-warm: linear-gradient(155deg, #2e2418 0%, var(--card) 55%);
-  --inset-fill: rgba(0, 0, 0, 0.34);
+  --inset-fill: rgba(0, 0, 0, 0.30);
   --card-shadow: none;
 
   --art-warm: linear-gradient(150deg, #241a16, #131314);
@@ -219,6 +217,9 @@
   --sidebar-accent-foreground: #f5f5f7;
   --sidebar-border: rgba(255, 255, 255, 0.09);
   --sidebar-ring: #ff6b00;
+  --regua: #6c6c76;
+  --luz: #ff6b00;
+
 }
 
 @layer base {
@@ -331,29 +332,59 @@
   .art-amber { background: var(--art-amber); }
   .art-slate { background: var(--art-slate); }
 
+  /* Ação primária = BLOCO DE LUZ. No claro o laranja não pode ser tipo
+     (2,18:1), então ele vaza sobre o vazio: fundo tinta, texto luz, 5,97:1.
+     No escuro o fundo da página já é o vazio, o bloco some e sobra a régua.
+     O mesmo botão muda de forma entre os modos, e isso é correto. */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 text-[17px] font-medium text-on-accent transition-opacity;
+    @apply inline-flex items-center justify-center gap-2 px-6 text-[17px] font-medium transition-colors;
+    background: var(--foreground);
+    color: var(--luz);
+    border: 1px solid var(--foreground);
+    border-radius: 0;
     min-height: 46px;
     padding-block: 12px;
   }
   .btn-primary:hover {
-    opacity: 0.86;
+    background: color-mix(in srgb, var(--foreground) 88%, var(--luz));
   }
+  .dark .btn-primary {
+    background: transparent;
+    border-color: var(--luz);
+  }
+  .dark .btn-primary:hover {
+    background: color-mix(in srgb, var(--luz) 14%, transparent);
+  }
+
+  /* Ação secundária: contorno de régua fina em tinta, sem preenchimento. */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-hairline bg-transparent px-6 text-[17px] text-ink transition-colors;
+    @apply inline-flex items-center justify-center gap-2 border px-6 text-[17px] text-ink transition-colors;
+    border-color: var(--foreground);
+    border-radius: 0;
     min-height: 46px;
     padding-block: 12px;
   }
   .btn-secondary:hover {
-    border-color: color-mix(in srgb, var(--accent-solid) 45%, transparent);
+    border-width: 2px;
+    padding-block: 11px;
   }
+
+  /* Rótulos: versalete sobre régua, nunca cápsula. */
   .pill {
-    @apply inline-flex items-center rounded-full px-3 py-1.5 text-[13px] text-ink-2;
-    background: color-mix(in srgb, var(--foreground) 7%, transparent);
+    @apply inline-flex items-center px-3 py-1.5 text-[13px] text-ink-2;
+    border: 1px solid var(--regua);
+    border-radius: 0;
+    background: transparent;
   }
   .pill-accent {
-    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium text-accent-ink;
-    background: var(--accent-soft);
+    @apply inline-flex items-center px-2.5 py-1 text-xs font-medium;
+    background: var(--foreground);
+    color: var(--luz);
+    border-radius: 0;
+  }
+  .dark .pill-accent {
+    background: transparent;
+    border-bottom: 2px solid var(--luz);
   }
 }
 
@@ -733,4 +764,119 @@ body::after {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ============================================================
+   A PRANCHA — decisão 006 / SISTEMA.md
+   Os primitivos do meio novo. As classes de serigrafia acima
+   (.misreg, .o-squeegee, .crop-mark) são do meio anterior e saem
+   quando as seções que ainda as usam forem convertidas.
+   ============================================================ */
+
+/* A moldura: fina por fora, grossa por dentro, com folga entre elas.
+   Não é borda de caixa — é o corte da chapa. Canto vivo, sempre. */
+.prancha {
+  border: 1px solid var(--foreground);
+  padding: 5px;
+  border-radius: 0;
+}
+.prancha > * {
+  border: 3px solid var(--foreground);
+  border-radius: 0;
+}
+
+/* A gratícula: a régua que ninguém olha. Cada quarta linha é maior —
+   é o que dá a leitura de coordenada em vez de papel quadriculado.
+   Nunca por cima de texto: fica atrás, e o conteúdo sobe por z-index. */
+.graticula {
+  background-image:
+    repeating-linear-gradient(to right,
+      color-mix(in srgb, var(--foreground) 40%, transparent) 0 .9px,
+      transparent .9px 192px),
+    repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--foreground) 40%, transparent) 0 .9px,
+      transparent .9px 192px),
+    repeating-linear-gradient(to right,
+      color-mix(in srgb, var(--foreground) 22%, transparent) 0 .5px,
+      transparent .5px 48px),
+    repeating-linear-gradient(to bottom,
+      color-mix(in srgb, var(--foreground) 22%, transparent) 0 .5px,
+      transparent .5px 48px);
+}
+
+/* O granulado: TRÊS passadas de pitch diferente, nunca uma. Uma só lê como
+   ruído de JPEG; três leem como fibra. E fica abaixo do ponto em que começa
+   a comer o texto miúdo — foi assim que a primeira capa errou. */
+.grao::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(circle at 28% 18%, color-mix(in srgb, var(--foreground) 85%, transparent) .9px, transparent 1.15px),
+    radial-gradient(circle at 72% 61%, color-mix(in srgb, var(--foreground) 70%, transparent) .7px, transparent .95px),
+    radial-gradient(circle at 47% 83%, color-mix(in srgb, var(--foreground) 60%, transparent) .65px, transparent .85px);
+  background-size: 15px 19px, 25px 11px, 7px 31px;
+  opacity: .32;
+}
+.dark .grao::before {
+  mix-blend-mode: screen;
+  opacity: .22;
+}
+
+/* O bloco de luz: o ÚNICO lugar onde a luz é tipo no modo claro.
+   Laranja no papel dá 2,18:1 e reprova até em corpo grande; sobre o vazio
+   dá 5,97:1. No escuro o fundo já é o vazio, então o bloco some e a luz
+   fica solta — o mesmo componente muda de forma, e isso é correto. */
+.bloco-luz {
+  background: var(--foreground);
+  color: var(--luz);
+  padding: .12em .5em .22em;
+  border-radius: 0;
+}
+.dark .bloco-luz {
+  background: transparent;
+  padding: 0;
+  border-bottom: 2px solid var(--luz);
+}
+
+/* O gesto do buril: no hover a régua APROFUNDA, não muda de cor.
+   É a única coisa que uma chapa gravada sabe fazer. */
+.buril {
+  color: var(--foreground);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: border-bottom-width 140ms ease;
+}
+.buril:hover,
+.buril:focus-visible {
+  border-bottom-width: 2px;
+}
+
+/* O versalete: o rótulo do sistema. Sem ele nada lê como prancha. */
+.versalete {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  font-weight: 500;
+}
+
+/* A escala graduada: divisor de seção e pé de página. */
+.escala {
+  height: 24px;
+  border-bottom: 1.6px solid var(--foreground);
+  background-image:
+    repeating-linear-gradient(to right, var(--foreground) 0 1.4px, transparent 1.4px 127px),
+    repeating-linear-gradient(to right,
+      color-mix(in srgb, var(--foreground) 70%, transparent) 0 .7px,
+      transparent .7px 31.75px);
+  background-size: 100% 100%, 100% 9px;
+  background-position: 0 0, 0 100%;
+  background-repeat: repeat-x;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buril { transition: none; }
 }

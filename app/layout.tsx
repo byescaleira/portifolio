@@ -1,5 +1,28 @@
 import type { Metadata } from "next";
+import { Bodoni_Moda, IBM_Plex_Mono, Spectral } from "next/font/google";
 import "./globals.css";
+
+/* As três famílias da decisão 006. Isto encerra a regra de "sem webfont" que
+   valia enquanto o meio era serigrafia: Bodoni, Spectral e Plex Mono não
+   existem na stack do sistema, e a voz de prancha depende delas. */
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--f-display",
+  display: "swap",
+});
+const spectral = Spectral({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--f-leitura",
+  display: "swap",
+});
+const plex = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--f-instrumento",
+  display: "swap",
+});
 import { ThemeProvider } from "./components/theme-provider";
 
 export const metadata: Metadata = {
@@ -57,7 +80,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className="h-full antialiased"
+      className={`h-full antialiased ${bodoni.variable} ${spectral.variable} ${plex.variable}`}
     >
       <body className="min-h-full flex flex-col [overflow-x:clip] bg-background text-foreground transition-colors duration-300">
         <ThemeProvider defaultTheme="dark" enableSystem={true}>
